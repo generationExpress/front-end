@@ -31,4 +31,145 @@ body{
     height: 150px;
     object-fit: cover;
     object-position: top center;
+    margin: 0;
+}
+
+
+.about-us{
+    width: 100%;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+
+.about-title h1{
+    font-size: 3rem;
+    margin: 0;
+}
+
+#us{
+    color: #8fd4a7;
+}
+
+#about-guion{
+    display: block;
+    width: 80px;
+    height: 6px;
+    background-color: #8fd4a7;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.about-content{
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+    align-items: center;
+}
+
+
+.about-image-container{
+    flex: 3;
+    position: relative;
+    width: 100%;
+    margin: 10px;
+}
+
+
+
+.box-green{
+    width: 150px;
+    height: 150px;
+    background-color: #b9e98b;
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    border-radius: 15px;
+}
+
+.about-img{
+    width: 100%;
+    height: 400px;
+    background-image: url("https://www.fedex.com/content/dam/fedex/lac-latin-america/images/2024/LAC_EN_2024_8_jpg_NA_LMR-FoC_mkt.jpg");
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+
+.about-text{
+    flex: 2;
+}
+
+.about-text p{
+    line-height: 1.7;
+    color: #444;
+}
+
+#p-bold{
+    font-weight: bold;
+}
+
+
+#about-content-div{
+    width: 80px;
+    height: 2px;
+    background-color: #8fd4a7;
+    margin: 20px 0;
+}
+
+
+.section-box{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.icon-box{
+    width: 60px;
+    height: 60px;
+    background-color: #68f982;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+#world-icon{
+    color: white;
+}
+
+.countries{
+    color: #68f982;
+    font-weight: bold;
+    margin: 0;
+}
+
+
+@media(max-width: 767px){
+
+    .about-content{
+        flex-direction: column;
+    }
+
+    .about-title h1{
+        font-size: 2.3rem;
+    }
+
+    .about-img{
+        height: 280px;
+    }
+
+    .about-text{
+        width: 100%;
+    }
+
+    .section-box{
+        gap: 2;
+    }
+
 }
