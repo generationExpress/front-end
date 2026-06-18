@@ -4,3 +4,11 @@ body{
     font-weight: 300;   
     font-style: normal;
 }
+.card-body{
+    text-align: center;
+}
+.photo-team{
+    padding: 2px;
+    border-color: #7CCFAE;
+}
+}
