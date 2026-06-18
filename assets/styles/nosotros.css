@@ -34,6 +34,10 @@ body{
     margin: 0;
 }
 
+#our-team H2, #our-team p{
+    margin-left: 50px;
+}
+
 
 .about-us{
     width: 100%;
