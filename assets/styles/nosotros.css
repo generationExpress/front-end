@@ -80,6 +80,10 @@ body{
     color: #444;
 }
 
+#p-bold{
+    font-weight: bold;
+}
+
 
 #about-content-div{
     width: 80px;
@@ -108,7 +112,7 @@ body{
 }
 
 #world-icon{
-    /* color: white; */
+    color: white;
 }
 
 .countries{
@@ -118,14 +122,14 @@ body{
 }
 
 
-@media(max-width: 768px){
+@media(max-width: 767px){
 
     .about-content{
         flex-direction: column;
     }
 
     .about-title h1{
-        font-size: 2.5rem;
+        font-size: 2.3rem;
     }
 
     .about-img{
@@ -134,6 +138,10 @@ body{
 
     .about-text{
         width: 100%;
+    }
+
+    .section-box{
+        gap: 2;
     }
 
 }
