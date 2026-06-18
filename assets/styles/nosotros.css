@@ -32,3 +32,11 @@ body{
     object-fit: cover;
     object-position: top center;
 }
+#title-team{
+    font-size: medium;
+    color: #000000;
+
+}
+.title-green{
+    color: #7CCFAE;
+}
