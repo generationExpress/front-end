@@ -3,12 +3,32 @@ body{
     font-family: "Ubuntu", sans-serif;   
     font-weight: 300;   
     font-style: normal;
+    
+}
+.card{
+    background-color: #FAFAFA !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 .card-body{
     text-align: center;
 }
 .photo-team{
     padding: 2px;
-    border-color: #7CCFAE;
+    border-color: #7CCFAE !important;
 }
+#team-box{
+     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+.photo-ajust {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    object-position: top center;
 }
