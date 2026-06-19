@@ -34,11 +34,26 @@ body{
     margin: 0;
 }
 
-#our-team H2, #our-team p{
+#our-team{
     margin-left: 50px;
+    display: flex;
+
 }
+#team-p{
+    font-weight: bold;
+}
+#title-line{
+   
+    width: 500px;
+    height: 5px;
+    background-color: #8fd4a7;
+    margin: 80px;
+    border-radius: 10%;
 
-
+}
+#nuestro{
+    color: #7CCFAE;
+}
 .about-us{
     width: 100%;
     padding: 50px;
