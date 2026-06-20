@@ -21,7 +21,7 @@ body{
     border-color: #7CCFAE !important;
 }
 #team-box{
-     display: flex;
+    display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 1.5rem;
@@ -33,25 +33,25 @@ body{
     object-position: top center;
     margin: 0;
 }
-#our-team{
-    margin-left: 50px;
-    display: flex;
-
-}
-#team-p{
-    font-weight: bold;
-}
-#title-line{
-   
-    width: 500px;
-    height: 5px;
-    background-color: #8fd4a7;
-    margin: 80px;
-    border-radius: 10%;
-
-}
 #nuestro{
     color: #7CCFAE;
+}
+#our-team{
+  
+    padding: 50px;
+
+
+}
+#team-guion{
+    display: block;
+    width: 80px;
+    height: 6px;
+    background-color: #8fd4a7;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+#team-text{
+    font-weight: bold   ;
 }
 .about-us{
     width: 100%;
@@ -267,6 +267,8 @@ body{
  display:flex;
  justify-content:center;
  align-items:center;
+
+ 
 }
 
 .panel-image img{
