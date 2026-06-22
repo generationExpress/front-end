@@ -66,11 +66,12 @@
             <!-- Formulario -->
             <div class="col-lg-7">
               <div class="contact-form-container">
-                <form class="contact-form">
+                <form class="contact-form" action="https://formspree.io/f/xjgqvegj" method="POST">
                   <div class="row g-3">
                     <div class="col-md-6">
                       <input
                         type="text"
+                        name="nombre"
                         class="form-control contact-input"
                         placeholder="Nombre completo"
                         required
@@ -80,6 +81,7 @@
                     <div class="col-md-6">
                       <input
                         type="email"
+                        name="email"
                         class="form-control contact-input"
                         placeholder="Correo electrónico"
                         required
@@ -89,6 +91,7 @@
                     <div class="col-12">
                       <input
                         type="text"
+                        name="asunto"
                         class="form-control contact-input"
                         placeholder="Asunto"
                         required
@@ -97,6 +100,7 @@
 
                     <div class="col-12">
                       <textarea
+                        name="mensaje"
                         class="form-control contact-input"
                         rows="6"
                         placeholder="Escribe tu mensaje..."
