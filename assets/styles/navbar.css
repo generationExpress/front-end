@@ -41,19 +41,19 @@
   transition: color 0.25s ease;
 }
 
-/* Línea subrayada para TODOS los enlaces */
+
 .nav-link::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -4px;              /* Ajusta según prefieras */
+  bottom: -4px;             
   width: 100%;
   height: 3px;
   background: #70c04f;
   border-radius: 10px;
-  transform: scaleX(0);      /* Oculto por defecto */
+  transform: scaleX(0);      
   transition: transform 0.3s ease;
-  transform-origin: left center; /* Aparece desde la izquierda */
+  transform-origin: left center; 
 }
 
 
