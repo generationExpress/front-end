@@ -33,12 +33,26 @@ body{
     object-position: top center;
     margin: 0;
 }
-
-#our-team H2, #our-team p{
+#our-team{
     margin-left: 50px;
+    display: flex;
+
 }
+#team-p{
+    font-weight: bold;
+}
+#title-line{
+   
+    width: 500px;
+    height: 5px;
+    background-color: #8fd4a7;
+    margin: 80px;
+    border-radius: 10%;
 
-
+}
+#nuestro{
+    color: #7CCFAE;
+}
 .about-us{
     width: 100%;
     padding: 50px;
@@ -176,4 +190,211 @@ body{
         gap: 2;
     }
 
+    
+}
+.card{  
+    
+    background-color: #FAFAFA !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+.card-body{
+    text-align: center;
+}
+.photo-team{
+    padding: 2px;
+    border-color: #7CCFAE !important;
+}
+#team-box{
+     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+.photo-ajust {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    object-position: top center;
+}
+
+/*-------MISION Y VIVION CORPORATIVA---------*/
+
+#panel{
+ width: 100%;
+ max-width: 1200px;
+ margin: 50px auto;
+ padding: 0 20px;
+ display:flex;
+ gap: 30px;
+ justify-content: space-between;;
+ align-items: stretch;
+ flex-wrap:  wrap;  
+}
+
+/*------TARJETAS----*/
+
+#panel .panel{
+  flex:1;
+  min-width:320px;
+  padding: 24px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  transition: .3s;
+  position:relative;
+  overflow:hidden;
+}
+  
+
+.panel-content{
+   display:flex;
+   justify-content: space-between;
+   align-items: center;
+   gap: 20px;
+}
+
+.panel-info{
+    flex:2;
+}
+
+.panel-image{
+ flex:1;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+}
+
+.panel-image img{
+ width:140px;
+ height:auto;
+ object-fit:contain;
+}
+
+#panel .panel:hover{
+ transform:translateY(-5px);
+}
+
+/*-----TITULOS*------*/
+
+#panel .panel h2{
+font-size: 1.8rem;
+margin-bottom: 12px;
+}
+
+/*-------TEXTO-------*/
+
+#panel .panel p{
+ line-height: 1.5;
+ font-size: 1rem;
+ padding: 15px;   
+}
+
+/*-------ICONOS--------*/
+
+#panel .icon-box{
+ width:60px;
+ height:60px;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ font-size:1.8rem;
+ border-radius:50%;
+ margin-bottom:20px;
+ background-color: #143B64;
+}
+
+/*------LINEA------*/
+
+#panel .panel-line{
+ width:70px;
+ height:4px;
+ border-radius:10px;
+ margin-bottom:20px;
+ background-color:#F4C524; 
+
+}
+
+/*--------MISION-------*/
+
+
+#panel .mision-panel{
+  padding: 24px;
+  border-radius: 20px;
+  border-bottom:6px solid #7CBF3F;
+
+}
+ 
+#panel .mision-panel .icon-box{
+    background-color: #F4C524;
+}
+
+#panel .mision-panel .panel-line{
+ background-color: #F4C524;
+
+}
+
+/*------VISION------*/
+
+#panel .vision-panel{
+ border-bottom: 6px solid #F4C524;
+ background: linear-gradient(
+   135deg,
+   #f2f7e6,
+   #d9f3c0
+   
+);
+color: black; 
+}
+
+#panel .vision-panel .line{
+
+ background-color: #F4C524;   
+}
+
+#panel .vision-panel h2{
+  color: black;  
+}
+
+/*-------RESPONSIVE--------*/
+
+@media(max-width: 768px){
+  #panel{
+     flex-direction: column;
+  }  
+}
+
+.panel-content{
+ flex-direction:column;
+ text-align:center;
+}
+
+.panel-image img{
+ width:100px;
+}
+
+.panel-line{
+ margin:auto;
+ margin-bottom:20px;
+}
+
+.panel{
+    position: relative;
+    overflow: hidden;
+}
+
+.panel-image{
+    position: absolute;
+
+    right: 20px;
+    bottom: 20px;
+
+    width: 120px;
+    height: auto;
+
+    opacity: 0.9;
 }
