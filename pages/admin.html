@@ -65,23 +65,52 @@
             <div class="col-md-6">
                 <section id="formulario">
                     <h2>Formulario</h2>
+                      <!--inicio formulario de prueba -->
                     <form>
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
+                          
+
+                            <label for="nombre" class="form-label">Nombre Completo</label>
                             <input type="text" class="form-control" id="nombre">
+                            <label for="contacto" class="form-label">Numero Contacto</label>
+                            <input type="number" class="form-control" id="contacto">
+                            <label for="direccion-inicio" class="form-label">Direccion De Recoleccion</label>
+                            <input type="text" class="form-control" id="direccion-inicio">
+                            <label for="direccion-final" class="form-label">Direccion De Entrega</label>
+                            <input type="text" class="form-control" id="direccion-final">
+                            <label for="peso" class="form-label">Peso Kg</label>
+                            <input type="number" class="form-control" id="peso">
+                            
+                            <label for="tipo-envio">Tipo De Envio:</label>
+                            <p></p>
+                            <select id="tipo-envio" name="tipo-envio">
+                                <option value="co">Normal</option>
+                                <option value="mx">Premium</option>
+                                <option value="es">Economico</option>
+                            </select>
+                            
+                            
                         </div>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        
+                        <button type="submit" class="btn btn-primary">Registrar</button>
                     </form>
+                    <!-- fin formulario de prueba -->
                 </section>
             </div>
             <div class="col-md-6">
                 <section id="solicitudes">
+                    <!-- inicio tabla solicitudes -->
+
                     <h2>Solicitudes</h2>
                     <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Descripción</th>
+                                <th>Tipo De Envio</th>
+                                <th>Cliente</th>
+                                <th>Inicio</th>
+                                <th>Fin</th>
+                                <th>Peso</th>                                
                             </tr>
                         </thead>
                         <tbody>
