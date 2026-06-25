@@ -16,42 +16,65 @@
     <link rel="stylesheet" href="../assets/styles/navbar.css">
     <link rel="stylesheet" href="../assets/styles/footer.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/styles/hero.css">
     <title>Inicio</title>
 </head>
 <body>
     <nav id="mainNavbar" class="navbar navbar-expand-lg custom-navbar sticky-top border">
         <div class="container">
             <a class="navbar-brand" href="#">
-                Generation <span class="brand-green">Express</span>
+                <div>
+                    Generation <span class="brand-green">Express</span>
+                </div>      
+                <span class="brand-tagline">Logística que conecta el mundo</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" 
+                aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="menu">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Servicios</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Rastreo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/pages/nosotros.html">Nosotros</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/pages/contacto.html">Contacto</a>
-                </li>
-            </ul>
-            <button class="btn btn-cotizar">
-                Ingresar
-            </button>
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Rastreo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/pages/nosotros.html">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/contacto.html">Contacto</a>
+                    </li>
+                </ul>
+                <button class="btn btn-ingresar">
+                    Ingresar
+                </button>
             </div>
         </div>
     </nav>
 
 
-    <section class="">
-
+    <!-- HERO -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <!-- Columna izquierda: texto + botón -->
+                <div class="col-lg-6 col-12 text-white hero-text">
+                    <h1 class="display-3 fw-bold">Logística inteligente que conecta negocios con el mundo</h1>
+                    <p class="lead mb-4">Envíos seguros, rápidos y confiables a cualquier parte del mundo.</p>
+                    <a href="#" class="btn btn-rastrear">Rastrear envío</a>
+                </div>
+                <!-- Columna derecha: imagen/icono (oculta en móvil) -->
+                <div class="col-lg-6 d-none d-lg-block text-center hero-image-right">
+                    <i class="bi bi-box-seam" style="font-size: 12rem; color: #70c04f; filter: drop-shadow(0 0 30px rgba(0,0,0,0.2));"></i>
+                    <!-- O si prefieres una imagen:
+                    <img src="ruta-de-tu-imagen.png" alt="Envío" class="img-fluid">
+                    -->
+                </div>
+            </div>
+        </div>
     </section>
 
     <section class="">
