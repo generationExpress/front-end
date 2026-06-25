@@ -3,130 +3,8 @@ body{
     font-family: "Ubuntu", sans-serif;   
     font-weight: 300;   
     font-style: normal;
-<<<<<<<<< Temporary merge branch 1
-}
-
-/*-------MISION Y VIVION CORPORATIVA---------*/
-
-#cards{
-width:100%;
-max-width: 1350px;
-margin: 80px auto;
-padding: 0 20px;
-display:flex;
-justify-content: space-between;;
- align-items: stretch;
-gap: 50px;
-flex-wrap:  wrap;  
-}
-
-/*------TARJETAS----*/
-
-.card{
-  width: 540px;
-  min-width: 210px;
-  min-height:250px;
-  padding: 24px;
-  border-radius: 20px;
-  background-color: #ffffff;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-  transition: 0.3s ease;
-  
-
-}
-
-.card:hover{
- transform:translateY(-5px);
-}
-
-/*-----TITULOS*------*/
-
-.card h2{
-font-size: 1.8rem;
-margin-bottom: 12px;
-
-}
-
-/*-------TEXTO-------*/
-
-.card p{
- line-height: 1.8;
- font-size: 1rem;
- padding: 15px;   
-}
-
-/*-------ICONOS--------*/
-
-.icon-box{
-   width: 60px;
-   height: 60px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   font-size: 1.5rem;
-   border-radius: 20px;
-   margin-bottom: 20px;
-}
-
-/*------LINEA------*/
-
-.line{
- width: 70px;
- padding: 0 10px;
- height: 4px;
- border-radius: 50px;
- margin-bottom: 20px;   
-}
-
-/*--------MISION-------*/
-
-
-.mision-card{
     
-    border-bottom:6px solid #7CBF3F;
-    gap: 100px
 }
-    .mision-card .icon-box{
-    background-color: #F4C524;
-}
-
-.mision-card .line{
- background-color: #F4C524;   
-}
-
-/*------VISION------*/
-
-.vision-card{
- gap: 100px;
-  border-bottom: 6px solid #F4C524;
- 
- background: linear-gradient(
-   135deg,
-   #f2f7e6,
-   #d9f3c0
-   
-);
-color: black; 
-}
-
-.vision-card .line{
- background-color: #F4C524;   
-}
-
-.vision-card h2{
-  color: black;  
-}
-
-/*-------RESPONSIVE--------*/
-
-@media(max-width: 768px){
-  #cards{
-     flex-direction: column;
-  }  
-}
-=========
-    
-
 .card-team{
     background-color: #FAFAFA !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -521,5 +399,4 @@ color: black;
     height: auto;
 
     opacity: 0.9;
-}
 }
