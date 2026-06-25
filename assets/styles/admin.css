@@ -107,3 +107,14 @@ select.contact-input {
         padding: 25px;
     }
 }
+
+.col{
+    box-sizing: border-box;
+}
+#section{
+    width: fit-content;
+}
+
+#section table{
+    width: 100%;
+}
