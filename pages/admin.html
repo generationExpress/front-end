@@ -84,7 +84,6 @@
                                     >
                                         <option value="">Tipo de envío</option>
                                         <option value="Nacional">Nacional</option>
-                                        <option value="Internacional">Internacional</option>
                                         <option value="Express">Express</option>
                                     </select>
                                 </div>
@@ -101,49 +100,60 @@
                                     />
                                 </div>
 
-                                <div class="col-12">
-                                    <input
-                                        type="text"
+                                <div class="col-6">
+                                    <select
                                         name="origin"
                                         id="origin"
-                                        class="form-control contact-input"
-                                        placeholder="Sitio de origen"
+                                        class="form-select contact-input"
                                         required
-                                    />
+                                    >
+                                        <option value="">Ciudad origen</option>
+                                        <option value="Bogotá">Bogotá</option>
+                                        <option value="Medellin">Medellin</option>
+                                        <option value="Cali">Cali</option>
+                                        <option value="Barranquilla">Barranquilla</option>
+                                    </select>
+                                    
                                 </div>
 
-                                <div class="col-12">
-                                    <input
-                                        type="text"
+                                <div class="col-6">
+                                     <select
                                         name="destination"
                                         id="destination"
-                                        class="form-control contact-input"
-                                        placeholder="Destino"
+                                        class="form-select contact-input"
                                         required
-                                    />
+                                    >
+                                        <option value="">Ciudad origen</option>
+                                        <option value="Bogotá">Bogotá</option>
+                                        <option value="Medellin">Medellin</option>
+                                        <option value="Cali">Cali</option>
+                                        <option value="Barranquilla">Barranquilla</option>
+                                    </select>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <input
                                         type="text"
-                                        name="contact_name"
-                                        id="contact_name"
+                                        name="characteristics"
+                                        id="characteristics"
                                         class="form-control contact-input"
-                                        placeholder="Nombre de contacto"
+                                        placeholder="Caracteristicas del envio"
+                                        required
+                                    />
+                                </div>
+                                 <div class="col-md-12">
+                                    <input
+                                        type="text"
+                                        name="image"
+                                        id="image"
+                                        class="form-control contact-input"
+                                        placeholder="Link imagen"
                                         required
                                     />
                                 </div>
 
-                                <div class="col-md-6">
-                                    <input
-                                        type="tel"
-                                        name="phone"
-                                        id="phone"
-                                        class="form-control contact-input"
-                                        placeholder="Teléfono"
-                                        required
-                                    />
-                                </div>
+
+                               
 
                                 <div class="col-12">
                                     <button type="submit" class="btn contact-btn">
@@ -166,11 +176,11 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Tipo De Envio</th>
-                                <th>Cliente</th>
-                                <th>Inicio</th>
-                                <th>Fin</th>
+                                <th>Caracteristicas</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
                                 <th>Peso</th>
-                                <th>valor</th>                                
+                                <th>Valor</th>                                
                             </tr>
                         </thead>
                         <tbody id = "tabla-solicitudes">

@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const valor = calcularValor(datosObjeto.weight, datosObjeto.type_shipping, datosObjeto.origin, datosObjeto.destination);
         
         // LE PASAMOS LA TABLA COMO PARÁMETRO PARA QUE LA FUNCIÓN PUEDA USARLA
-        ingresarSolicitud(tabla, id, datosObjeto.type_shipping, datosObjeto.contact_name, datosObjeto.origin, datosObjeto.destination, datosObjeto.weight, valor);
+        ingresarSolicitud(tabla, id, datosObjeto.type_shipping, datosObjeto.characteristics, datosObjeto.origin, datosObjeto.destination, datosObjeto.weight, valor);
         
         id++; 
         
@@ -63,20 +63,21 @@ function calcularValor(peso, tipo, origen, destino) {
 }
 
 // RECIBE LA TABLA AQUÍ
-function ingresarSolicitud(tablaElemento, id, tipo, cliente, origen, destino, peso, valor) {
+function ingresarSolicitud(tablaElemento, id, tipo, caracteristicas, origen, destino, peso, valor) {
     if (!tablaElemento) return; // Validación por seguridad
 
     const fila = document.createElement('tr');
     fila.innerHTML = `
         <td>${id}</td>
         <td>${tipo}</td>
-        <td>${cliente}</td>
+        <td>${caracteristicas}</td>
         <td>${origen}</td>
         <td>${destino}</td>
         <td>${peso} kg</td>
         <td>$${valor.toLocaleString('es-CO')}</td>
     `;
 
+ 
     // Ahora usamos el parámetro recibido localmente
     tablaElemento.appendChild(fila);
 }
