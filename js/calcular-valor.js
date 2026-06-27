@@ -77,6 +77,7 @@ function ingresarSolicitud(tablaElemento, id, tipo, cliente, origen, destino, pe
         <td>$${valor.toLocaleString('es-CO')}</td>
     `;
 
+ 
     // Ahora usamos el parámetro recibido localmente
     tablaElemento.appendChild(fila);
 }
