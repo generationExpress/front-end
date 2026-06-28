@@ -1,0 +1,174 @@
+.services-section {
+    background: #f7f8fa;
+}
+
+.services-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.services-subtitle {
+    font-size: 1.3rem;
+    color: #64748b;
+}
+
+/* CARD */
+.service-card {
+    background: white;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    transition: 0.3s ease;
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 45px rgba(0,0,0,0.12);
+}
+
+.service-image-wrapper {
+    position: relative;
+}
+
+.service-image {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+}
+
+.shipping-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.nacional {
+    background: #16a34a;
+}
+
+.internacional {
+    background: #2563eb;
+}
+
+.express {
+    background: #f59e0b;
+}
+
+.service-body {
+    padding: 0;
+}
+
+.service-section {
+    padding: 18px 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.service-section h6 {
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #111827;
+}
+
+.service-section p {
+    margin: 0;
+    color: #475569;
+}
+
+.location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.location-box small,
+.weight-box small {
+    display: block;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.location-box strong,
+.weight-box strong {
+    color: #1f2937;
+}
+
+.location-box i,
+.weight-box i {
+    margin-right: 6px;
+}
+
+.origin i {
+    color: #16a34a;
+}
+
+.destination i {
+    color: #2563eb;
+}
+
+.weight-box i {
+    color: #f59e0b;
+}
+
+.price-footer {
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-footer span {
+    color: #334155;
+}
+
+.price-footer strong {
+    color: #16a34a;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+/* EMPTY STATE */
+.empty-services {
+    border: 2px dashed #cbd5e1;
+    border-radius: 20px;
+    padding: 80px 30px;
+    text-align: center;
+    background: #f8fafc;
+}
+
+.empty-services i {
+    font-size: 4rem;
+    color: #70c04f;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.empty-services h3 {
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.empty-services p {
+    color: #64748b;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .services-title {
+        font-size: 2.2rem;
+    }
+
+    .services-subtitle {
+        font-size: 1rem;
+    }
+
+    .service-image {
+        height: 220px;
+    }
+}

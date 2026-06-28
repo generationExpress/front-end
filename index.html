@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="assets/styles/stats.css">
     <link rel="stylesheet" href="assets/styles/advantages.css">
     <link rel="stylesheet" href="assets/styles/testimonials.css">
+    <link rel="stylesheet" href="assets/styles/servicios.css">
     <title>Inicio</title>
 </head>
 <body>
@@ -201,8 +202,27 @@
         </div>
     </section>
 
-    <section class="">
+    <section class="services-section py-5">
+        <div class="container">
 
+            <div class="text-center mb-5">
+                <h2 class="services-title">Nuestros Servicios</h2>
+                <p class="services-subtitle">
+                    Conoce los envíos que hemos gestionado
+                </p>
+            </div>
+
+            <!-- Grid dinámico -->
+            <div id="services-container" class="row g-4"></div>
+
+            <!-- Empty state -->
+            <div id="empty-services" class="empty-services d-none">
+                <i class="bi bi-box-seam"></i>
+                <h3>Aún no hay servicios registrados</h3>
+                <p>Cuando agregues solicitudes de envío, aparecerán aquí.</p>
+            </div>
+
+        </div>
     </section>
 
     <section class="testimonials-section">
@@ -341,6 +361,6 @@
 
         <div class="footer-gradient"></div>
     </footer>
-    
+    <script src="js/servicios.js"></script>
 </body>
 </html>
