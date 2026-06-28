@@ -1,44 +1,69 @@
 // Asegurar que el DOM esté listo
+let listaSolicitudes = [];
 let id = 1;
 
-document.addEventListener('DOMContentLoaded', () => {
-    
-    const solicitud = document.getElementById('form-solicitud');
-    const tabla = document.getElementById('tabla-solicitudes');
+const formulario = document.querySelector(".contact-form");
+const tabla = document.getElementById('tabla-solicitudes');
 
-    // Validación de seguridad para evitar errores en consola
-    if (!solicitud) {
-        console.error("No se encontró el formulario con el ID 'form-solicitud'");
-        return;
+function guardarSolicitud(event) {
+    // 1. Evitamos que la página se recargue
+    event.preventDefault();
+
+    const tipoEnvio = document.getElementById("type_shipping").value;
+    const origen = document.getElementById("origin").value;
+    const destino = document.getElementById("destination").value;
+    const pesoInput = document.getElementById("weight").value;
+    
+    // 4. Conversión del peso a tipo numérico flotante
+    const peso = parseFloat(pesoInput) || 0;
+    
+    const nombreContacto = document.getElementById("contact_name") ? document.getElementById("contact_name").value : "";
+    const telefono = document.getElementById("phone") ? document.getElementById("phone").value : "";
+    const caracteristicas = document.getElementById("characteristics") ? document.getElementById("characteristics").value : "";
+    const imagen = document.getElementById("image") ? document.getElementById("image").value : "";
+
+    // Calcular el valor del envío
+    const valor = calcularValor(peso, tipoEnvio, origen, destino);
+
+    const nuevaSolicitud = {
+        id: id,
+        tipoEnvio: tipoEnvio,
+        origen: origen,
+        destino: destino,
+        peso: peso,
+        nombreContacto: nombreContacto,
+        telefono: telefono,
+        caracteristicas: caracteristicas,
+        imagen: imagen,
+        valor: valor
+    };
+
+    listaSolicitudes.push(nuevaSolicitud);
+
+    if (tabla) {
+        const fila = document.createElement('tr');
+        const urlImagen = nuevaSolicitud.imagen || 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=150';
+
+        fila.innerHTML = `
+            <td>${nuevaSolicitud.id}</td>
+            <td>${nuevaSolicitud.tipoEnvio}</td>
+            <td>${nuevaSolicitud.caracteristicas}</td>
+            <td>${nuevaSolicitud.origen}</td>
+            <td>${nuevaSolicitud.destino}</td>
+            <td>${nuevaSolicitud.peso} kg</td>
+            <td>$${nuevaSolicitud.valor.toLocaleString('es-CO')}</td>
+            <td>
+                <img src="${urlImagen}" alt="Preview" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+            </td>
+        `;
+        tabla.appendChild(fila);
     }
 
-    solicitud.addEventListener('submit', (event) => {
-        // 1. Evitamos que la página se recargue
-        event.preventDefault();
+    id++;
 
-        // 2. Capturamos los datos del formulario
-        const formData = new FormData(solicitud);
-
-        // 3. Convertir FormData a un objeto plano de JS
-        const datosObjeto = Object.fromEntries(formData);
-
-        // 4. Conversión del peso a tipo numérico flotante
-        if (datosObjeto.weight) {
-            datosObjeto.weight = parseFloat(datosObjeto.weight);
-        }
-
-        // Calcular el valor del envío
-        const valor = calcularValor(datosObjeto.weight, datosObjeto.type_shipping, datosObjeto.origin, datosObjeto.destination);
-        
-        // LE PASAMOS LA TABLA COMO PARÁMETRO PARA QUE LA FUNCIÓN PUEDA USARLA
-        ingresarSolicitud(tabla, id, datosObjeto.type_shipping, datosObjeto.characteristics, datosObjeto.origin, datosObjeto.destination, datosObjeto.weight, valor);
-        
-        id++; 
-        
-        // Opcional: Resetea el formulario para que quede limpio tras agregar la fila
-        solicitud.reset();
-    });
-});
+    // Resetea el formulario para que quede limpio tras agregar la fila
+    formulario.reset();
+}
 
 function calcularValor(peso, tipo, origen, destino) {
     const valorNacional = 5000;
@@ -62,6 +87,8 @@ function calcularValor(peso, tipo, origen, destino) {
     }
 }
 
+/*
+// LE PASAMOS LA TABLA COMO PARÁMETRO PARA QUE LA FUNCIÓN PUEDA USARLA
 // RECIBE LA TABLA AQUÍ
 function ingresarSolicitud(tablaElemento, id, tipo, caracteristicas, origen, destino, peso, valor) {
     if (!tablaElemento) return; // Validación por seguridad
@@ -77,7 +104,11 @@ function ingresarSolicitud(tablaElemento, id, tipo, caracteristicas, origen, des
         <td>$${valor.toLocaleString('es-CO')}</td>
     `;
 
- 
     // Ahora usamos el parámetro recibido localmente
     tablaElemento.appendChild(fila);
+}
+*/
+
+if (formulario) {
+    formulario.addEventListener("submit", guardarSolicitud);
 }
