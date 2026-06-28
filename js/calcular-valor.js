@@ -26,9 +26,34 @@ document.addEventListener('DOMContentLoaded', () => {
         if (datosObjeto.weight) {
             datosObjeto.weight = parseFloat(datosObjeto.weight);
         }
+        
+        //COMENTARIOS DE LUCIA EN MAYUSCULA
 
         // Calcular el valor del envío
         const valor = calcularValor(datosObjeto.weight, datosObjeto.type_shipping, datosObjeto.origin, datosObjeto.destination);
+         // AGREGO ELVALOR CALCULADO AL OBJETO SI NO SE NECESITA OMITIR ESTO===>datosObjeto.valor = valor;
+         /* AGREGAR ESTA INFORMACION AL OBJETO
+         datosObjeto.id = id;
+         datosObjeto.valor = valor;
+         datosObjeto.estado = "pendiente";
+         datosObjeto.fecha =new Date().totaleString("es-CO")
+       
+
+        /* SE GUARDA FORMULARIO EN LOCAL STORAGE PERO ME QUE LA DUDA
+        SI DEJAR O QUITAR ESTE ==> localStorage.setItem("solicitudEnvio",JSON.stringify(datosObjeto));*/
+        
+        
+       // MUESTRA LAS SOLICITUDES HECHAS Y QUEDA VACIO SI NO HAY SOLICITUD
+
+        let solicitudes = JSON.parse(localStorage.getItem("solicitudes"))  || [];
+
+        // DEJO LA POSIBILIDAD DE AGREGAR UNA NUEVA SOLICITUD
+
+        solicitudes.push(datosObjeto);
+        // GUARDO EL ARREGLO CON LAS SOLICITUDES PARA QUE NO SOBREESCRIBA CADA PEDIDO
+
+        localStorage.setItem("solicitudes",JSON.stringify(solicitudes));
+
         
         // LE PASAMOS LA TABLA COMO PARÁMETRO PARA QUE LA FUNCIÓN PUEDA USARLA
         ingresarSolicitud(tabla, id, datosObjeto.type_shipping, datosObjeto.characteristics, datosObjeto.origin, datosObjeto.destination, datosObjeto.weight, valor);
