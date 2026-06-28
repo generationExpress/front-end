@@ -6,6 +6,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const solicitud = document.getElementById('form-solicitud');
     const tabla = document.getElementById('tabla-solicitudes');
 
+
+    let solicitudes = JSON.parse(localStorage.getItem("solicitudes"))  || [];
+
+    console.log("lista de solicitudes guardadas:", solicitudes);
+    console.log("lista json de las solicitudes",JSON.stringify(solicitudes));
+    console.log("Objetos de cada solicitud: ");
+    solicitudes.forEach((solicitud, index) => {
+        console.log(`Solicitud ${index + 1}:`, solicitud);
+    });
+
     // Validación de seguridad para evitar errores en consola
     if (!solicitud) {
         console.error("No se encontró el formulario con el ID 'form-solicitud'");
