@@ -212,10 +212,18 @@
                 </p>
             </div>
 
-            <!-- Grid dinámico -->
-            <div id="services-container" class="row g-4"></div>
+            <div class="services-slider-wrapper">
+                <button id="scroll-left" class="slider-btn left">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
 
-            <!-- Empty state -->
+                <div id="services-container"></div>
+
+                <button id="scroll-right" class="slider-btn right">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        
             <div id="empty-services" class="empty-services d-none">
                 <i class="bi bi-box-seam"></i>
                 <h3>Aún no hay servicios registrados</h3>

@@ -1,3 +1,23 @@
+const container = document.getElementById("services-container");
+const leftBtn = document.getElementById("scroll-left");
+const rightBtn = document.getElementById("scroll-right");
+
+if (leftBtn && rightBtn && container) {
+    leftBtn.addEventListener("click", () => {
+        container.scrollBy({
+            left: -404,
+            behavior: "smooth"
+        });
+    });
+
+    rightBtn.addEventListener("click", () => {
+        container.scrollBy({
+            left: 404,
+            behavior: "smooth"
+        });
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("services-container");
     const emptyState = document.getElementById("empty-services");
@@ -33,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const valorTexto = valor;
 
         const card = document.createElement("div");
-        card.className = "col-lg-4 col-md-6 col-12";
+        card.className = "service-slide";
 
         card.innerHTML = `
             <div class="service-card">
@@ -121,3 +141,4 @@ function calcularValor(peso, tipo, origen, destino) {
         return 0;
     }
 }
+
