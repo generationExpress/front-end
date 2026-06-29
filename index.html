@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="assets/styles/hero.css">
     <link rel="stylesheet" href="assets/styles/stats.css">
+    <link rel="stylesheet" href="assets/styles/advantages.css">
+    <link rel="stylesheet" href="assets/styles/testimonials.css">
+    <link rel="stylesheet" href="assets/styles/servicios.css">
     <title>Inicio</title>
 </head>
 <body>
@@ -36,21 +39,21 @@
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Servicios</a>
+                        <a class="nav-link active" href="#">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Rastreo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/pages/nosotros.html">Nosotros</a>
+                        <a class="nav-link" href="/pages/nosotros.html">Nosotros</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/pages/contacto.html">Contacto</a>
                     </li>
                 </ul>
-                <button class="btn btn-ingresar">
+                <a href="pages/admin.html" class="btn btn-ingresar">
                     Ingresar
-                </button>
+                </a>
             </div>
         </div>
     </nav>
@@ -66,13 +69,6 @@
                     <h1 class="display-3 fw-bold">Logística inteligente que conecta negocios con el mundo</h1>
                     <p class="lead mb-4">Envíos seguros, rápidos y confiables a cualquier parte del mundo.</p>
                     <a href="#" class="btn btn-rastrear">Rastrear envío</a>
-                </div>
-                <!-- Columna derecha: imagen/icono (oculta en móvil) -->
-                <div class="col-lg-6 d-none d-lg-block text-center hero-image-right">
-                    <i class="bi bi-box-seam" style="font-size: 12rem; color: #70c04f; filter: drop-shadow(0 0 30px rgba(0,0,0,0.2));"></i>
-                    <!-- O si prefieres una imagen:
-                    <img src="ruta-de-tu-imagen.png" alt="Envío" class="img-fluid">
-                    -->
                 </div>
             </div>
         </div>
@@ -138,16 +134,172 @@
         </div>
     </section>
 
-    <section class="">
+    <section class="advantages-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
 
+                <!-- LEFT -->
+                <div class="col-lg-6">
+                    <h2 class="section-title">Ventajas de la aplicación</h2>
+                    <p class="section-subtitle">
+                        Nuestra plataforma digital no solo gestiona envíos, transforma su
+                        visión estratégica de la cadena de suministro en una ventaja competitiva real.
+                    </p>
+
+                    <div class="advantage-card">
+                        <div class="advantage-icon">
+                            <i class="bi bi-broadcast"></i>
+                        </div>
+                        <div>
+                            <h4>Tecnología de punta</h4>
+                            <p>
+                                Rastreo satelital en tiempo real con precisión de metros.
+                                Notificaciones instantáneas y predicción de arribo mediante IA.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="advantage-card">
+                        <div class="advantage-icon">
+                            <i class="bi bi-globe-americas"></i>
+                        </div>
+                        <div>
+                            <h4>Red global</h4>
+                            <p>
+                                Presencia operativa directa en más de 40 países.
+                                Gestión aduanera experta que garantiza el flujo constante.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="advantage-card">
+                        <div class="advantage-icon">
+                            <i class="bi bi-leaf"></i>
+                        </div>
+                        <div>
+                            <h4>Sostenibilidad real</h4>
+                            <p>
+                                Programas activos de reducción de huella de carbono y
+                                optimización de rutas para minimizar el impacto ambiental.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT -->
+                <div class="col-lg-6">
+                    <div class="advantages-image-wrapper">
+                        <img src="/assets/images/atencion_personalizada.png" alt="Dashboard logístico" class="img-fluid advantages-image">
+
+                        <div class="floating-stat">
+                            <h3>99.9%</h3>
+                            <p>ENTREGAS A TIEMPO GARANTIZADAS POR CONTRATO</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </section>
 
-    <section class="">
+    <section class="services-section py-5">
+        <div class="container">
 
+            <div class="text-center mb-5">
+                <h2 class="services-title">Nuestros Servicios</h2>
+                <p class="services-subtitle">
+                    Conoce los envíos que hemos gestionado
+                </p>
+            </div>
+
+            <div class="services-slider-wrapper">
+                <button id="scroll-left" class="slider-btn left">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+
+                <div id="services-container"></div>
+
+                <button id="scroll-right" class="slider-btn right">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        
+            <div id="empty-services" class="empty-services d-none">
+                <i class="bi bi-box-seam"></i>
+                <h3>Aún no hay servicios registrados</h3>
+                <p>Cuando agregues solicitudes de envío, aparecerán aquí.</p>
+            </div>
+
+        </div>
     </section>
 
-    <section class="">
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="testimonials-title">
+                Lo que dicen <span>nuestros clientes</span>
+            </h2>
 
+            <div class="row g-4 justify-content-center">
+
+                <div class="col-lg-4">
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+
+                        <p class="testimonial-text">
+                            “Excelente servicio, siempre entregan a tiempo y la
+                            plataforma de rastreo es muy fácil de usar.”
+                        </p>
+
+                        <div class="client-info">
+                            <img src="https://i.pravatar.cc/50?img=12" alt="cliente">
+                            <div>
+                                <h5>Carlos Méndez</h5>
+                                <span>Gerente de Compras, TechCorp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="testimonial-card featured">
+                        <div class="stars">★★★★★</div>
+
+                        <p class="testimonial-text">
+                            “Generation Express ha optimizado nuestra cadena
+                            de suministro y redujo nuestros costos logísticos drásticamente.”
+                        </p>
+
+                        <div class="client-info">
+                            <img src="https://i.pravatar.cc/50?img=32" alt="cliente">
+                            <div>
+                                <h5>María Fernanda Ruiz</h5>
+                                <span>CEO, TiendaOnline</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+
+                        <p class="testimonial-text">
+                            “Su atención personalizada y cobertura internacional
+                            nos han permitido crecer sin límites.”
+                        </p>
+
+                        <div class="client-info">
+                            <img src="https://i.pravatar.cc/50?img=15" alt="cliente">
+                            <div>
+                                <h5>Juan Pablo Gómez</h5>
+                                <span>Director, GlobalImport</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </section>
 
 
@@ -217,6 +369,7 @@
 
         <div class="footer-gradient"></div>
     </footer>
-    
+    <script src="js/servicios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
