@@ -1,0 +1,118 @@
+// Asegurar que el DOM esté listo
+let id = 1;
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const solicitud = document.getElementById('form-solicitud');
+    const tabla = document.getElementById('tabla-solicitudes');
+
+
+    let solicitudes = JSON.parse(localStorage.getItem("solicitudes"))  || [];
+
+    console.log("lista de solicitudes guardadas:", solicitudes);
+    console.log("lista json de las solicitudes",JSON.stringify(solicitudes));
+    console.log("Objetos de cada solicitud: ");
+    solicitudes.forEach((solicitud, index) => {
+        console.log(`Solicitud ${index + 1}:`, solicitud);
+    });
+
+    // Validación de seguridad para evitar errores en consola
+    if (!solicitud) {
+        console.error("No se encontró el formulario con el ID 'form-solicitud'");
+        return;
+    }
+
+    solicitud.addEventListener('submit', (event) => {
+        // 1. Evitamos que la página se recargue
+        event.preventDefault();
+
+        // 2. Capturamos los datos del formulario
+        const formData = new FormData(solicitud);
+
+        // 3. Convertir FormData a un objeto plano de JS
+        const datosObjeto = Object.fromEntries(formData);
+
+        // 4. Conversión del peso a tipo numérico flotante
+        if (datosObjeto.weight) {
+            datosObjeto.weight = parseFloat(datosObjeto.weight);
+        }
+        
+        //COMENTARIOS DE LUCIA EN MAYUSCULA
+
+        // Calcular el valor del envío
+        const valor = calcularValor(datosObjeto.weight, datosObjeto.type_shipping, datosObjeto.origin, datosObjeto.destination);
+         // AGREGO ELVALOR CALCULADO AL OBJETO SI NO SE NECESITA OMITIR ESTO===>datosObjeto.valor = valor;
+         /* AGREGAR ESTA INFORMACION AL OBJETO
+         datosObjeto.id = id;
+         datosObjeto.valor = valor;
+         datosObjeto.estado = "pendiente";
+         datosObjeto.fecha =new Date().totaleString("es-CO")
+       
+
+        /* SE GUARDA FORMULARIO EN LOCAL STORAGE PERO ME QUE LA DUDA
+        SI DEJAR O QUITAR ESTE ==> localStorage.setItem("solicitudEnvio",JSON.stringify(datosObjeto));*/
+        
+        
+       // MUESTRA LAS SOLICITUDES HECHAS Y QUEDA VACIO SI NO HAY SOLICITUD
+
+        let solicitudes = JSON.parse(localStorage.getItem("solicitudes"))  || [];
+
+        // DEJO LA POSIBILIDAD DE AGREGAR UNA NUEVA SOLICITUD
+
+        solicitudes.push(datosObjeto);
+        // GUARDO EL ARREGLO CON LAS SOLICITUDES PARA QUE NO SOBREESCRIBA CADA PEDIDO
+
+        localStorage.setItem("solicitudes",JSON.stringify(solicitudes));
+
+        
+        // LE PASAMOS LA TABLA COMO PARÁMETRO PARA QUE LA FUNCIÓN PUEDA USARLA
+        ingresarSolicitud(tabla, id, datosObjeto.type_shipping, datosObjeto.characteristics, datosObjeto.origin, datosObjeto.destination, datosObjeto.weight, valor);
+        
+        id++; 
+        
+        // Opcional: Resetea el formulario para que quede limpio tras agregar la fila
+        solicitud.reset();
+    });
+});
+
+function calcularValor(peso, tipo, origen, destino) {
+    const valorNacional = 5000;
+    const valorInternacional = 50000;
+    const valorExpress = 10000;
+    const valorKg = 1000;
+    const recargoNacional = 5000;
+
+    if (tipo === "Nacional") {
+        if (origen === destino) {
+            return valorNacional + (valorKg * peso); 
+        } else {
+            return valorNacional + recargoNacional + (valorKg * peso);
+        }
+    } else if (tipo === "Internacional") {
+        return valorInternacional + (valorKg * peso);
+    } else if (tipo === "Express") {
+        return valorNacional + valorExpress + (peso * valorKg);
+    } else {
+        return 0;
+    }
+}
+
+// RECIBE LA TABLA AQUÍ
+function ingresarSolicitud(tablaElemento, id, tipo, caracteristicas, origen, destino, peso, valor) {
+    if (!tablaElemento) return; // Validación por seguridad
+
+    const fila = document.createElement('tr');
+    fila.innerHTML = `
+        <td>${id}</td>
+        <td>${tipo}</td>
+        <td>${caracteristicas}</td>
+        <td>${origen}</td>
+        <td>${destino}</td>
+        <td>${peso} kg</td>
+        <td>$${valor.toLocaleString('es-CO')}</td>
+    `;
+
+ 
+    // Ahora usamos el parámetro recibido localmente
+    tablaElemento.appendChild(fila);
+}
