@@ -1,0 +1,227 @@
+body {
+    background-color: #f8f9fa;
+    font-family: "Ubuntu", sans-serif;
+}
+
+.kpi-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border-radius: 12px;
+}
+.kpi-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1) !important;
+}
+
+/* Vehicle Item Base Styles */
+.vehicle-item {
+    background: #fff;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(0,0,0,.08);
+}
+.vehicle-item:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,.05);
+}
+
+/* Icon Box */
+.v-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 1.5rem;
+}
+
+/* Progress bar */
+.progress-thin {
+    height: 6px;
+    border-radius: 3px;
+}
+
+/* Badge specific */
+.badge-soft {
+    font-weight: 500;
+}
+
+.btn-yellow{
+    background: #e5b000;
+    color: #000;
+}
+.btn-yellow:hover{
+    background: #ffc400;
+    color: #000;
+}
+
+/* modal */
+.vehicle-modal{
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.08);
+}
+
+.modal-header{
+    padding: 30px 35px 15px;
+}
+
+.modal-body{
+    padding: 35px;
+}
+
+.modal-footer{
+    padding: 20px 35px 35px;
+}
+
+.shipping-label{
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.shipping-input {
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+    transition: .3s;
+}
+
+.shipping-input:focus {
+       border-color: #67c587;
+    box-shadow: 0 0 0 .25rem rgba(103,197,135,.2);
+}
+.btn-save{
+    background: #67c587;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 26px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.btn-save:hover{
+    background: #55b977;
+    color: white;
+}
+
+.btn-light{
+    border-radius: 10px;
+    padding: 12px 26px;
+}
+
+/* List View */
+#vehicles-container.view-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+#vehicles-container.view-list .vehicle-item {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+}
+#vehicles-container.view-list .v-grid-only {
+    display: none !important;
+}
+#vehicles-container.view-list .v-icon-container {
+    margin-right: 24px;
+}
+#vehicles-container.view-list .v-main-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+#vehicles-container.view-list .v-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+#vehicles-container.view-list .v-meta-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-top: 6px;
+}
+#vehicles-container.view-list .v-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    min-width: 300px;
+    justify-content: flex-end;
+}
+#vehicles-container.view-list .v-actions .conductor-name {
+    width: 120px;
+    text-align: right;
+    color: #6c757d;
+}
+
+/* Grid View */
+#vehicles-container.view-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+#vehicles-container.view-grid .vehicle-item {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+}
+#vehicles-container.view-grid .v-list-only {
+    display: none !important;
+}
+#vehicles-container.view-grid .v-icon-container {
+    margin-bottom: 20px;
+}
+#vehicles-container.view-grid .v-header-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+#vehicles-container.view-grid .v-meta-grid {
+    margin-top: 16px;
+    font-size: 0.9rem;
+}
+#vehicles-container.view-grid .v-meta-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: #6c757d;
+}
+#vehicles-container.view-grid .v-meta-val {
+    color: #212529;
+    font-weight: 500;
+}
+
+/* View Toggle Buttons */
+.view-toggle .btn {
+    padding: 8px 16px;
+    color: #6c757d;
+    background-color: white;
+}
+.view-toggle .btn:hover {
+    background-color: #f8f9fa;
+}
+.view-toggle .btn.active {
+    background-color: #e5b000;
+    color: white;
+    border-color: #e5b000;
+}
+
+@media (max-width: 768px) {
+    #vehicles-container.view-list .v-meta-info {
+        flex-wrap: wrap;
+    }
+    #vehicles-container.view-list .v-actions {
+        min-width: auto;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+    }
+    #vehicles-container.view-list .v-actions .conductor-name {
+        text-align: right;
+    }
+}

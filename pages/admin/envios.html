@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Envíos - Generation Express</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="./../../assets/styles/admin/components/aside.css" />
+    <link rel="stylesheet" href="./../../assets/styles/admin/envios.css" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar"></div>
+    <section class="home-section">
+        <div id="navbar-container"></div>
+
+        <div class="parent p-4">
+            <div class="header-row mb-4">
+                <div>
+                    <h2 class="fw-bold text-dark mb-1">Gestión de Envíos</h2>
+                    <p class="text-muted mb-0">Administra y realiza seguimiento de todos tus envíos</p>
+                </div>
+                <div class="d-flex gap-2 mt-3 mt-md-0">
+                    <button class="btn btn-light border bg-white shadow-sm"><i class="bi bi-download me-2"></i>
+                        Exportar</button>
+                    <button class="btn btn-yellow" data-bs-toggle="modal" data-bs-target="#form-shipping"><i
+                            class="bi bi-plus-lg me-2"></i> Nuevo Envío</button>
+                </div>
+            </div>
+
+
+
+
+            <!-- KPI 1 -->
+            <div class="div1">
+                <div class="card border-0 shadow-sm kpi-card h-100">
+                    <div class="card-body">
+                        <div class="icon-box bg-primary bg-opacity-10 text-primary">
+                            <i class="bi bi-box"></i>
+                        </div>
+                        <h3 class="fw-bold mb-0">10</h3>
+                        <span class="text-muted small">Total</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 2 -->
+            <div class="div2">
+                <div class="card border-0 shadow-sm kpi-card h-100">
+                    <div class="card-body">
+                        <div class="icon-box bg-primary bg-opacity-10 text-primary">
+                            <i class="bi bi-truck"></i>
+                        </div>
+                        <h3 class="fw-bold mb-0">3</h3>
+                        <span class="text-muted small">En Tránsito</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 3 -->
+            <div class="div3">
+                <div class="card border-0 shadow-sm kpi-card h-100">
+                    <div class="card-body">
+                        <div class="icon-box bg-success bg-opacity-10 text-success">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                        <h3 class="fw-bold mb-0">3</h3>
+                        <span class="text-muted small">Entregados</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 4 -->
+            <div class="div4">
+                <div class="card border-0 shadow-sm kpi-card h-100">
+                    <div class="card-body">
+                        <div class="icon-box bg-warning bg-opacity-10 text-warning">
+                            <i class="bi bi-clock"></i>
+                        </div>
+                        <h3 class="fw-bold mb-0">2</h3>
+                        <span class="text-muted small">Pendientes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 5 -->
+            <div class="div5">
+                <div class="card border-0 shadow-sm kpi-card h-100">
+                    <div class="card-body">
+                        <div class="icon-box bg-danger bg-opacity-10 text-danger" style="color: #dc3545;">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                        <h3 class="fw-bold mb-0">2</h3>
+                        <span class="text-muted small">Retrasados</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Section -->
+            <div class="div6 mt-2">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <!-- Filters -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-8 col-lg-9">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0 text-muted"><i
+                                            class="bi bi-search"></i></span>
+                                    <input type="text" class="form-control border-start-0 ps-0 shadow-none"
+                                        placeholder="Buscar por tracking, cliente, conductor...">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-3 d-flex gap-2">
+                                <select class="form-select flex-grow-1 text-muted shadow-none">
+                                    <option>En tránsito</option>
+                                    <option>Entregados</option>
+                                    <option>Pendientes</option>
+                                    <option>Retrasados</option>
+                                    <option>Todos los estados</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <!-- Table -->
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-muted pb-3">Tracking</th>
+                                        <th class="text-muted pb-3">Cliente </th>
+                                        <th class="text-muted pb-3">Ruta </th>
+                                        <th class="text-muted pb-3">Conductor</i></th>
+                                        <th class="text-muted pb-3">Vehículo </th>
+                                        <th class="text-muted pb-3">Peso </th>
+                                        <th class="text-muted pb-3">Estado </th>
+                                        <th class="text-muted pb-3">Entrega Est.</th>
+                                        <th class="text-muted pb-3">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="#"
+                                                class="fw-bold text-primary text-decoration-none">LOG-2024-<br>001</a>
+                                        </td>
+                                        <td>
+                                            <div class="fw-bold text-dark">Electrónica Sur S.L.</div>
+                                            <div class="text-muted small">+34 612 345 678</div>
+                                        </td>
+                                        <td>Madrid <i class="bi bi-chevron-right mx-1 small text-muted"></i> Barcelona
+                                        </td>
+                                        <td>Carlos García</td>
+                                        <td><span class="badge bg-light text-dark border px-2 py-1">MV-001</span></td>
+                                        <td>2,500<br>kg</td>
+                                        <td><span
+                                                class="badge badge-soft bg-primary bg-opacity-10 text-primary fw-bold"><i
+                                                    class="bi bi-truck me-1"></i> En Tránsito</span></td>
+                                        <td class="text-muted">2024-01-15</td>
+                                        <td>
+                                            <button
+                                                class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i
+                                                    class="bi bi-eye"></i></button>
+                                            <button
+                                                class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i
+                                                    class="bi bi-pencil-square"></i></button>
+                                            <button
+                                                class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i
+                                                    class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         MODAL: Nuevo Envío  (#form-shipping)
+         ─────────────────────────────────────────────────────
+         CÓMO FUNCIONA:
+         1. APERTURA — El botón "Nuevo Envío" tiene los atributos
+            data-bs-toggle="modal" y data-bs-target="#form-shipping".
+            Bootstrap intercepta el clic y muestra este modal
+            automáticamente, sin necesitar JavaScript extra.
+
+         2. ANIMACIÓN — La clase "modal fade" aplica la transición
+            suave de opacidad al abrir y cerrar.
+
+         3. TAMAÑO — "modal-lg" amplía el ancho del modal para
+            mostrar el formulario en dos columnas cómodamente.
+            "modal-dialog-centered" lo centra verticalmente.
+
+         4. CIERRE — El botón ✕ y el botón "Cancelar" usan
+            data-bs-dismiss="modal" para cerrar sin JS extra.
+            También se puede cerrar haciendo clic fuera del modal.
+
+         5. VALIDACIÓN — El formulario tiene la clase "needs-validation"
+            y el atributo "novalidate". Bootstrap no muestra los errores
+            nativos del navegador; en cambio, el script al final del
+            archivo agrega la clase "was-validated" al submit para
+            activar los estilos de error/éxito de Bootstrap en cada campo.
+
+         6. ENVÍO — Al hacer clic en "Guardar Envío", el script
+            valida el formulario. Si es inválido, muestra los mensajes
+            de error (invalid-feedback). Si es válido, aquí puedes
+            agregar un fetch() o AJAX para enviar los datos al servidor.
+         ===================================================== -->
+    <div class="modal fade" id="form-shipping" tabindex="-1" aria-labelledby="shippingModalLabel" aria-hidden="true">
+
+        <!-- modal-dialog-centered: centra verticalmente en la pantalla -->
+        <!-- modal-lg: hace el modal más ancho para el formulario en 2 columnas -->
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg" style="border-radius:16px; overflow:hidden;">
+
+                <!-- ── ENCABEZADO ── -->
+                <div class="modal-header border-0 px-4 pt-4 pb-0">
+                    <div>
+                        <h5 class="modal-title fw-bold text-dark" id="shippingModalLabel">
+                            <i class="bi bi-box-seam me-2 text-primary"></i>Nuevo Envío
+                        </h5>
+                        <p class="text-muted small mb-0">Completa los datos para registrar el envío</p>
+                    </div>
+                    <!-- data-bs-dismiss="modal" cierra el modal automáticamente -->
+                    <button type="button" class="btn-close shadow-none ms-auto" data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
+                </div>
+
+                <!-- ── CUERPO DEL MODAL ── -->
+                <div class="modal-body p-4">
+
+                    <form id="shipping-form">
+
+                        <div class="row g-4">
+
+                            <div class="col-md-6">
+                                <label class="shipping-label">Cliente</label>
+                                <input type="text" class="form-control shipping-input" placeholder="Nombre del cliente" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="shipping-label">Teléfono</label>
+                                <input type="tel" class="form-control shipping-input" placeholder="+57 300 000 0000" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="shipping-label">Origen</label>
+                                <input type="text" class="form-control shipping-input" placeholder="Ciudad de origen" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="shipping-label">Destino</label>
+                                <input type="text" class="form-control shipping-input" placeholder="Ciudad destino" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="shipping-label">Peso</label>
+                                <input type="number" class="form-control shipping-input" placeholder="Kg" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="shipping-label">Estado</label required>
+
+                                <select class="form-select shipping-input" required>
+                                    <option selected>Seleccionar</option>
+                                    <option>En tránsito</option>
+                                    <option>Pendiente</option>
+                                    <option>Entregado</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="shipping-label">Entrega</label>
+                                <input type="date" class="form-control shipping-input" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="shipping-label">
+                                    Vehículo asignado
+                                </label>
+
+                                <select class="form-select shipping-input" required>
+                                    <option>Seleccionar vehículo...</option>
+                                    <option>Seleccionar vehículo...</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <!-- ── PIE DEL MODAL ── -->
+                <div class="modal-footer border-0 px-4 pb-4 pt-2 gap-2">
+                    <!-- Cancelar: data-bs-dismiss cierra sin guardar -->
+                    <button type="button" class="btn btn-light border shadow-none px-4" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <!-- Guardar: el script de abajo intercepta este clic y valida antes de enviar -->
+                    <button type="button" class="btn btn-yellow text-white px-4 shadow-none" id="btn-guardar-envio">
+                        <i class="bi bi-check-circle me-2"></i></i>Guardar Envío
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script type="module" src="./../../js/components/sidebar.js"></script>
+    <script type="module" src="./../../js/components/navbar.js"></script>
+    <script type="module" src="./../../js/envios.js"></script>
+
+
+
+</body>
+
+</html>

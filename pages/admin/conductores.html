@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conductores - Generation Express</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./../../assets/styles/admin/components/aside.css" />
+    <link rel="stylesheet" href="./../../assets/styles/admin/conductores.css" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar"></div>
+    <section class="home-section">
+        <div id="navbar-container"></div>
+
+        <div class="p-4">
+
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div>
+                    <h2 class="fw-bold text-dark mb-1">Gestión de Conductores</h2>
+                    <p class="text-muted mb-0">Administra el equipo de conductores y su rendimiento</p>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-yellow text-white" data-bs-toggle="modal"
+                        data-bs-target="#driver-modal">
+
+                        <i class="bi bi-plus-lg me-2"></i>
+                        Añadir Conductor
+
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="row g-4 mb-4">
+                <!-- Total -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card border-0 shadow-sm kpi-card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-people fs-4 text-primary"></i>
+                            </div>
+                            <h2 class="fw-bold text-dark mb-0">8</h2>
+                            <div class="fw-semibold text-dark mt-1">Total Conductores</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- En Ruta -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card border-0 shadow-sm kpi-card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-truck fs-4 text-primary"></i>
+                            </div>
+                            <h2 class="fw-bold text-primary mb-0">4</h2>
+                            <div class="fw-semibold text-dark mt-1">En Ruta Ahora</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Disponibles -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card border-0 shadow-sm kpi-card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-check-circle fs-4 text-success"></i>
+                            </div>
+                            <h2 class="fw-bold text-success mb-0">2</h2>
+                            <div class="fw-semibold text-dark mt-1">Disponibles</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mejor Conductor -->
+                <div class="col-md-12 col-lg-3">
+                    <div class="kpi-card-highlight h-100 p-4 shadow">
+                        <div class="d-flex align-items-center gap-2 mb-3 opacity-75">
+                            <i class="bi bi-trophy" style="font-size:1rem;"></i>
+                            <span style="font-size:0.85rem; font-weight:500;">Mejor Conductor</span>
+                        </div>
+                        <div class="fw-bold mb-1" style="font-size:1.15rem;">Roberto Fernández</div>
+                        <div class="d-flex align-items-center gap-2 opacity-75" style="font-size:0.85rem;">
+                            <span>2105 envíos</span>
+                            <span>·</span>
+                            <span><i class="bi bi-star-fill text-warning me-1"></i>4.9</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-3">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-6 col-lg-7">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i
+                                        class="bi bi-search"></i></span>
+                                <input type="text" class="form-control border-start-0 ps-0 shadow-none"
+                                    placeholder="Buscar conductor, licencia, vehículo...">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-5">
+                            <div class="d-flex gap-1 filter-tabs flex-wrap">
+                                <button class="btn active" data-filter="todos">Todos</button>
+                                <button class="btn" data-filter="disponible">Disponibles</button>
+                                <button class="btn" data-filter="en-ruta">En Ruta</button>
+                                <button class="btn" data-filter="descanso">Descanso</button>
+                                <button class="btn" data-filter="baja">Baja</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Driver Cards Grid -->
+            <div class="drivers-grid" id="drivers-grid">
+
+                <!-- Card 1: Carlos García -->
+                <div class="driver-card p-4 shadow-sm" data-status="en-ruta">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="driver-avatar" style="background:#ede9fe; color:#7c3aed;">CG</div>
+                            <div>
+                                <div class="fw-bold text-dark mb-0" style="font-size:1rem;">Carlos García</div>
+                                <div class="text-muted" style="font-size:0.8rem;">D-001</div>
+                            </div>
+                        </div>
+                        <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2"
+                            style="font-size:0.78rem; font-weight:600;">En Ruta</span>
+                    </div>
+
+                    <!-- Stars & Rating -->
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-half"></i></span>
+                        <span class="fw-bold text-dark" style="font-size:0.9rem;">4.9</span>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="d-flex flex-column gap-2 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Licencia</span>
+                            <span class="driver-stat-value">C+E</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Vehículo</span>
+                            <span class="driver-stat-value text-primary">MV-001</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Envíos totales</span>
+                            <span class="driver-stat-value">1247</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Este mes</span>
+                            <span class="driver-stat-value text-primary">47</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Puntualidad</span>
+                            <span class="driver-stat-value text-success">98%</span>
+                        </div>
+                    </div>
+                    <div class="progress progress-thin bg-light mb-3">
+                        <div class="progress-bar bg-success" style="width: 98%"></div>
+                    </div>
+
+                    <hr class="my-3 text-muted opacity-25">
+                    <div class="d-flex gap-2">
+                        <button class="contact-btn"><i class="bi bi-telephone"></i></button>
+                        <button class="contact-btn"><i class="bi bi-envelope"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 2: Ana Martínez -->
+                <div class="driver-card p-4 shadow-sm" data-status="disponible">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="driver-avatar" style="background:#dcfce7; color:#16a34a;">AM</div>
+                            <div>
+                                <div class="fw-bold text-dark mb-0" style="font-size:1rem;">Ana Martínez</div>
+                                <div class="text-muted" style="font-size:0.8rem;">D-002</div>
+                            </div>
+                        </div>
+                        <span class="badge rounded-pill bg-success bg-opacity-10 text-success px-3 py-2"
+                            style="font-size:0.78rem; font-weight:600;">Disponible</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-half"></i></span>
+                        <span class="fw-bold text-dark" style="font-size:0.9rem;">4.8</span>
+                    </div>
+
+                    <div class="d-flex flex-column gap-2 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Licencia</span>
+                            <span class="driver-stat-value">C</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Vehículo</span>
+                            <span class="driver-stat-value text-primary">MV-002</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Envíos totales</span>
+                            <span class="driver-stat-value">984</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Este mes</span>
+                            <span class="driver-stat-value text-primary">39</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Puntualidad</span>
+                            <span class="driver-stat-value text-success">96%</span>
+                        </div>
+                    </div>
+                    <div class="progress progress-thin bg-light mb-3">
+                        <div class="progress-bar bg-primary" style="width: 96%"></div>
+                    </div>
+
+                    <hr class="my-3 text-muted opacity-25">
+                    <div class="d-flex gap-2">
+                        <button class="contact-btn"><i class="bi bi-telephone"></i></button>
+                        <button class="contact-btn"><i class="bi bi-envelope"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 3: Miguel López -->
+                <div class="driver-card p-4 shadow-sm" data-status="en-ruta">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="driver-avatar" style="background:#dbeafe; color:#2563eb;">ML</div>
+                            <div>
+                                <div class="fw-bold text-dark mb-0" style="font-size:1rem;">Miguel López</div>
+                                <div class="text-muted" style="font-size:0.8rem;">D-003</div>
+                            </div>
+                        </div>
+                        <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2"
+                            style="font-size:0.78rem; font-weight:600;">En Ruta</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star"></i></span>
+                        <span class="fw-bold text-dark" style="font-size:0.9rem;">4.7</span>
+                    </div>
+
+                    <div class="d-flex flex-column gap-2 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Licencia</span>
+                            <span class="driver-stat-value">C+E</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Vehículo</span>
+                            <span class="driver-stat-value text-primary">MV-003</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Envíos totales</span>
+                            <span class="driver-stat-value">1532</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Este mes</span>
+                            <span class="driver-stat-value text-primary">52</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Puntualidad</span>
+                            <span class="driver-stat-value text-success">94%</span>
+                        </div>
+                    </div>
+                    <div class="progress progress-thin bg-light mb-3">
+                        <div class="progress-bar bg-primary" style="width: 94%"></div>
+                    </div>
+
+                    <hr class="my-3 text-muted opacity-25">
+                    <div class="d-flex gap-2">
+                        <button class="contact-btn"><i class="bi bi-telephone"></i></button>
+                        <button class="contact-btn"><i class="bi bi-envelope"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 4: Laura Sánchez -->
+                <div class="driver-card p-4 shadow-sm" data-status="descanso">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="driver-avatar" style="background:#fff7ed; color:#ea580c;">LS</div>
+                            <div>
+                                <div class="fw-bold text-dark mb-0" style="font-size:1rem;">Laura Sánchez</div>
+                                <div class="text-muted" style="font-size:0.8rem;">D-004</div>
+                            </div>
+                        </div>
+                        <span class="badge rounded-pill bg-warning bg-opacity-10 text-warning px-3 py-2"
+                            style="font-size:0.78rem; font-weight:600;">Descanso</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-half"></i></span>
+                        <span class="fw-bold text-dark" style="font-size:0.9rem;">4.9</span>
+                    </div>
+
+                    <div class="d-flex flex-column gap-2 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Licencia</span>
+                            <span class="driver-stat-value">C</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Vehículo</span>
+                            <span class="driver-stat-value text-primary">MV-004</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Envíos totales</span>
+                            <span class="driver-stat-value">723</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Este mes</span>
+                            <span class="driver-stat-value text-primary">28</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Puntualidad</span>
+                            <span class="driver-stat-value text-success">99%</span>
+                        </div>
+                    </div>
+                    <div class="progress progress-thin bg-light mb-3">
+                        <div class="progress-bar bg-success" style="width: 99%"></div>
+                    </div>
+
+                    <hr class="my-3 text-muted opacity-25">
+                    <div class="d-flex gap-2">
+                        <button class="contact-btn"><i class="bi bi-telephone"></i></button>
+                        <button class="contact-btn"><i class="bi bi-envelope"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 5: David Pérez -->
+                <div class="driver-card p-4 shadow-sm" data-status="disponible">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="driver-avatar" style="background:#fef9c3; color:#ca8a04;">DP</div>
+                            <div>
+                                <div class="fw-bold text-dark mb-0" style="font-size:1rem;">David Pérez</div>
+                                <div class="text-muted" style="font-size:0.8rem;">D-005</div>
+                            </div>
+                        </div>
+                        <span class="badge rounded-pill bg-success bg-opacity-10 text-success px-3 py-2"
+                            style="font-size:0.78rem; font-weight:600;">Disponible</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-fill"></i></span>
+                        <span class="fw-bold text-dark" style="font-size:0.9rem;">5.0</span>
+                    </div>
+
+                    <div class="d-flex flex-column gap-2 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Licencia</span>
+                            <span class="driver-stat-value">C+E</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Vehículo</span>
+                            <span class="driver-stat-value text-primary">MV-005</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Envíos totales</span>
+                            <span class="driver-stat-value">892</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Este mes</span>
+                            <span class="driver-stat-value text-primary">35</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Puntualidad</span>
+                            <span class="driver-stat-value text-success">100%</span>
+                        </div>
+                    </div>
+                    <div class="progress progress-thin bg-light mb-3">
+                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                    </div>
+
+                    <hr class="my-3 text-muted opacity-25">
+                    <div class="d-flex gap-2">
+                        <button class="contact-btn"><i class="bi bi-telephone"></i></button>
+                        <button class="contact-btn"><i class="bi bi-envelope"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 6: Roberto Fernández -->
+                <div class="driver-card p-4 shadow-sm" data-status="en-ruta">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="driver-avatar" style="background:#ffe4e6; color:#e11d48;">RF</div>
+                            <div>
+                                <div class="fw-bold text-dark mb-0" style="font-size:1rem;">Roberto Fernández</div>
+                                <div class="text-muted" style="font-size:0.8rem;">D-006</div>
+                            </div>
+                        </div>
+                        <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2"
+                            style="font-size:0.78rem; font-weight:600;">En Ruta</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-half"></i></span>
+                        <span class="fw-bold text-dark" style="font-size:0.9rem;">4.9</span>
+                    </div>
+
+                    <div class="d-flex flex-column gap-2 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Licencia</span>
+                            <span class="driver-stat-value">C+E</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Vehículo</span>
+                            <span class="driver-stat-value text-primary">MV-006</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Envíos totales</span>
+                            <span class="driver-stat-value">2105</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Este mes</span>
+                            <span class="driver-stat-value text-primary">61</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Puntualidad</span>
+                            <span class="driver-stat-value text-success">97%</span>
+                        </div>
+                    </div>
+                    <div class="progress progress-thin bg-light mb-3">
+                        <div class="progress-bar bg-success" style="width: 97%"></div>
+                    </div>
+
+                    <hr class="my-3 text-muted opacity-25">
+                    <div class="d-flex gap-2">
+                        <button class="contact-btn"><i class="bi bi-telephone"></i></button>
+                        <button class="contact-btn"><i class="bi bi-envelope"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 7: Elena Torres -->
+                <div class="driver-card p-4 shadow-sm" data-status="baja">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="driver-avatar" style="background:#f3f4f6; color:#6b7280;">ET</div>
+                            <div>
+                                <div class="fw-bold text-dark mb-0" style="font-size:1rem;">Elena Torres</div>
+                                <div class="text-muted" style="font-size:0.8rem;">D-007</div>
+                            </div>
+                        </div>
+                        <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary px-3 py-2"
+                            style="font-size:0.78rem; font-weight:600;">Baja</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star"></i></span>
+                        <span class="fw-bold text-dark" style="font-size:0.9rem;">4.6</span>
+                    </div>
+
+                    <div class="d-flex flex-column gap-2 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Licencia</span>
+                            <span class="driver-stat-value">C</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Vehículo</span>
+                            <span class="driver-stat-value text-muted">—</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Envíos totales</span>
+                            <span class="driver-stat-value">541</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Este mes</span>
+                            <span class="driver-stat-value text-muted">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Puntualidad</span>
+                            <span class="driver-stat-value text-warning">87%</span>
+                        </div>
+                    </div>
+                    <div class="progress progress-thin bg-light mb-3">
+                        <div class="progress-bar bg-warning" style="width: 87%"></div>
+                    </div>
+
+                    <hr class="my-3 text-muted opacity-25">
+                    <div class="d-flex gap-2">
+                        <button class="contact-btn"><i class="bi bi-telephone"></i></button>
+                        <button class="contact-btn"><i class="bi bi-envelope"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card 8: Javier Moreno -->
+                <div class="driver-card p-4 shadow-sm" data-status="en-ruta">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="driver-avatar" style="background:#f0fdf4; color:#15803d;">JM</div>
+                            <div>
+                                <div class="fw-bold text-dark mb-0" style="font-size:1rem;">Javier Moreno</div>
+                                <div class="text-muted" style="font-size:0.8rem;">D-008</div>
+                            </div>
+                        </div>
+                        <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2"
+                            style="font-size:0.78rem; font-weight:600;">En Ruta</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                class="bi bi-star"></i></span>
+                        <span class="fw-bold text-dark" style="font-size:0.9rem;">4.5</span>
+                    </div>
+
+                    <div class="d-flex flex-column gap-2 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Licencia</span>
+                            <span class="driver-stat-value">C+E</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Vehículo</span>
+                            <span class="driver-stat-value text-primary">MV-007</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Envíos totales</span>
+                            <span class="driver-stat-value">673</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Este mes</span>
+                            <span class="driver-stat-value text-primary">31</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="driver-stat-label">Puntualidad</span>
+                            <span class="driver-stat-value text-success">91%</span>
+                        </div>
+                    </div>
+                    <div class="progress progress-thin bg-light mb-3">
+                        <div class="progress-bar bg-primary" style="width: 91%"></div>
+                    </div>
+
+                    <hr class="my-3 text-muted opacity-25">
+                    <div class="d-flex gap-2">
+                        <button class="contact-btn"><i class="bi bi-telephone"></i></button>
+                        <button class="contact-btn"><i class="bi bi-envelope"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+     MODAL - NEW DRIVER
+=========================================== -->
+    <div class="modal fade" id="driver-modal" tabindex="-1" aria-labelledby="driverModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+
+            <div class="modal-content vehicle-modal">
+
+                <!-- Header -->
+                <div class="modal-header border-0">
+
+                    <div>
+
+                        <h4 class="modal-title fw-bold" id="driverModalLabel">
+                            <i class="bi bi-person-badge me-2 text-success"></i>
+                            Nuevo Conductor
+                        </h4>
+
+                        <p class="text-muted mb-0">
+                            Registra un nuevo conductor para la flota de transporte.
+                        </p>
+
+                    </div>
+
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body">
+
+                    <form id="driver-form" class="needs-validation" novalidate>
+
+                        <div class="row g-4">
+
+                            <!-- Name -->
+                            <div class="col-md-6">
+
+                                <label for="driver-name" class="shipping-label">
+                                    Nombre completo
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input id="driver-name" type="text" class="form-control shipping-input"
+                                    placeholder="Ej. Carlos García" required>
+
+                                <div class="invalid-feedback">
+                                    Ingresa el nombre.
+                                </div>
+
+                            </div>
+
+                            <!-- License -->
+                            <div class="col-md-6">
+
+                                <label for="driver-license" class="shipping-label">
+                                    Licencia
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input id="driver-license" type="text" class="form-control shipping-input"
+                                    placeholder="Ej. C123456789" required>
+
+                                <div class="invalid-feedback">
+                                    Ingresa la licencia.
+                                </div>
+
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="col-md-6">
+
+                                <label for="driver-phone" class="shipping-label">
+                                    Teléfono
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input id="driver-phone" type="tel" class="form-control shipping-input"
+                                    placeholder="+57 300 123 4567" required>
+
+                                <div class="invalid-feedback">
+                                    Ingresa el teléfono.
+                                </div>
+
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-md-6">
+
+                                <label for="driver-email" class="shipping-label">
+                                    Correo electrónico
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input id="driver-email" type="email" class="form-control shipping-input"
+                                    placeholder="correo@empresa.com" required>
+
+                                <div class="invalid-feedback">
+                                    Ingresa un correo válido.
+                                </div>
+
+                            </div>
+
+                            <!-- Assigned Vehicle -->
+                            <div class="col-md-6">
+
+                                <label for="assigned-vehicle" class="shipping-label">
+                                    Vehículo asignado
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <select id="assigned-vehicle" class="form-select shipping-input" required>
+
+                                    <option value="" selected disabled>
+                                        Seleccionar vehículo...
+                                    </option>
+
+                                    <option>Mercedes Sprinter</option>
+                                    <option>Volkswagen Crafter</option>
+                                    <option>Iveco Daily</option>
+                                    <option>Ford Transit</option>
+
+                                </select>
+
+                                <div class="invalid-feedback">
+                                    Selecciona un vehículo.
+                                </div>
+
+                            </div>
+
+                            <!-- Status -->
+                            <div class="col-md-6">
+
+                                <label for="driver-status" class="shipping-label">
+                                    Estado
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <select id="driver-status" class="form-select shipping-input" required>
+
+                                    <option value="" selected disabled>
+                                        Seleccionar...
+                                    </option>
+
+                                    <option value="active">Activo</option>
+                                    <option value="vacation">Vacaciones</option>
+                                    <option value="inactive">Inactivo</option>
+
+                                </select>
+
+                                <div class="invalid-feedback">
+                                    Selecciona un estado.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer border-0">
+
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+
+                        Cancelar
+
+                    </button>
+
+                    <button type="button" id="btn-driver-save" class="btn btn-yellow text-white">
+
+                        <i class="bi bi-check-circle me-2"></i>
+                        Registrar Conductor
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="./../../js/components/sidebar.js"></script>
+    <script type="module" src="./../../js/components/navbar.js"></script>
+    <script type="module" src="./../../js/conductores.js"></script>
+
+    <!-- Filter Logic -->
+    <script>
+
+    </script>
+</body>
+
+</html>
