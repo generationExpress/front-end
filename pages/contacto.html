@@ -24,13 +24,44 @@
 
     <link rel="stylesheet" href="./../assets/styles/footer.css" />
     <link rel="stylesheet" href="./../assets/styles/contacto.css" />
+    <link rel="stylesheet" href="./../assets/styles/navbar.css" />
     
   </head>
 
   <body>
-    <header>
-      <!-- place navbar here -->
-    </header>
+    <nav id="mainNavbar" class="navbar navbar-expand-lg custom-navbar sticky-top border">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <div>
+                    Generation <span class="brand-green">Express</span>
+                </div>      
+                <span class="brand-tagline">Logística que conecta el mundo</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" 
+                aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Rastreo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/nosotros.html">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/pages/contacto.html">Contacto</a>
+                    </li>
+                </ul>
+                <a href="/pages/admin.html" class="btn btn-ingresar">
+                    Ingresar
+                </a>
+            </div>
+        </div>
+    </nav>
     <main>
       <section id="contacto" class="contact-section py-5">
         <div class="container">
