@@ -218,101 +218,177 @@
          ===================================================== -->
     <div class="modal fade" id="form-shipping" tabindex="-1" aria-labelledby="shippingModalLabel" aria-hidden="true">
 
-        <!-- modal-dialog-centered: centra verticalmente en la pantalla -->
-        <!-- modal-lg: hace el modal más ancho para el formulario en 2 columnas -->
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0 shadow-lg" style="border-radius:16px; overflow:hidden;">
 
-                <!-- ── ENCABEZADO ── -->
+                <!-- ENCABEZADO -->
                 <div class="modal-header border-0 px-4 pt-4 pb-0">
                     <div>
                         <h5 class="modal-title fw-bold text-dark" id="shippingModalLabel">
                             <i class="bi bi-box-seam me-2 text-primary"></i>Nuevo Envío
                         </h5>
-                        <p class="text-muted small mb-0">Completa los datos para registrar el envío</p>
+                        <p class="text-muted small mb-0">
+                            Completa la información del envío.
+                        </p>
                     </div>
-                    <!-- data-bs-dismiss="modal" cierra el modal automáticamente -->
+
                     <button type="button" class="btn-close shadow-none ms-auto" data-bs-dismiss="modal"
                         aria-label="Cerrar"></button>
                 </div>
 
-                <!-- ── CUERPO DEL MODAL ── -->
+                <!-- CUERPO -->
                 <div class="modal-body p-4">
 
                     <form id="shipping-form">
 
-                        <div class="row g-4">
+                        <!-- ===================== REMITENTE ===================== -->
+                        <h6 class="fw-bold text-primary mb-3">
+                            <i class="bi bi-person-fill me-2"></i>Remitente
+                        </h6>
+
+                        <div class="row g-3 mb-4">
 
                             <div class="col-md-6">
-                                <label class="shipping-label">Cliente</label>
-                                <input type="text" class="form-control shipping-input" placeholder="Nombre del cliente" required>
+                                <label class="shipping-label">Nombre</label>
+                                <input type="text" class="form-control shipping-input" id="sender-name"
+                                    placeholder="Nombre del remitente" required>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="shipping-label">Teléfono</label>
-                                <input type="tel" class="form-control shipping-input" placeholder="+57 300 000 0000" required>
+                                <input type="tel" class="form-control shipping-input" id="sender-phone"
+                                    placeholder="+57 300 000 0000" required>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="shipping-label">Origen</label>
-                                <input type="text" class="form-control shipping-input" placeholder="Ciudad de origen" required>
+                            <div class="col-md-12">
+                                <label class="shipping-label">Correo</label>
+                                <input type="email" class="form-control shipping-input" id="sender-email"
+                                    placeholder="correo@ejemplo.com" required>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="shipping-label">Destino</label>
-                                <input type="text" class="form-control shipping-input" placeholder="Ciudad destino" required>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label class="shipping-label">Peso</label>
-                                <input type="number" class="form-control shipping-input" placeholder="Kg" required>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label class="shipping-label">Estado</label required>
-
-                                <select class="form-select shipping-input" required>
-                                    <option selected>Seleccionar</option>
-                                    <option>En tránsito</option>
-                                    <option>Pendiente</option>
-                                    <option>Entregado</option>
-                                </select>
+                            <div class="col-md-8">
+                                <label class="shipping-label">Dirección</label>
+                                <input type="text" class="form-control shipping-input" id="sender-address"
+                                    placeholder="Dirección del remitente" required>
                             </div>
 
                             <div class="col-md-4">
-                                <label class="shipping-label">Entrega</label>
-                                <input type="date" class="form-control shipping-input" required>
-                            </div>
-
-                            <div class="col-12">
-                                <label class="shipping-label">
-                                    Vehículo asignado
-                                </label>
-
-                                <select class="form-select shipping-input" required>
-                                    <option>Seleccionar vehículo...</option>
-                                    <option>Seleccionar vehículo...</option>
-                                </select>
+                                <label class="shipping-label">Ciudad</label>
+                                <input type="text" class="form-control shipping-input" id="sender-city"
+                                    placeholder="Ciudad" required>
                             </div>
 
                         </div>
 
-                    </form>
+                        <hr>
 
+                        <!-- ===================== DESTINATARIO ===================== -->
+                        <h6 class="fw-bold text-success mb-3">
+                            <i class="bi bi-person-check-fill me-2"></i>Destinatario
+                        </h6>
+
+                        <div class="row g-3 mb-4">
+
+                            <div class="col-md-6">
+                                <label class="shipping-label">Nombre</label>
+                                <input type="text" class="form-control shipping-input" id="recipient-name"
+                                    placeholder="Nombre del destinatario" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="shipping-label">Teléfono</label>
+                                <input type="tel" class="form-control shipping-input" id="recipient-phone"
+                                    placeholder="+57 300 000 0000" required>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <label class="shipping-label">Correo</label>
+                                <input type="email" class="form-control shipping-input" id="recipient-email"
+                                    placeholder="correo@ejemplo.com" required>
+                            </div>
+
+                            <div class="col-md-8">
+                                <label class="shipping-label">Dirección</label>
+                                <input type="text" class="form-control shipping-input" id="recipient-address"
+                                    placeholder="Dirección del destinatario" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="shipping-label">Ciudad</label>
+                                <input type="text" class="form-control shipping-input" id="recipient-city"
+                                    placeholder="Ciudad" required>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <!-- ===================== PEDIDO ===================== -->
+                        <h6 class="fw-bold text-warning mb-3">
+                            <i class="bi bi-truck me-2"></i>Pedido
+                        </h6>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-3">
+                                <label class="shipping-label">Estado</label>
+                                <select class="form-select shipping-input" id="shipping-status" required>
+                                    <option value="">Seleccionar...</option>
+                                    <option>Pendiente</option>
+                                    <option>En tránsito</option>
+                                    <option>Entregado</option>
+                                    <option>Cancelado</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="shipping-label">Prioridad</label>
+                                <select class="form-select shipping-input" id="shipping-priority" required>
+                                    <option value="">Seleccionar...</option>
+                                    <option>Alta</option>
+                                    <option>Media</option>
+                                    <option>Baja</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="shipping-label">Vehículo asignado</label>
+                                <select class="form-select shipping-input" id="assigned-vehicle" required>
+                                    <option value="">Seleccionar...</option>
+                                    <option>Camión 01</option>
+                                    <option>Camión 02</option>
+                                    <option>Furgón 01</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="shipping-label">Peso (kg)</label>
+                                <input type="number" class="form-control shipping-input" id="package-weight"
+                                    placeholder="0.00" step="0.01" min="0" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="shipping-label">Observaciones</label>
+                                <textarea class="form-control shipping-input" id="shipping-notes" rows="4"
+                                    placeholder="Escribe alguna observación del pedido..."></textarea>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
-                <!-- ── PIE DEL MODAL ── -->
+                <!-- PIE -->
                 <div class="modal-footer border-0 px-4 pb-4 pt-2 gap-2">
-                    <!-- Cancelar: data-bs-dismiss cierra sin guardar -->
+
                     <button type="button" class="btn btn-light border shadow-none px-4" data-bs-dismiss="modal">
                         Cancelar
                     </button>
-                    <!-- Guardar: el script de abajo intercepta este clic y valida antes de enviar -->
-                    <button type="button" class="btn btn-yellow text-white px-4 shadow-none" id="btn-guardar-envio">
-                        <i class="bi bi-check-circle me-2"></i></i>Guardar Envío
+
+                    <button type="button" class="btn btn-yellow text-white px-4 shadow-none" id="btn-save-shipping">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Guardar Envío
                     </button>
                 </div>
-
             </div>
         </div>
     </div>
