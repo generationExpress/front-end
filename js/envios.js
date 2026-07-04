@@ -65,12 +65,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function saveLocalStorage(shipment) {
-    const shipments = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+     const solicitudes = JSON.parse(localStorage.getItem("solicitudes")) || [];
 
-    shipments.push(shipment);
+      solicitudes.push({ origin: shipment.sender.city,
+       destination: shipment.recipient.city,
+       weight: shipment.order.weight, 
+       type_shipping: shipment.order.priority,
+       characteristics: shipment.order.notes, 
+       createdAt: shipment.createdAt, 
+       sender: shipment.sender,
+       recipient: shipment.recipient, 
+       order: shipment.order
+    });
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(shipments));
-  }
+   localStorage.setItem("solicitudes", JSON.stringify(solicitudes));
+
+    }
+
+   
 
   function resetForm() {
     form.reset();

@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     rightBtn.classList.remove("d-none");
 
     solicitudes.forEach(servicio => {
+        console.log("Servicio:", servicio);
         const tipoClase = servicio.type_shipping
             ? servicio.type_shipping.trim().toLowerCase()
             : "";
@@ -52,8 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
             servicio.destination
         );
 
-
+        console.log("Valor:", valor);
         const valorTexto = valor;
+         console.log("Creando tarjeta...");
 
         const card = document.createElement("div");
         card.className = "service-slide";
