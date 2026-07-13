@@ -1,3 +1,5 @@
+const STORAGE_KEY = "drivers";
+
 document.addEventListener("DOMContentLoaded", () => {
   const filterBtns = document.querySelectorAll(".filter-tabs .btn");
   const cards = document.querySelectorAll("#drivers-grid .driver-card");
@@ -36,11 +38,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalElement = document.getElementById("driver-modal");
 
   btnSave.addEventListener("click", () => {
+    
+    const name = document.getElementById("driver-name");
+    const phone = document.getElementById("driver-phone");
+    const email = document.getElementById("driver-email");
+    
+    name.setCustomValidity("");
+    phone.setCustomValidity("");
+    email.setCustomValidity("");
+
+    if (name.value.trim().length < 10) {
+      name.setCustomValidity("El nombre debe tener al menos 10 caracteres.");
+    }
+
+    if (!/^\d{10}$/.test(phone.value.trim())) {
+      phone.setCustomValidity(
+        "Ingrese un número de teléfono válido de 10 dígitos.",
+      );
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+      email.setCustomValidity("Ingrese un correo electrónico válido.");
+    }
+
     const isValid = form.checkValidity();
 
     form.classList.add("was-validated");
 
-    if (!isValid) return;
+    if (!isValid) {
+      form.reportValidity();
+      return;
+    }
 
     const driver = {
       name: document.getElementById("driver-name").value,
@@ -52,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     console.log("Driver:", driver);
+    saveLocalStorage(driver);
 
     bootstrap.Modal.getInstance(modalElement).hide();
 
@@ -64,3 +93,19 @@ document.addEventListener("DOMContentLoaded", () => {
     form.classList.remove("was-validated");
   });
 });
+
+function saveLocalStorage(driver) {
+  const drivers = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+  drivers.push(driver);
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(drivers));
+}
+
+function resetForm() {
+  form.reset();
+
+  // Eliminar los estilos de validación para que
+  // al abrir nuevamente el modal aparezca limpio.
+  form.classList.remove("was-validated");
+}
