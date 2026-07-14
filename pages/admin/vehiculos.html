@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vehículos - Generation Express</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./../../assets/styles/admin/components/aside.css" />
+    <link rel="stylesheet" href="./../../assets/styles/admin/vehiculos.css" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar"></div>
+    <section class="home-section">
+        <div id="navbar-container"></div>
+
+        <div class="p-4">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div>
+                    <h2 class="fw-bold text-dark mb-1">Gestión de Vehículos</h2>
+                    <p class="text-muted mb-0">Control de flota, mantenimiento y disponibilidad</p>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-yellow text-white" data-bs-toggle="modal"
+                        data-bs-target="#vehicle-modal">
+
+                        <i class="bi bi-plus-lg me-2"></i>
+                        Añadir Vehículo
+
+                    </button>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm kpi-card h-100">
+                        <div class="card-body">
+                            <h2 class="fw-bold text-dark mb-1">8</h2>
+                            <div class="fw-bold text-dark">Total Flota</div>
+                            <span class="text-muted small">vehículos registrados</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm kpi-card h-100">
+                        <div class="card-body">
+                            <h2 class="fw-bold text-success mb-1">3</h2>
+                            <div class="fw-bold text-dark">Disponibles</div>
+                            <span class="text-muted small">listos para operar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm kpi-card h-100">
+                        <div class="card-body">
+                            <h2 class="fw-bold text-primary mb-1">3</h2>
+                            <div class="fw-bold text-dark">En Ruta</div>
+                            <span class="text-muted small">actualmente activos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm kpi-card h-100">
+                        <div class="card-body">
+                            <h2 class="fw-bold text-warning mb-1">1</h2>
+                            <div class="fw-bold text-dark">Mantenimiento</div>
+                            <span class="text-muted small">en revisión</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-3">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-7 col-lg-8">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i
+                                        class="bi bi-search"></i></span>
+                                <input type="text" class="form-control border-start-0 ps-0 shadow-none"
+                                    placeholder="Buscar por matrícula, modelo, conductor...">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-4 d-flex gap-3 justify-content-end">
+                            <select class="form-select w-auto shadow-none text-muted">
+                                <option>Todos</option>
+                                <option>Disponible</option>
+                                <option>En Ruta</option>
+                                <option>Mantenimiento</option>
+                                <option>Inactivo</option>
+                            </select>
+                            <div class="btn-group view-toggle rounded" role="group">
+                                <button class="btn border shadow-none rounded-start" id="btn-grid"><i
+                                        class="bi bi-grid"></i></button>
+                                <button class="btn border shadow-none rounded-end active" id="btn-list"><i
+                                        class="bi bi-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="vehicles-container" class="view-list">
+
+
+                <div class="vehicle-item">
+                    <div class="v-header-grid w-100 v-grid-only">
+                        <div class="v-icon bg-primary bg-opacity-10 text-primary"><i class="bi bi-truck"></i></div>
+                        <span class="badge badge-soft bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill"><i
+                                class="bi bi-truck me-1"></i> En Ruta</span>
+                    </div>
+
+                    <div class="v-icon-container v-list-only">
+                        <div class="v-icon bg-primary bg-opacity-10 text-primary"><i class="bi bi-truck"></i></div>
+                    </div>
+
+                    <div class="v-main-info flex-column align-items-start">
+                        <div class="v-title-row">
+                            <span class="fw-bold text-primary">MV-001</span>
+                            <span class="v-grid-only text-muted small ms-auto">1234-ABC</span>
+                            <div class="fw-bold text-dark fs-5 v-list-only">Mercedes-Benz Sprinter 316</div>
+                        </div>
+                        <div class="fw-bold text-dark fs-5 v-grid-only mt-2">Mercedes-Benz Sprinter 316</div>
+
+                        <div class="v-meta-info v-list-only">
+                            <span class="badge bg-light text-dark border px-2 py-1">1234-ABC</span>
+                            <span>Furgón · 2021</span>
+                            <span>3,500 kg</span>
+                            <span>87.450 km</span>
+                            <span><i class="bi bi-geo-alt me-1"></i> A-2 km 245</span>
+                        </div>
+                    </div>
+
+                    <div class="v-actions v-list-only">
+                        <span class="conductor-name">Carlos García</span>
+                        <span class="badge badge-soft bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill"><i
+                                class="bi bi-truck me-1"></i> En Ruta</span>
+                        <button class="btn btn-sm text-muted border-0 bg-transparent fs-5"><i
+                                class="bi bi-eye"></i></button>
+                    </div>
+
+                    <!-- Grid specific details -->
+                    <div class="v-meta-grid v-grid-only w-100">
+                        <div class="text-muted mb-3">Furgón · 2021</div>
+                        <div class="v-meta-row"><span>Capacidad</span><span class="v-meta-val">3,500 kg</span></div>
+                        <div class="v-meta-row"><span>Kilometraje</span><span class="v-meta-val">87.450 km</span></div>
+                        <div class="v-meta-row"><span>Conductor</span><span class="v-meta-val text-dark fw-bold">Carlos
+                                García</span></div>
+
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between mb-1 small text-muted">
+                                <span><i class="bi bi-fuel-pump me-1"></i> Combustible</span>
+                                <span class="fw-bold text-dark">72%</span>
+                            </div>
+                            <div class="progress progress-thin bg-light">
+                                <div class="progress-bar bg-success" style="width: 72%"></div>
+                            </div>
+                        </div>
+
+                        <hr class="my-3 text-muted">
+                        <div class="text-muted small">
+                            <i class="bi bi-geo-alt me-1"></i> A-2 km 245
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- ==========================================
+     MODAL - NEW VEHICLE
+=========================================== -->
+    <div class="modal fade" id="vehicle-modal" tabindex="-1" aria-labelledby="vehicleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content vehicle-modal">
+
+                <!-- Header -->
+                <div class="modal-header border-0">
+                    <div>
+                        <h4 class="modal-title fw-bold" id="vehicleModalLabel">
+                            <i class="bi bi-truck me-2 text-success"></i>
+                            Nuevo Vehículo
+                        </h4>
+
+                        <p class="text-muted mb-0">
+                            Registra un nuevo vehículo para la flota de transporte.
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <form id="vehicle-form" class="needs-validation" novalidate>
+                        <div class="row g-4">
+                            <!-- License Plate -->
+                            <div class="col-md-6">
+                                <label for="license-plate" class="shipping-label">
+                                    Placa <span class="text-danger">*</span>
+                                </label>
+                                <input id="license-plate" type="text" class="form-control shipping-input"
+                                    placeholder="Ej. ABC123" required>
+                                <div class="invalid-feedback">
+                                    Ingresa la placa.
+                                </div>
+                            </div>
+
+                            <!-- Model -->
+                            <div class="col-md-6">
+
+                                <label for="vehicle-model" class="shipping-label">
+                                    Modelo <span class="text-danger">*</span>
+                                </label>
+                                <input id="vehicle-model" type="text" class="form-control shipping-input"
+                                    placeholder="Ej. Mercedes Sprinter 2024" required>
+                                <div class="invalid-feedback">
+                                    Ingresa el modelo.
+                                </div>
+                            </div>
+
+                            <!-- Capacity -->
+                            <div class="col-md-6">
+                                <label for="vehicle-capacity" class="shipping-label">
+                                    Capacidad (kg) <span class="text-danger">*</span>
+                                </label>
+                                <input id="vehicle-capacity" type="number" class="form-control shipping-input"
+                                    placeholder="3500" required>
+                                <div class="invalid-feedback">
+                                    Ingresa la capacidad.
+                                </div>
+                            </div>
+
+                            <!-- Mileage -->
+                            <div class="col-md-6">
+                                <label for="vehicle-mileage" class="shipping-label">
+                                    Kilometraje <span class="text-danger">*</span>
+                                </label>
+                                <input id="vehicle-mileage" type="number" class="form-control shipping-input"
+                                    placeholder="125000" required>
+                                <div class="invalid-feedback">
+                                    Ingresa el kilometraje.
+                                </div>
+                            </div>
+
+                            <!-- Fuel -->
+                            <div class="col-md-6">
+                                <label for="fuel-type" class="shipping-label">
+                                    Combustible <span class="text-danger">*</span>
+                                </label>
+                                <select id="fuel-type" class="form-select shipping-input" required>
+                                    <option value="" selected disabled>
+                                        Seleccionar...
+                                    </option>
+                                    <option value="gasoline">Gasolina</option>
+                                    <option value="diesel">Diésel</option>
+                                    <option value="natural-gas">Gas Natural</option>
+                                    <option value="electric">Eléctrico</option>
+                                    <option value="hybrid">Híbrido</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Selecciona el combustible.
+                                </div>
+                            </div>
+
+                            <!-- Maintenance -->
+                            <div class="col-md-6">
+                                <label for="maintenance-status" class="shipping-label">
+                                    Estado del mantenimiento
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select id="maintenance-status" class="form-select shipping-input" required>
+                                    <option value="" selected disabled>
+                                        Seleccionar...
+                                    </option>
+                                    <option value="up-to-date">Al día</option>
+                                    <option value="scheduled">Próximo mantenimiento</option>
+                                    <option value="maintenance">En mantenimiento</option>
+                                    <option value="expired">Mantenimiento vencido</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Selecciona un estado.
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer border-0">
+
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button type="button" id="btn-vehicle-save" class="btn btn-yellow text-white">
+
+                        <i class="bi bi-check-circle me-2"></i>
+                        Registrar Vehículo
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="./../../js/components/sidebar.js"></script>
+    <script type="module" src="./../../js/components/navbar.js"></script>
+    <script type="module" src="./../../js/vehiculo.js"></script>
+
+</body>
+
+</html>

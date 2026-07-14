@@ -1,0 +1,147 @@
+body {
+    background-color: #f8f9fa;
+    font-family: "Ubuntu", sans-serif;
+}
+
+.btn-yellow{
+    background: #e5b000;
+    color: #000;
+}
+.btn-yellow:hover{
+    background: #ffc400;
+    color: #000;
+}
+
+
+/* KPI cards */
+.kpi-card {
+    border-radius: 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.kpi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.08) !important;
+}
+.kpi-card-highlight {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    border-radius: 14px;
+    color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.kpi-card-highlight:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(37,99,235,.4) !important;
+}
+
+/* Filter Tabs */
+.filter-tabs .btn {
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: none;
+    color: #6c757d;
+    background: transparent;
+    transition: all 0.2s;
+}
+.filter-tabs .btn:hover {
+    background: #f1f3f5;
+    color: #212529;
+}
+.filter-tabs .btn.active {
+    background: #e5b000;
+    color: #fff;
+}
+
+/* Avatar */
+.driver-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+/* Driver Card */
+.driver-card {
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: #fff;
+}
+.driver-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.08) !important;
+}
+
+/* Stats row */
+.driver-stat-label {
+    color: #9ca3af;
+    font-size: 0.82rem;
+}
+.driver-stat-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Progress bar */
+.progress-thin {
+    height: 7px;
+    border-radius: 4px;
+}
+
+/* Contact icons */
+.contact-btn {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #e5e7eb;
+    color: #6c757d;
+    background: transparent;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+.contact-btn:hover {
+    background: #f1f3f5;
+    border-color: #cbd5e1;
+    color: #212529;
+}
+
+/* Stars */
+.stars { color: #f59e0b; }
+
+/* Responsive grid */
+.drivers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.shipping-input {
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+    transition: .3s;
+}
+
+.shipping-input:focus {
+       border-color: #67c587;
+    box-shadow: 0 0 0 .25rem rgba(103,197,135,.2);
+}
+@media (max-width: 1200px) {
+    .drivers-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 992px) {
+    .drivers-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 576px) {
+    .drivers-grid { grid-template-columns: 1fr; }
+}

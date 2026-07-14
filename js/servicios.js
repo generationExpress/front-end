@@ -37,6 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    leftBtn.classList.remove("d-none");
+    rightBtn.classList.remove("d-none");
+
     solicitudes.forEach(servicio => {
         const tipoClase = servicio.type_shipping
             ? servicio.type_shipping.trim().toLowerCase()

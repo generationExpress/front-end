@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Ubuntu", sans-serif;
+    font-style: normal;
+}
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Las filas de KPIs (1) y botones (4) se ajustan a su contenido 'auto', las gráficas toman el resto '1fr' */
+    grid-template-rows: auto 1fr 1fr auto;
+    gap: 16px;
+}
+
+/* Animación Hover */
+.parent>div {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border-radius: 8px;
+    /* Para que la sombra se vea mejor si la aplicamos al div contenedor */
+}
+
+.parent>div:hover {
+    transform: scale(1.03);
+    position: relative;
+    z-index: 10;
+}
+
+/* Spans para Escritorio */
+.div5 {
+    grid-column: span 3;
+}
+
+.div8 {
+    grid-column: span 1;
+}
+
+.div9 {
+    grid-column: span 1;
+}
+
+.div10 {
+    grid-column: span 3;
+}
+
+.btn-yellow{
+    background: #e5b000;
+    color: #000;
+}
+.btn-yellow:hover{
+    background: #ffc400;
+    color: #000;
+}
+
+
+/* Responsive - Pantallas Medianas (Tablets) */
+@media (max-width: 1200px) {
+    .parent {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+
+    .div5 {
+        grid-column: span 2;
+    }
+
+    .div8 {
+        grid-column: span 2;
+    }
+
+    .div9 {
+        grid-column: span 2;
+    }
+
+    .div10 {
+        grid-column: span 2;
+    }
+}
+
+/* Responsive - Pantallas Pequeñas (Móviles) */
+@media (max-width: 768px) {
+    .parent {
+        grid-template-columns: 1fr;
+    }
+
+    .div5 {
+        grid-column: span 1;
+    }
+
+    .div8 {
+        grid-column: span 1;
+    }
+
+    .div9 {
+        grid-column: span 1;
+    }
+
+    .div10 {
+        grid-column: span 1;
+    }
+}

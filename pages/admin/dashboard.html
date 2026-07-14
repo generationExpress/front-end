@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="./../../assets/styles/admin/components/aside.css"
+    />
+    <link rel="stylesheet" href="./../../assets/styles/admin/dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
+  </head>
+  <body>
+    <div class="sidebar" id="sidebar"></div>
+    <section class="home-section">
+      <div id="navbar-container"></div>
+      <div class="parent p-4">
+
+        <div class="div1">
+          <div class="card border-0 shadow-sm h-100 rounded-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div class="p-2 bg-primary bg-opacity-10 rounded text-primary">
+                  <i class="bi bi-box-seam fs-5"></i>
+                </div>
+                <span class="badge text-success bg-success bg-opacity-10"><i class="bi bi-arrow-up-short"></i> +12%</span>
+              </div>
+              <h3 class="fw-bold mb-0">587</h3>
+              <p class="text-muted small mb-0">Envíos Totales</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="div2">
+          <div class="card border-0 shadow-sm h-100 rounded-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div class="p-2 bg-success bg-opacity-10 rounded text-success">
+                  <i class="bi bi-check-circle fs-5"></i>
+                </div>
+                <span class="badge text-success bg-success bg-opacity-10"><i class="bi bi-arrow-up-short"></i> +8%</span>
+              </div>
+              <h3 class="fw-bold mb-0">352</h3>
+              <p class="text-muted small mb-0">Entregados</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="div3">
+          <div class="card border-0 shadow-sm h-100 rounded-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div class="p-2 bg-info bg-opacity-10 rounded text-info">
+                  <i class="bi bi-truck fs-5"></i>
+                </div>
+                <span class="badge text-success bg-success bg-opacity-10"><i class="bi bi-arrow-up-short"></i> +5%</span>
+              </div>
+              <h3 class="fw-bold mb-0">145</h3>
+              <p class="text-muted small mb-0">En Tránsito</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="div4">
+          <div class="card border-0 shadow-sm h-100 rounded-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div class="p-2 bg-warning bg-opacity-10 rounded text-warning">
+                  <i class="bi bi-clock-history fs-5"></i>
+                </div>
+                <span class="badge text-danger bg-danger bg-opacity-10"><i class="bi bi-arrow-down-short"></i> -2%</span>
+              </div>
+              <h3 class="fw-bold mb-0">67</h3>
+              <p class="text-muted small mb-0">Pendientes</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart 1 (Line) -->
+        <div class="div5">
+          <div class="card border-0 shadow-sm h-100 rounded-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                  <h6 class="fw-bold mb-0">Rendimiento Mensual</h6>
+                  <small class="text-muted">Envíos vs. Entregas completadas</small>
+                </div>
+                <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-download me-1"></i> Exportar</button>
+              </div>
+              <div id="chart-rendimiento"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart 2 (Donut) -->
+        <div class="div8">
+          <div class="card border-0 shadow-sm h-100 rounded-3">
+            <div class="card-body d-flex flex-column">
+              <div>
+                <h6 class="fw-bold mb-0">Estado de Envíos</h6>
+                <small class="text-muted">Distribución actual</small>
+              </div>
+              <div id="chart-estado" class="flex-grow-1 d-flex align-items-center justify-content-center mt-2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart 3 (Bar) -->
+        <div class="div9">
+          <div class="card border-0 shadow-sm h-100 rounded-3">
+            <div class="card-body">
+              <div>
+                <h6 class="fw-bold mb-0">Esta Semana</h6>
+                <small class="text-muted">Actividad diaria</small>
+              </div>
+              <div id="chart-semana"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="div10">
+          <div class="card border-0 shadow-sm h-100 rounded-3">
+            <div class="card-body p-0 d-flex flex-column h-100">
+              <div class="p-3 d-flex justify-content-between align-items-center border-bottom">
+                <div>
+                  <h6 class="fw-bold mb-0">Envíos Recientes</h6>
+                  <small class="text-muted">Últimas actualizaciones</small>
+                </div>
+                <div>
+                  <button class="btn btn-sm btn-outline-secondary me-2"><i class="bi bi-funnel"></i> Filtrar</button>
+                  <a href="./envios.html"><button class="btn btn-sm btn-yellow"><i class="bi bi-plus-lg"></i> Ver todos</button></a>
+                </div>
+              </div>
+              <div class="table-responsive flex-grow-1">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-light text-muted small">
+                    <tr>
+                      <th class="ps-4 border-0">Tracking</th>
+                      <th class="border-0">Ruta</th>
+                      <th class="border-0">Conductor</th>
+                      <th class="border-0">Estado</th>
+                      <th class="pe-4 border-0">Entrega Est.</th>
+                    </tr>
+                  </thead>
+                  <tbody class="border-top-0 small">
+                    <tr>
+                      <td class="ps-4 fw-medium text-primary">LOG-2024-001</td>
+                      <td><span class="text-muted">Madrid <i class="bi bi-arrow-right mx-1"></i> Barcelona</span></td>
+                      <td class="fw-medium">Carlos García</td>
+                      <td><span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2"><i class="bi bi-truck me-1"></i> En Tránsito</span></td>
+                      <td class="pe-4 text-muted">2024-07-15</td>
+                    </tr>
+                    <tr>
+                      <td class="ps-4 fw-medium text-primary">LOG-2024-002</td>
+                      <td><span class="text-muted">Valencia <i class="bi bi-arrow-right mx-1"></i> Sevilla</span></td>
+                      <td class="fw-medium">Ana Martínez</td>
+                      <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2"><i class="bi bi-check-circle me-1"></i> Entregado</span></td>
+                      <td class="pe-4 text-muted">2024-07-14</td>
+                    </tr>
+                    <tr>
+                      <td class="ps-4 fw-medium text-primary">LOG-2024-003</td>
+                      <td><span class="text-muted">Bilbao <i class="bi bi-arrow-right mx-1"></i> Zaragoza</span></td>
+                      <td class="fw-medium">Miguel López</td>
+                      <td><span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3 py-2"><i class="bi bi-clock-history me-1"></i> Pendiente</span></td>
+                      <td class="pe-4 text-muted">2024-07-16</td>
+                    </tr>
+                    <tr>
+                      <td class="ps-4 fw-medium text-primary">LOG-2024-004</td>
+                      <td><span class="text-muted">Málaga <i class="bi bi-arrow-right mx-1"></i> Granada</span></td>
+                      <td class="fw-medium">Laura Sánchez</td>
+                      <td><span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 py-2"><i class="bi bi-exclamation-triangle me-1"></i> Retrasado</span></td>
+                      <td class="pe-4 text-muted">2024-07-14</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="div11">
+          <button class="btn btn-primary w-100 py-3 shadow-sm rounded-3 fw-medium d-flex justify-content-center align-items-center h-100">
+            <span><i class="bi bi-plus-circle me-2"></i> Nuevo Envío</span>
+          </button>
+        </div>
+        <div class="div12">
+          <button class="btn btn-success w-100 py-3 shadow-sm rounded-3 fw-medium d-flex justify-content-center align-items-center h-100" style="background-color: #198754; border-color: #198754;">
+            <span><i class="bi bi-truck-front me-2"></i> Añadir Vehículo</span>
+          </button>
+        </div>
+        <div class="div13">
+          <button class="btn w-100 py-3 shadow-sm rounded-3 fw-medium text-white d-flex justify-content-center align-items-center h-100" style="background-color: #6f42c1; border-color: #6f42c1;">
+            <span><i class="bi bi-person-plus me-2"></i> Registrar Conductor</span>
+          </button>
+        </div>
+        <div class="div14">
+          <button class="btn w-100 py-3 shadow-sm rounded-3 fw-medium text-white d-flex justify-content-center align-items-center h-100" style="background-color: #fd7e14; border-color: #fd7e14;">
+            <span><i class="bi bi-geo-alt me-2"></i> Programar Ruta</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="./../../js/components/sidebar.js"></script>
+    <script type="module" src="./../../js/components/navbar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="module" src="./../../js/dashborad.js"></script>
+  </body>
+</html>
