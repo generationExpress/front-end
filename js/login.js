@@ -8,9 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
 
         const usuario = {
-            nombre: document.getElementById('nombre').value.trim(),
             correo: document.getElementById('correo').value.trim(),
-            telefono: document.getElementById('telefono').value.trim()
+            telefono: document.getElementById('contrasena').value.trim()
         };
 
         localStorage.setItem('loginData', JSON.stringify(usuario));
