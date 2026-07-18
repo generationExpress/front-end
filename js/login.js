@@ -7,14 +7,33 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
 
+        const correoIngresado = document.getElementById('correo').value.trim();
+        const contrasena = document.getElementById('contrasena').value.trim();
+
         const usuario = {
-            correo: document.getElementById('correo').value.trim(),
-            telefono: document.getElementById('contrasena').value.trim()
+            correo: correoIngresado,
+            telefono: contrasena
         };
 
-        localStorage.setItem('loginData', JSON.stringify(usuario));
+        const drivers = JSON.parse(localStorage.getItem('drivers')) || [];
 
-        successMessage.textContent = 'Datos guardados correctamente en el almacenamiento local.';
-        successMessage.style.display = 'block';
+        const driverEncontrado = drivers.find(driver => driver.email === correoIngresado);
+
+        if (driverEncontrado) {
+            localStorage.setItem('loginData', JSON.stringify(usuario));
+            localStorage.setItem('driverActual', JSON.stringify(driverEncontrado));
+
+            successMessage.textContent = '¡Bienvenido! Redirigiendo...';
+            successMessage.style.display = 'block';
+            successMessage.style.color = 'green';
+
+            setTimeout(() => {
+                window.location.href = '../pages/mensajero.html';
+            }, 1000);
+        } else {
+            successMessage.textContent = 'Correo no encontrado. Verifique que sea un conductor registrado.';
+            successMessage.style.display = 'block';
+            successMessage.style.color = 'red';
+        }
     });
 });
