@@ -60,25 +60,19 @@
         <h2>Crear Cuenta</h2>
         <form id="loginForm">
             <div class="form-group">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" id="nombre" class="form-control" placeholder="Ingrese su nombre completo" required>
-                <div class="error-message" id="errorNombre"></div>
-            </div>
-
-            <div class="form-group">
                 <label for="correo" class="form-label">Correo Electrónico</label>
                 <input type="email" id="correo" class="form-control" placeholder="ejemplo@correo.com" required>
                 <div class="error-message" id="errorCorreo"></div>
             </div>
 
             <div class="form-group">
-                <label for="telefono" class="form-label">Teléfono</label>
-                <input type="tel" id="telefono" class="form-control" placeholder="Ingrese su número telefónico" required>
-                <div class="error-message" id="errorTelefono"></div>
+                <label for="contrasena" class="form-label">Contraseña</label>
+                <input type="password" id="contrasena" class="form-control" placeholder="Ingrese su contraseña" required>
+                <div class="error-message" id="errorContrasena"></div>
             </div>
 
-            <button type="submit" class="btn-login">Crear Cuenta</button>
             <button type="submit" class="btn-login">Iniciar Sesión</button>
+            <button type="submit" class="btn-login">Crear Cuenta</button>
             <div class="success-message" id="successMessage">¡Datos guardados correctamente!</div>
         </form>
     </div>
