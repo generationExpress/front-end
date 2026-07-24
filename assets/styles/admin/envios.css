@@ -48,18 +48,6 @@ body {
     grid-column: span 1;
 }
 
-.modal {
-    z-index: 99999 !important;
-}
-
-.modal-dialog {
-    z-index: 100000 !important;
-}
-
-.modal-backdrop {
-    z-index: 99998 !important;
-}
-
 .div6 {
     grid-column: span 5;
 }

@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vista de Rutas - Generation Express</title>
+
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Google Fonts Ubuntu -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet" />
+    <!-- Boxicons -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
+
+    <!-- Project Styles -->
+    <link rel="stylesheet" href="./../../assets/styles/admin/components/aside.css" />
+    <link rel="stylesheet" href="./../../assets/styles/admin/rutas.css" />
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar"></div>
+    <section class="home-section">
+        <div id="navbar-container"></div>
+
+        <div class="parent p-4">
+
+            <!-- ── ENCABEZADO PRINCIPAL ── -->
+            <div class="header-row mb-4">
+                <div>
+                    <h2 class="fw-bold text-dark mb-1">Vista de Rutas</h2>
+                    <p class="text-muted mb-0">Consulta y gestiona todas las rutas con su pedido, conductor y entrega asociados</p>
+                </div>
+                <div class="d-flex gap-2 mt-3 mt-md-0">
+                    <button class="btn btn-light border bg-white shadow-sm text-dark px-3" id="btn-export">
+                        <i class="bi bi-download me-2"></i>Exportar
+                    </button>
+                    <button class="btn  btn-yellow text-white px-3" data-bs-toggle="modal" data-bs-target="#modal-new-route">
+                        <i class="bi bi-geo-alt-fill me-2"></i>Nueva Ruta
+                    </button>
+                </div>
+            </div>
+
+            <!-- ── METRICAS / INDICADORES SUPERIORES (5 KPI CARDS HORIZONTALES) ── -->
+            
+            <!-- KPI 1: Total Rutas -->
+            <div class="div1">
+                <div class="card border-0 shadow-sm kpi-card h-100">
+                    <div class="card-body">
+                        <div class="icon-box bg-primary bg-opacity-10 text-primary">
+                            <i class="bi bi-geo-alt"></i>
+                        </div>
+                        <h3 class="fw-bold mb-0">8</h3>
+                        <span class="text-muted small">Total Rutas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 2: En Tránsito -->
+            <div class="div2">
+                <div class="card border-0 shadow-sm kpi-card h-100">
+                    <div class="card-body">
+                        <div class="icon-box bg-primary bg-opacity-10 text-primary">
+                            <i class="bi bi-truck"></i>
+                        </div>
+                        <h3 class="fw-bold mb-0">2</h3>
+                        <span class="text-muted small">En Tránsito</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 3: Entregadas -->
+            <div class="div3">
+                <div class="card border-0 shadow-sm kpi-card h-100">
+                    <div class="card-body">
+                        <div class="icon-box bg-success bg-opacity-10 text-success">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                        <h3 class="fw-bold mb-0">3</h3>
+                        <span class="text-muted small">Entregadas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 4: Pendientes -->
+            <div class="div4">
+                <div class="card border-0 shadow-sm kpi-card h-100">
+                    <div class="card-body">
+                        <div class="icon-box bg-warning bg-opacity-10 text-warning">
+                            <i class="bi bi-clock"></i>
+                        </div>
+                        <h3 class="fw-bold mb-0">2</h3>
+                        <span class="text-muted small">Pendientes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 5: Retrasadas -->
+            <div class="div5">
+                <div class="card border-0 shadow-sm kpi-card h-100">
+                    <div class="card-body">
+                        <div class="icon-box bg-danger bg-opacity-10 text-danger" style="color: #dc3545;">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                        <h3 class="fw-bold mb-0">1</h3>
+                        <span class="text-muted small">Retrasadas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SECCION CONTENEDORA DE FILTROS Y TABLA ── -->
+            <div class="div6 mt-2">
+                <div class="card border-0 shadow-sm routes-table-card">
+                    <div class="card-body p-4">
+
+                        <!-- BARRA DE CONTROLES: BUSCADOR Y FILTROS -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-5 col-lg-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                                    <input type="text" id="search-input" class="form-control border-start-0 ps-0 shadow-none" placeholder="Buscar por ID, tracking, conductor, remitente, matrícula...">
+                                </div>
+                            </div>
+                            <div class="col-md-7 col-lg-6">
+                                <div class="d-flex gap-2 flex-wrap flex-sm-nowrap">
+                                    <select id="filter-status" class="form-select shadow-none text-muted">
+                                        <option value="ALL">Todos los estados</option>
+                                        <option value="PENDING">PENDING (Pendiente)</option>
+                                        <option value="ASSIGNED">ASSIGNED (Asignado)</option>
+                                        <option value="IN_TRANSIT">IN_TRANSIT (En Tránsito)</option>
+                                        <option value="DELIVERED">DELIVERED (Entregado)</option>
+                                        <option value="CANCELLED">CANCELLED (Cancelado / Retrasado)</option>
+                                    </select>
+                                    <select id="filter-driver" class="form-select shadow-none text-muted">
+                                        <option value="ALL">Todos los conductores</option>
+                                        <option value="Carlos García">Carlos García</option>
+                                        <option value="Ana Martínez">Ana Martínez</option>
+                                        <option value="Miguel López">Miguel López</option>
+                                        <option value="Laura Sánchez">Laura Sánchez</option>
+                                    </select>
+                                    <button class="btn btn-light border bg-white text-dark shadow-none d-flex align-items-center" type="button">
+                                        <i class="bi bi-funnel me-1"></i>Filtros
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TABLA DE RUTAS -->
+                        <div class="table-responsive">
+                            <table class="table routes-table align-middle mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th class="ps-3">ID Ruta <i class="bi bi-chevron-up ms-1 small"></i></th>
+                                        <th>Tracking</th>
+                                        <th>Origen</th>
+                                        <th>Destino</th>
+                                        <th>T. Estimado</th>
+                                        <th>Estado</th>
+                                        <th>Conductor</th>
+                                        <th>Vehículo</th>
+                                        <th>Remitente</th>
+                                        <th>Destinatario</th>
+                                        <th class="text-end pe-3">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="routes-table-body">
+                                    
+                                    <!-- Fila 1: RUT-001 -->
+                                    <tr data-status="IN_TRANSIT" data-driver="Carlos García">
+                                        <td class="ps-3">
+                                            <a href="javascript:void(0)" class="fw-bold text-primary text-decoration-none btn-view-detail" data-route-id="RUT-001">RUT-001</a>
+                                        </td>
+                                        <td>
+                                            <span class="font-monospace text-dark small fw-semibold">LOG-2024-001</span>
+                                        </td>
+                                        <td class="fw-bold text-dark">Madrid</td>
+                                        <td><i class="bi bi-chevron-right text-muted small me-1"></i>Barcelona</td>
+                                        <td class="text-muted"><i class="bi bi-clock me-1"></i>5h 45m</td>
+                                        <td>
+                                            <span class="badge-status badge-in-transit">
+                                                <i class="bi bi-truck"></i>En Tránsito
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="driver-avatar-sm" style="background:#059669;">CG</div>
+                                                <span class="fw-semibold text-dark">Carlos García</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">1234-ABC</div>
+                                            <div class="text-muted small">Mercedes-Benz</div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">Electrónica Sur S.L.</div>
+                                            <div class="text-muted small">Madrid</div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">TechStore</div>
+                                            <div class="text-muted small">Barcelona</div>
+                                        </td>
+                                        <td class="text-end pe-3">
+                                            <div class="d-inline-flex gap-1">
+                                                <button class="btn-action-icon btn-view btn-view-detail" data-route-id="RUT-001" title="Ver detalle">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-edit" title="Editar ruta">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-track btn-view-detail" data-route-id="RUT-001" title="Ver seguimiento">
+                                                    <i class="bi bi-signpost-split"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-proof btn-view-detail" data-route-id="RUT-001" title="Ver entrega">
+                                                    <i class="bi bi-card-checklist"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Fila 2: RUT-002 -->
+                                    <tr data-status="DELIVERED" data-driver="Ana Martínez">
+                                        <td class="ps-3">
+                                            <a href="javascript:void(0)" class="fw-bold text-primary text-decoration-none btn-view-detail" data-route-id="RUT-002">RUT-002</a>
+                                        </td>
+                                        <td>
+                                            <span class="font-monospace text-dark small fw-semibold">LOG-2024-002</span>
+                                        </td>
+                                        <td class="fw-bold text-dark">Valencia</td>
+                                        <td><i class="bi bi-chevron-right text-muted small me-1"></i>Sevilla</td>
+                                        <td class="text-muted"><i class="bi bi-clock me-1"></i>4h 40m</td>
+                                        <td>
+                                            <span class="badge-status badge-delivered">
+                                                <i class="bi bi-check-circle"></i>Entregado
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="driver-avatar-sm" style="background:#2563eb;">AM</div>
+                                                <span class="fw-semibold text-dark">Ana Martínez</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">5678-DEF</div>
+                                            <div class="text-muted small">Volkswagen</div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">Moda Levante S.A.</div>
+                                            <div class="text-muted small">Valencia</div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">Boutique Sevilla</div>
+                                            <div class="text-muted small">Sevilla</div>
+                                        </td>
+                                        <td class="text-end pe-3">
+                                            <div class="d-inline-flex gap-1">
+                                                <button class="btn-action-icon btn-view btn-view-detail" data-route-id="RUT-002" title="Ver detalle">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-edit" title="Editar ruta">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-track btn-view-detail" data-route-id="RUT-002" title="Ver seguimiento">
+                                                    <i class="bi bi-signpost-split"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-proof btn-view-detail" data-route-id="RUT-002" title="Ver entrega">
+                                                    <i class="bi bi-card-checklist"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Fila 3: RUT-003 -->
+                                    <tr data-status="PENDING" data-driver="Miguel López">
+                                        <td class="ps-3">
+                                            <a href="javascript:void(0)" class="fw-bold text-primary text-decoration-none btn-view-detail" data-route-id="RUT-003">RUT-003</a>
+                                        </td>
+                                        <td>
+                                            <span class="font-monospace text-dark small fw-semibold">LOG-2024-003</span>
+                                        </td>
+                                        <td class="fw-bold text-dark">Bilbao</td>
+                                        <td><i class="bi bi-chevron-right text-muted small me-1"></i>Zaragoza</td>
+                                        <td class="text-muted"><i class="bi bi-clock me-1"></i>2h 50m</td>
+                                        <td>
+                                            <span class="badge-status badge-pending">
+                                                <i class="bi bi-clock"></i>Pendiente
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="driver-avatar-sm" style="background:#059669;">ML</div>
+                                                <span class="fw-semibold text-dark">Miguel López</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">9012-GHI</div>
+                                            <div class="text-muted small">Iveco</div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">Industrias del Norte</div>
+                                            <div class="text-muted small">Bilbao</div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">Almacenes Ebro</div>
+                                            <div class="text-muted small">Zaragoza</div>
+                                        </td>
+                                        <td class="text-end pe-3">
+                                            <div class="d-inline-flex gap-1">
+                                                <button class="btn-action-icon btn-view btn-view-detail" data-route-id="RUT-003" title="Ver detalle">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-edit" title="Editar ruta">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-track btn-view-detail" data-route-id="RUT-003" title="Ver seguimiento">
+                                                    <i class="bi bi-signpost-split"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-proof btn-view-detail" data-route-id="RUT-003" title="Ver entrega">
+                                                    <i class="bi bi-card-checklist"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Fila 4: RUT-004 -->
+                                    <tr data-status="CANCELLED" data-driver="Laura Sánchez">
+                                        <td class="ps-3">
+                                            <a href="javascript:void(0)" class="fw-bold text-primary text-decoration-none btn-view-detail" data-route-id="RUT-004">RUT-004</a>
+                                        </td>
+                                        <td>
+                                            <span class="font-monospace text-dark small fw-semibold">LOG-2024-004</span>
+                                        </td>
+                                        <td class="fw-bold text-dark">Málaga</td>
+                                        <td><i class="bi bi-chevron-right text-muted small me-1"></i>Granada</td>
+                                        <td class="text-muted"><i class="bi bi-clock me-1"></i>1h 40m</td>
+                                        <td>
+                                            <span class="badge-status badge-cancelled">
+                                                <i class="bi bi-exclamation-triangle"></i>Retrasada
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="driver-avatar-sm" style="background:#7c3aed;">LS</div>
+                                                <span class="fw-semibold text-dark">Laura Sánchez</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">3456-JKL</div>
+                                            <div class="text-muted small">Ford</div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">Importaciones Málaga</div>
+                                            <div class="text-muted small">Málaga</div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-semibold text-dark">Distribuciones Granada</div>
+                                            <div class="text-muted small">Granada</div>
+                                        </td>
+                                        <td class="text-end pe-3">
+                                            <div class="d-inline-flex gap-1">
+                                                <button class="btn-action-icon btn-view btn-view-detail" data-route-id="RUT-004" title="Ver detalle">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-edit" title="Editar ruta">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-track btn-view-detail" data-route-id="RUT-004" title="Ver seguimiento">
+                                                    <i class="bi bi-signpost-split"></i>
+                                                </button>
+                                                <button class="btn-action-icon btn-proof btn-view-detail" data-route-id="RUT-004" title="Ver entrega">
+                                                    <i class="bi bi-card-checklist"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =====================================================
+         MODAL 1: Detalle Completo de Ruta (#route-detail-modal)
+         ===================================================== -->
+    <div class="modal fade" id="route-detail-modal" tabindex="-1" aria-labelledby="routeDetailLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content border-0 shadow-lg" style="border-radius:18px; overflow:hidden;">
+                
+                <!-- Header -->
+                <div class="modal-header bg-light border-0 px-4 py-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="p-2 bg-primary bg-opacity-10 text-primary rounded-3 fs-4">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title fw-bold text-dark mb-0">Detalle de Ruta: <span id="detail-route-id" class="text-primary"></span></h5>
+                            <span class="text-muted small">Tracking: <strong id="detail-tracking" class="text-dark"></strong></span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <div id="detail-status-container"></div>
+                        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body p-4">
+                    <div class="row g-4">
+                        
+                        <!-- Columna Izquierda: Información de Ruta, Pedido, Conductor & Vehículo -->
+                        <div class="col-lg-7">
+                            
+                            <!-- Ruta & Origen Destino -->
+                            <div class="detail-card-box mb-3">
+                                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-map me-2 text-primary"></i>Información de la Ruta</h6>
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <span class="text-muted small d-block">Origen</span>
+                                        <span class="fw-bold text-dark fs-6" id="detail-origin"></span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted small d-block">Destino</span>
+                                        <span class="fw-bold text-dark fs-6" id="detail-destination"></span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted small d-block">Tiempo Estimado</span>
+                                        <span class="fw-semibold text-dark" id="detail-estimated-time"></span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted small d-block">Fecha de Creación</span>
+                                        <span class="fw-semibold text-dark" id="detail-created-at"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedido Relacionado -->
+                            <div class="detail-card-box mb-3">
+                                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-box-seam me-2 text-primary"></i>Datos del Pedido Relacionado</h6>
+                                <div class="row g-3">
+                                    <div class="col-6 col-sm-3">
+                                        <span class="text-muted small d-block">Peso Total</span>
+                                        <span class="fw-bold text-dark" id="detail-weight"></span>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <span class="text-muted small d-block">Costo Total</span>
+                                        <span class="fw-bold text-success" id="detail-cost"></span>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <span class="text-muted small d-block">Fecha Asignada</span>
+                                        <span class="fw-semibold text-dark small" id="detail-assigned-date"></span>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <span class="text-muted small d-block">Entrega Est.</span>
+                                        <span class="fw-semibold text-dark small" id="detail-delivery-date"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Conductor & Vehículo -->
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="detail-card-box h-100">
+                                        <h6 class="fw-bold text-dark mb-3"><i class="bi bi-person-badge me-2 text-primary"></i>Conductor Asignado</h6>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div id="detail-driver-avatar" class="driver-avatar-sm" style="width:42px; height:42px; font-size:1rem;"></div>
+                                            <div>
+                                                <div class="fw-bold text-dark" id="detail-driver-name"></div>
+                                                <div class="text-muted small" id="detail-driver-license"></div>
+                                                <div class="text-muted small"><i class="bi bi-telephone me-1"></i><span id="detail-driver-phone"></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="detail-card-box h-100">
+                                        <h6 class="fw-bold text-dark mb-3"><i class="bi bi-truck me-2 text-primary"></i>Vehículo Asignado</h6>
+                                        <div>
+                                            <div class="fw-bold text-dark fs-6" id="detail-vehicle-plate"></div>
+                                            <div class="text-muted small" id="detail-vehicle-model"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Columna Derecha: Remitente, Destinatario, Historial & Evidencia -->
+                        <div class="col-lg-5">
+                            
+                            <!-- Remitente & Destinatario -->
+                            <div class="detail-card-box mb-3">
+                                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-arrow-left-right me-2 text-primary"></i>Remitente y Destinatario</h6>
+                                <div class="mb-3 pb-2 border-bottom">
+                                    <div class="badge bg-light text-primary border mb-1">REMITENTE</div>
+                                    <div class="fw-bold text-dark" id="detail-sender-name"></div>
+                                    <div class="text-muted small"><i class="bi bi-geo-alt me-1"></i><span id="detail-sender-address"></span>, <span id="detail-sender-city"></span></div>
+                                    <div class="text-muted small"><i class="bi bi-telephone me-1"></i><span id="detail-sender-phone"></span></div>
+                                </div>
+                                <div>
+                                    <div class="badge bg-light text-success border mb-1">DESTINATARIO</div>
+                                    <div class="fw-bold text-dark" id="detail-recipient-name"></div>
+                                    <div class="text-muted small"><i class="bi bi-geo-alt me-1"></i><span id="detail-recipient-address"></span>, <span id="detail-recipient-city"></span></div>
+                                    <div class="text-muted small"><i class="bi bi-telephone me-1"></i><span id="detail-recipient-phone"></span></div>
+                                </div>
+                            </div>
+
+                            <!-- Historial de Estados (Timeline) -->
+                            <div class="detail-card-box mb-3">
+                                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-clock-history me-2 text-primary"></i>Historial de Estados</h6>
+                                <div class="timeline" id="detail-timeline"></div>
+                            </div>
+
+                            <!-- Evidencia de Entrega -->
+                            <div class="detail-card-box">
+                                <h6 class="fw-bold text-dark mb-2"><i class="bi bi-card-checklist me-2 text-primary"></i>Evidencia de Entrega</h6>
+                                <div id="detail-evidence-box"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer bg-light border-0 px-4 py-3">
+                    <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         MODAL 2: Crear Nueva Ruta (#modal-new-route)
+         ===================================================== -->
+    <div class="modal fade" id="modal-new-route" tabindex="-1" aria-labelledby="newRouteLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg" style="border-radius:18px; overflow:hidden;">
+                <div class="modal-header border-0 px-4 pt-4 pb-0">
+                    <div>
+                        <h5 class="modal-title fw-bold text-dark" id="newRouteLabel"><i class="bi bi-plus-circle me-2 text-primary"></i>Nueva Ruta</h5>
+                        <p class="text-muted small mb-0">Completa los campos para crear e iniciar una nueva ruta</p>
+                    </div>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="new-route-form" class="needs-validation" novalidate>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small text-dark">Origen <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control shadow-none" placeholder="Ciudad o dirección de origen" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small text-dark">Destino <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control shadow-none" placeholder="Ciudad o dirección de destino" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small text-dark">Tiempo Estimado (minutos) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control shadow-none" placeholder="Ej. 345" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small text-dark">Conductor <span class="text-danger">*</span></label>
+                                <select class="form-select shadow-none" required>
+                                    <option value="" disabled selected>Seleccionar conductor...</option>
+                                    <option value="1">Carlos García</option>
+                                    <option value="2">Ana Martínez</option>
+                                    <option value="3">Miguel López</option>
+                                    <option value="4">Laura Sánchez</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small text-dark">Vehículo <span class="text-danger">*</span></label>
+                                <select class="form-select shadow-none" required>
+                                    <option value="" disabled selected>Seleccionar vehículo...</option>
+                                    <option value="1">1234-ABC · Mercedes-Benz Sprinter</option>
+                                    <option value="2">5678-DEF · Volkswagen Crafter</option>
+                                    <option value="3">9012-GHI · Iveco Daily</option>
+                                    <option value="4">3456-JKL · Ford Transit</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small text-dark">Tracking / Pedido <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control shadow-none" placeholder="Ej. LOG-2024-005" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 px-4 pb-4 pt-0 gap-2">
+                    <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary px-4" id="btn-save-route"><i class="bi bi-check-circle me-2"></i>Crear Ruta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Component Scripts -->
+    <script type="module" src="./../../js/components/sidebar.js"></script>
+    <script type="module" src="./../../js/components/navbar.js"></script>
+    <script type="module" src="./../../js/rutas.js"></script>
+
+</body>
+
+</html>
