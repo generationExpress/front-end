@@ -2,8 +2,25 @@
   font-size: 45px;
 }
 
+.search-container{
+  background-color: #ffff;
+  height: 100px;
+  width: 800px;
+  position: relative;
+  left: 50%;
+  translate: -50%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.search-inner-container{
+  position: absolute;
+  top: 25px;
+  left: 30px;
+}
+
 #tracking-input {
-  width: 100%;
+  width: 650px;
   padding: 12px 20px 12px 40px;
   border: 2px solid #ccc;
   outline: none;
@@ -20,4 +37,12 @@
 
 #tracking-button{
   border-radius: 0px 5px 5px 0px;
+}
+
+
+.vr {
+  margin: 0 55px;
+  height: 45px;
+  width:3px;
+  border:1px #ccc inset;
 }
