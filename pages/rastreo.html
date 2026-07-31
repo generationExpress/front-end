@@ -15,7 +15,7 @@
     
     <link rel="stylesheet" href="../assets/styles/navbar.css">
     <link rel="stylesheet" href="../assets/styles/footer.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">  
   <title>Document</title>
 </head>
 <body>
@@ -55,37 +55,42 @@
 
     <main>
       <!-- TITULO Y TEXTO -->
-      <section>
+      <section class="text-center mt-5">
         <h2>Rastrea tu envio</h2>
         <p>Consulta el estado de tu paquete en tiempo real ingresando tu número de guía</p>
       </section>
-      </main>
+
       <!-- FORM Y BUTTON -->
-      <section>
-        <div>
-          <form action="">
-            <input type="text">
+      <section class="text-center mt-5">
+        <div class="d-flex flex-row justify-content-center">
+          <div class="me-2">
+            <form action="">
+            <input type="text" placeholder="Ej. TRK-985632147">
           </form>
-          <button>Rastrear</button>
+          </div>
+          <button type="button" class="btn btn-primary">Rastrear</button>
         </div>
       </section>
 
       <!-- VENTAJAS  -->
-      <section>
-        <div>
-          <p>Actualizacion en tiempo real</p>
-        </div>
-        <div>
-          <p>Corbetura nacional e internacional</p>
-        </div>
-        <div>
-          <p>Seguimiento seguro</p>
+      <section class="mt-5 text-center">
+        <div class="d-flex justify-content-center ">
+          <div>
+            <p>Actualizacion en tiempo real</p>
+          </div>
+          <div>
+            <p>Corbetura nacional e internacional</p>
+          </div>
+          <div>
+            <p>Seguimiento seguro</p>
+          </div>
         </div>
       </section>
       
       <!-- IMAGEN  -->
       <section>
-        <img src="/assets/images/prueba_img.png" alt="imagen-rastreo">
+        <img src="/assets/images/prueba_img.png" alt="imagen-rastreo" 
+          class="mx-auto d-block">
       </section>
     </main>  
 </body>
