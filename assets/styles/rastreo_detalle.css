@@ -1,0 +1,105 @@
+.tracking-timeline{
+  margin: 3rem 1rem;
+  background-color: #ffff;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.timeline-title-badge{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5px;
+}
+
+
+.tracking-details{
+  margin: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 3rem 1rem;
+}
+
+/* ESTILOS TIMELINE */
+
+.timeline-container{
+  display: flex;  
+}
+
+/*ESTILOS DE CADA CIRCULO DEL TIMELINE */
+
+.timeline-step{
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+}
+
+/*ESTILOS CONTAINER QUE CONTINE CADA CIRCULO Y LINEA DEL TIMELINE*/
+
+.step-container{
+  display: flex;
+  align-items: center;
+}
+
+.step-container::before{
+  content: '';
+  height: 1px;
+  width: 20px;
+  border: 2px #ccc inset;
+}
+
+.step-container:last-child::after{
+  content: '';
+  height: 1px;
+  width: 20px;
+  border: 2px #ccc inset;
+}
+
+/*ESTADO DE COMPLETADO*/
+
+.step-container.completed:last-child::after{
+  border-color: blue;
+}
+
+.step-container.completed .timeline-step{
+ border-color: blue; 
+ background-color: blue;
+}
+
+.step-container.completed::before{
+  border-color: blue;
+}
+
+/* ESTILOS ICONO DEL CHECK */
+
+.bi.bi-check-lg{
+  position: relative;
+  left: 20%;
+  color: white;
+  size: 0px; 
+}
+
+/*ESTILOS FIGURA ESTADO ACTUAL(PRESENTE) */
+
+.present-figure{
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  position: relative;
+  left: 25%;
+  top: 25%;
+  background-color: blue;
+}
+
+
+/*ESTADO PRESENTE */
+
+.step-container.present .timeline-step{
+ border-color: blue; 
+}
+
+.step-container.present::before{
+  border-color: blue;
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="../assets/styles/navbar.css">
+    <link rel="stylesheet" href="../assets/styles/footer.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">  
+    
+  <link rel="stylesheet" href="../assets/styles/rastreo_detalle.css">
+  <title>Detalle rastreo de envíos | Generation Express</title>
+</head>
+<body>
+  <nav id="mainNavbar" class="navbar navbar-expand-lg custom-navbar sticky-top border">
+      <div class="container">
+          <a class="navbar-brand" href="#">
+              <div>
+                  Generation <span class="brand-green">Express</span>
+              </div>      
+              <span class="brand-tagline">Logística que conecta el mundo</span>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" 
+              aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="menu">
+              <ul class="navbar-nav mx-auto">
+                  <li class="nav-item">
+                      <a class="nav-link active" href="#">Inicio</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Rastreo</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/pages/nosotros.html">Nosotros</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/pages/contacto.html">Contacto</a>
+                  </li>
+              </ul>
+              <a href="pages/login.html" class="btn btn-ingresar">
+                  Ingresar
+              </a>
+          </div>
+      </div>
+  </nav>
+  <main>
+    <!--LINEA DE TIEMPO Y NUMERO ENTREGA-->
+    <section class="tracking-timeline">
+
+      <!--TRACKING NUMERO Y BADGE CON ESTADO-->
+
+      <div class="timeline-title-badge">
+        <div>
+          <h3>Tracking number</h3>
+          <h2>TRK-556465464665</h2>
+        </div>
+        <div>
+           i
+           <span>estado</span>
+        </div>
+      </div>
+
+      <!--TIMELINE -->
+      
+      <div class="timeline-container"> 
+        <!--CONTAINER, CONTIENE CIRCULO Y LINEA-->
+        <div class="step-container completed">
+          <!-- CADA CIRCULO DEL TIMELINE -->
+          <div class="timeline-step">
+            <!-- ICONO CUANDO SEA COMPLETE -->
+            <i class="bi bi-check-lg"></i>
+          </div>
+        </div>
+        <div class="step-container present">
+          <div class="timeline-step">
+            <!-- FIGURA CUANDO ESTE SEA EL PASO ACTUAL -->
+            <div class="present-figure">
+            </div>
+          </div>
+        </div>
+        <div class="step-container">
+          <div class="timeline-step">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--DETALLES DE LA ENTREGA-->
+    <section class="tracking-details">
+      <h2>Detalles de Entrega</h2>
+      <ul>
+        <li>
+          <p>Fecha y Hora</p>
+          <p>24 Oct 2026 14:30hrs</p>
+        </li>
+        <li>
+          <p>Recibido por</p>
+          <p>Maria Gonzalez</p>
+        </li>
+        <li>
+          <p>Origen</p>
+          <p>Maria Gonzalez</p>
+        </li>
+        <li>
+          <p>Destino</p>
+          <p>Maria Gonzalez</p>
+        </li>
+
+      </ul>
+    </section>
+  </main>
+  <script src="../js/rastreo/rastreo_detalle.js"></script>
+</body>
+</html>
