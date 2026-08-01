@@ -1,12 +1,13 @@
-const trackingGuideId =  document.getElementById("tracking-input");
+const trackingInput =  document.getElementById("tracking-input");
 const btn =  document.getElementById("tracking-button");
 
+const form = document.querySelector("#tracking-form");
 
-btn.addEventListener("click", (e) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log(trackingGuideId.value)
-  
+  console.log(trackingInput.value)
 })
+
 
 //TODO: ADD THE LOGIC OF THE TRACKING PAGE
 /*IT NEEDS TO HAVE A REQUEST, IF EXISTS A TRACKING PACKAGE WITH THAT NUMBER GUIDE
