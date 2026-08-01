@@ -6,7 +6,30 @@ const form = document.querySelector("#tracking-form");
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   console.log(trackingInput.value)
+
+  const isValid = validateTrackingNumber(trackingInput.value);
+
+  if (!isValid){
+    console.log("No es una guia valida");
+    return;
+  }
+
+  navigateTo();
+  
 })
+
+
+function navigateTo(){
+  window.location.href = '../pages/nosotros.html'
+}
+
+function validateTrackingNumber(trackingNumber) {
+  trackingNumber = trackingNumber.trim();
+  if (!trackingNumber) {
+    return false;
+  }
+  return true;
+}
 
 
 //TODO: ADD THE LOGIC OF THE TRACKING PAGE
