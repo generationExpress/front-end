@@ -55,85 +55,115 @@
   <main class="tracking-page">
 
     <!-- ============================================================
-         SECCIÓN: LÍNEA DE TIEMPO Y NÚMERO DE GUÍA
-         data-status en la sección controla el color de acento de
-         todo el bloque (timeline + badge). Valores esperados desde
-         JS: "pendiente" | "en-transito" | "entregado"
+         ESTADO: CARGANDO
+         Visible mientras se espera la respuesta simulada/real.
     ============================================================= -->
-    <section class="tracking-timeline" id="trackingTimeline" data-status="en-transito">
-
-      <div class="timeline-title-badge">
-        <div class="tracking-info">
-          <span class="tracking-label">Número de guía</span>
-          <h1 class="tracking-number" id="trackingNumber">TRK-556465464665</h1>
-        </div>
-
-        <div class="badge-container" id="statusBadge">
-          <i class="bi bi-truck" id="statusIcon" aria-hidden="true"></i>
-          <span id="statusLabel">En tránsito</span>
-        </div>
-      </div>
-
-      <!-- TIMELINE: ol porque el orden de los pasos importa -->
-      <ol class="timeline-container" id="timelineContainer">
-
-        <li class="step-container completed">
-          <div class="timeline-step">
-            <i class="bi bi-check-lg" aria-hidden="true"></i>
-          </div>
-          <div class="step-info">
-            <span class="step-name">Pedido recibido</span>
-            <span class="step-date">22 Oct 2026, 08:15hrs</span>
-          </div>
-        </li>
-
-        <li class="step-container present" aria-current="step">
-          <div class="timeline-step">
-            <span class="present-figure"></span>
-          </div>
-          <div class="step-info">
-            <span class="step-name">En tránsito</span>
-            <span class="step-date">23 Oct 2026, 19:40hrs</span>
-          </div>
-        </li>
-
-        <li class="step-container">
-          <div class="timeline-step"></div>
-          <div class="step-info">
-            <span class="step-name">Entregado</span>
-            <span class="step-date">Pendiente</span>
-          </div>
-        </li>
-
-      </ol>
+    <section class="state-panel" id="loadingState">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Buscando información de tu envío…</p>
     </section>
 
     <!-- ============================================================
-         SECCIÓN: DETALLES DE ENTREGA
+         ESTADO: NO ENCONTRADO
+         Visible cuando la guía no existe en la respuesta.
     ============================================================= -->
-    <section class="tracking-details">
-      <h2>Detalles de Entrega</h2>
-      <dl class="details-list" id="deliveryDetails">
-        <div class="details-item">
-          <dt>Fecha y hora estimada</dt>
-          <dd>24 Oct 2026, 14:30hrs</dd>
-        </div>
-        <div class="details-item">
-          <dt>Recibido por</dt>
-          <dd>Maria Gonzalez</dd>
-        </div>
-        <div class="details-item">
-          <dt>Origen</dt>
-          <dd>Bogotá, Colombia</dd>
-        </div>
-        <div class="details-item">
-          <dt>Destino</dt>
-          <dd>Medellín, Colombia</dd>
-        </div>
-      </dl>
+    <section class="state-panel" id="notFoundState" hidden>
+      <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+      <p id="notFoundMessage">No encontramos ningún envío con la guía <strong id="notFoundNumber"></strong>.</p>
+      <p class="state-panel-hint" id="notFoundHint">Verifica el número e inténtalo de nuevo.</p>
+      <a href="rastreo.html" class="btn btn-primary">Volver a rastrear</a>
     </section>
+
+    <!-- ============================================================
+         CONTENIDO REAL: se muestra solo cuando ya hay datos
+    ============================================================= -->
+    <div id="trackingContent" hidden>
+
+      <!-- SECCIÓN: LÍNEA DE TIEMPO Y NÚMERO DE GUÍA
+           data-status en la sección controla el color de acento de
+           todo el bloque (timeline + badge). Valores esperados desde
+           JS: "pendiente" | "en-transito" | "entregado" -->
+      <section class="tracking-timeline" id="trackingTimeline" data-status="en-transito">
+
+        <div class="timeline-title-badge">
+          <div class="tracking-info">
+            <span class="tracking-label">Número de guía</span>
+            <h1 class="tracking-number" id="trackingNumber">TRK-556465464665</h1>
+          </div>
+
+          <div class="badge-container" id="statusBadge">
+            <i class="bi bi-truck" id="statusIcon" aria-hidden="true"></i>
+            <span id="statusLabel">En tránsito</span>
+          </div>
+        </div>
+
+        <!-- TIMELINE: ol porque el orden de los pasos importa.
+             data-step identifica cada paso para que el JS lo llene
+             sin depender del orden en el que vengan en el JSON. -->
+        <ol class="timeline-container" id="timelineContainer">
+
+          <li class="step-container" data-step="pendiente">
+            <div class="timeline-step">
+              <i class="bi bi-check-lg" aria-hidden="true"></i>
+              <span class="present-figure"></span>
+            </div>
+            <div class="step-info">
+              <span class="step-name">Pedido recibido</span>
+              <span class="step-date"></span>
+            </div>
+          </li>
+
+          <li class="step-container" data-step="en-transito">
+            <div class="timeline-step">
+              <i class="bi bi-check-lg" aria-hidden="true"></i>
+              <span class="present-figure"></span>
+            </div>
+            <div class="step-info">
+              <span class="step-name">En tránsito</span>
+              <span class="step-date"></span>
+            </div>
+          </li>
+
+          <li class="step-container" data-step="entregado">
+            <div class="timeline-step">
+              <i class="bi bi-check-lg" aria-hidden="true"></i>
+              <span class="present-figure"></span>
+            </div>
+            <div class="step-info">
+              <span class="step-name">Entregado</span>
+              <span class="step-date"></span>
+            </div>
+          </li>
+
+        </ol>
+      </section>
+
+      <!-- SECCIÓN: DETALLES DE ENTREGA -->
+      <section class="tracking-details">
+        <h2>Detalles de Entrega</h2>
+        <dl class="details-list" id="deliveryDetails">
+          <div class="details-item">
+            <dt>Fecha y hora estimada</dt>
+            <dd id="detailEstimatedDate">—</dd>
+          </div>
+          <div class="details-item" id="detailReceivedByRow">
+            <dt>Recibido por</dt>
+            <dd id="detailReceivedBy">—</dd>
+          </div>
+          <div class="details-item">
+            <dt>Origen</dt>
+            <dd id="detailOrigin">—</dd>
+          </div>
+          <div class="details-item">
+            <dt>Destino</dt>
+            <dd id="detailDestination">—</dd>
+          </div>
+        </dl>
+      </section>
+    </div>
   </main>
 
+  <script src="../js/rastreo/tracking-api.js"></script>
   <script src="../js/rastreo/rastreo_detalle.js"></script>
 </body>
 </html>

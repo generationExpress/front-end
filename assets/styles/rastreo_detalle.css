@@ -168,18 +168,29 @@ body {
   background-color: #fff;
 }
 
+/* Por defecto (paso "upcoming"): ni check ni punto */
+.timeline-step i,
+.timeline-step .present-figure {
+  display: none;
+}
+
 .step-container.completed .timeline-step {
   border-color: var(--status-color);
   background-color: var(--status-color);
 }
 
 .step-container.completed .timeline-step i {
+  display: block;
   color: #fff;
   font-size: .9rem;
 }
 
 .step-container.present .timeline-step {
   border-color: var(--status-color);
+}
+
+.step-container.present .timeline-step .present-figure {
+  display: block;
 }
 
 .present-figure {
@@ -321,4 +332,50 @@ body {
     transition: none !important;
     animation: none !important;
   }
+}
+
+/* =========================================================
+   ESTADOS: CARGANDO / NO ENCONTRADO
+========================================================= */
+.state-panel {
+  max-width: 480px;
+  margin: 3rem auto;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.state-panel i {
+  font-size: 2rem;
+  color: var(--color-pending);
+  margin-bottom: .75rem;
+  display: inline-block;
+}
+
+.state-panel p {
+  margin: 0 0 .5rem;
+}
+
+.state-panel-hint {
+  font-size: .85rem;
+  margin-bottom: 1.25rem !important;
+}
+
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 auto .75rem;
+  border: 3px solid #E5E7EB;
+  border-top-color: var(--color-transit);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* fila "Recibido por" oculta hasta que el estado sea "entregado" */
+#detailReceivedByRow.is-hidden {
+  display: none;
 }

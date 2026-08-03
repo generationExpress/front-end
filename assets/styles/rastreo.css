@@ -39,8 +39,25 @@
   border: 2px solid #bbbbbb;
 }
 
+#tracking-input.is-invalid {
+  border-color: #DC2626;
+}
+
+#tracking-input:disabled,
+#tracking-button:disabled {
+  opacity: .7;
+  cursor: not-allowed;
+}
+
 #tracking-button{
   border-radius: 0px 5px 5px 0px;
+}
+
+.tracking-error {
+  max-width: 50rem;
+  margin: .75rem auto 0;
+  color: #DC2626;
+  font-size: .9rem;
 }
 
 .advantages {
@@ -89,6 +106,10 @@
     width: 100%;
   }
 
+  .tracking-error {
+    width: 90%;
+  }
+
   .advantages {
     display: flex;
     flex-direction: column;
@@ -116,6 +137,10 @@
 
   #tracking-input {
       width: 100%;
+  }
+
+  .tracking-error {
+    width: 90%;
   }
 
   .advantages {
