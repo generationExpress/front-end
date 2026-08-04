@@ -1,0 +1,170 @@
+/* Bootstrap trae azul por defecto en .btn-primary; lo llevamos a la
+   gama de verde de la marca. */
+.btn-primary {
+  --bs-btn-bg: #70c04f;
+  --bs-btn-border-color: #70c04f;
+  --bs-btn-hover-bg: #5fa941;
+  --bs-btn-hover-border-color: #5fa941;
+  --bs-btn-active-bg: #4f8f37;
+  --bs-btn-active-border-color: #4f8f37;
+  --bs-btn-focus-shadow-rgb: 112, 192, 79;
+}
+
+.tracking-title {
+  font-size: 2.8rem;
+}
+
+.search-container{
+  background-color: #ffff;
+  height: 100px;
+  width: 100%;
+  max-width: 50rem;
+  position: relative;
+  left: 50%;
+  translate: -50%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-inner-container{
+  display: flex;
+  flex-direction: row;
+}
+
+#tracking-input {
+  width: 650px; 
+  padding: 12px 20px 12px 40px;
+  border: 2px solid #ccc;
+  outline: none;
+  border-radius: 5px 0px 0px 5px;
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-search' viewBox='0 0 16 16' %3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'%3E%3C/path%3E%3C/svg%3E");
+  background-position: 10px;
+  background-repeat: no-repeat; 
+}
+
+#tracking-input:focus {
+  border: 2px solid #bbbbbb;
+}
+
+#tracking-input.is-invalid {
+  border-color: #DC2626;
+}
+
+#tracking-input:disabled,
+#tracking-button:disabled {
+  opacity: .7;
+  cursor: not-allowed;
+}
+
+#tracking-button{
+  border-radius: 0px 5px 5px 0px;
+}
+
+.tracking-error {
+  max-width: 50rem;
+  margin: .75rem auto 0;
+  color: #DC2626;
+  font-size: .9rem;
+}
+
+.advantages {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
+.vr {
+  margin: 0 55px;
+  height: 45px;
+  width:3px;
+  border:1px #ccc inset;
+}
+
+
+.rastreo-img{
+  max-width: 100%;
+  height: auto;
+  max-height: 800px;
+  margin-bottom: 100px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px){
+
+  .search-container{
+    height: 150px;
+    width: 90%;
+  }
+
+  .search-inner-container{
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #tracking-input {
+    border-radius: 5px;
+    width: 100%;
+  }
+
+   #tracking-button {
+    border-radius: 5px;
+    width: 100%;
+  }
+
+  .tracking-error {
+    width: 90%;
+  }
+
+  .advantages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .vr{
+    display: none;
+  }
+
+}
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) and (max-width: 800px) {
+
+  .search-container{
+    width: 90%;
+  }
+
+  .search-inner-container{    
+    display: flex;
+    flex-direction: row;
+  }
+
+  #tracking-input {
+      width: 100%;
+  }
+
+  .tracking-error {
+    width: 90%;
+  }
+
+  .advantages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .vr{
+    display: none;
+  }
+
+}

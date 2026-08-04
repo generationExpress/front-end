@@ -1,12 +1,12 @@
 body{
-    background-color: #FAFAFA;
+    background-color: var(--color-surface-light);
     font-family: "Ubuntu", sans-serif;   
     font-weight: 300;   
     font-style: normal;
     
 }
 .card-team{
-    background-color: #FAFAFA !important;
+    background-color: var(--color-surface-light) !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .card-team:hover {
@@ -34,7 +34,7 @@ body{
     margin: 0;
 }
 #nuestro{
-    color: #7CCFAE;
+    color: var(--color-primary);
 }
 #our-team{
   
@@ -46,7 +46,7 @@ body{
     display: block;
     width: 80px;
     height: 6px;
-    background-color: #8fd4a7;
+    background-color: var(--color-primary);
     border-radius: 20px;
     margin-top: 10px;
 }
@@ -66,14 +66,14 @@ body{
 }
 
 #us{
-    color: #8fd4a7;
+    color: var(--color-primary);
 }
 
 #about-guion{
     display: block;
     width: 80px;
     height: 6px;
-    background-color: #8fd4a7;
+    background-color: var(--color-primary);
     border-radius: 20px;
     margin-top: 10px;
 }
@@ -98,7 +98,7 @@ body{
 .box-green{
     width: 150px;
     height: 150px;
-    background-color: #b9e98b;
+    background-color: var(--color-surface-vision-soft);
     position: absolute;
     bottom: -20px;
     left: -20px;
@@ -123,7 +123,7 @@ body{
 
 .about-text p{
     line-height: 1.7;
-    color: #444;
+    color: var(--color-text-soft);
 }
 
 #p-bold{
@@ -134,7 +134,7 @@ body{
 #about-content-div{
     width: 80px;
     height: 2px;
-    background-color: #8fd4a7;
+    background-color: var(--color-primary);
     margin: 20px 0;
 }
 
@@ -149,7 +149,7 @@ body{
 .icon-box{
     width: 60px;
     height: 60px;
-    background-color: #68f982;
+    background-color: var(--color-primary);
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -162,7 +162,7 @@ body{
 }
 
 .countries{
-    color: #68f982;
+    color: var(--color-primary);
     font-weight: bold;
     margin: 0;
 }
@@ -222,181 +222,129 @@ body{
     object-position: top center;
 }
 
-/*-------MISION Y VIVION CORPORATIVA---------*/
+/*-------MISION Y VISION CORPORATIVA---------*/
 
-#panel{
- width: 100%;
- max-width: 1200px;
- margin: 50px auto;
- padding: 0 20px;
- display:flex;
- gap: 30px;
- justify-content: space-between;;
- align-items: stretch;
- flex-wrap:  wrap;  
+.mission-vision-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 50px auto 80px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
 }
 
-/*------TARJETAS----*/
-
-#panel .panel{
-  flex:1;
-  min-width:320px;
-  padding: 24px;
-  border-radius: 20px;
-  background-color: #ffffff;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-  transition: .3s;
-  position:relative;
-  overflow:hidden;
-}
-  
-
-.panel-content{
-   display:flex;
-   justify-content: space-between;
-   align-items: center;
-   gap: 20px;
-}
-
-.panel-info{
-    flex:2;
-}
-
-.panel-image{
- flex:1;
- display:flex;
- justify-content:center;
- align-items:center;
-
- 
-}
-
-.panel-image img{
- width:140px;
- height:auto;
- object-fit:contain;
-}
-
-#panel .panel:hover{
- transform:translateY(-5px);
-}
-
-/*-----TITULOS*------*/
-
-#panel .panel h2{
-font-size: 1.8rem;
-margin-bottom: 12px;
-}
-
-/*-------TEXTO-------*/
-
-#panel .panel p{
- line-height: 1.5;
- font-size: 1rem;
- padding: 15px;   
-}
-
-/*-------ICONOS--------*/
-
-#panel .icon-box{
- width:60px;
- height:60px;
- display:flex;
- justify-content:center;
- align-items:center;
- font-size:1.8rem;
- border-radius:50%;
- margin-bottom:20px;
- background-color: #143B64;
-}
-
-/*------LINEA------*/
-
-#panel .panel-line{
- width:70px;
- height:4px;
- border-radius:10px;
- margin-bottom:20px;
- background-color:#F4C524; 
-
-}
-
-/*--------MISION-------*/
-
-
-#panel .mision-panel{
-  padding: 24px;
-  border-radius: 20px;
-  border-bottom:6px solid #7CBF3F;
-
-}
- 
-#panel .mision-panel .icon-box{
-    background-color: #F4C524;
-}
-
-#panel .mision-panel .panel-line{
- background-color: #F4C524;
-
-}
-
-/*------VISION------*/
-
-#panel .vision-panel{
- border-bottom: 6px solid #F4C524;
- background: linear-gradient(
-   135deg,
-   #f2f7e6,
-   #d9f3c0
-   
-);
-color: black; 
-}
-
-#panel .vision-panel .line{
-
- background-color: #F4C524;   
-}
-
-#panel .vision-panel h2{
-  color: black;  
-}
-
-/*-------RESPONSIVE--------*/
-
-@media(max-width: 768px){
-  #panel{
-     flex-direction: column;
-  }  
-}
-
-.panel-content{
- flex-direction:column;
- text-align:center;
-}
-
-.panel-image img{
- width:100px;
-}
-
-.panel-line{
- margin:auto;
- margin-bottom:20px;
-}
-
-.panel{
+.panel-card {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 28px;
+    border-radius: 24px;
     overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.panel-image{
+.panel-card:hover {
+    transform: translateY(-5px);
+}
+
+.mission-card {
+    background: var(--color-white);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-bottom: 4px solid var(--color-accent-yellow);
+}
+
+.vision-card {
+    background: linear-gradient(135deg, var(--color-surface-vision), var(--color-surface-vision-soft));
+    box-shadow: 0 12px 28px rgba(112, 192, 79, 0.12);
+    border-bottom: 4px solid var(--color-primary);
+}
+
+.panel-card__badge {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    font-size: 1.25rem;
+    margin-bottom: 18px;
+    color: var(--color-white);
+}
+
+.mission-card .panel-card__badge {
+    background: var(--color-accent-yellow);
+}
+
+.vision-card .panel-card__badge {
+    background: var(--color-primary);
+}
+
+.panel-card h2 {
+    font-size: 1.7rem;
+    margin: 0 0 10px;
+    color: var(--color-primary);
+}
+
+.panel-card__line {
+    width: 40px;
+    height: 4px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+}
+
+.mission-card .panel-card__line {
+    background: var(--color-accent-yellow);
+}
+
+.vision-card .panel-card__line {
+    background: var(--color-primary);
+}
+
+.panel-card p {
+    line-height: 1.7;
+    font-size: 1rem;
+    color: var(--color-text-soft);
+    margin: 0;
+    padding: 0;
+    flex: 1;
+}
+
+.panel-card__illustration {
     position: absolute;
+    right: 16px;
+    bottom: 16px;
+    width: 130px;
+    opacity: 0.82;
+    pointer-events: none;
+    z-index: 0;
+}
 
-    right: 20px;
-    bottom: 20px;
-
-    width: 120px;
+.panel-card__illustration img {
+    width: 100%;
     height: auto;
+    display: block;
+}
 
-    opacity: 0.9;
+.panel-card > *:not(.panel-card__illustration) {
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .mission-vision-section {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-card {
+        padding: 24px;
+    }
+
+    .panel-card__illustration {
+        width: 96px;
+        opacity: 0.6;
+    }
 }

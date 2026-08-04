@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="../assets/styles/variables.css">
+  <link rel="stylesheet" href="../assets/styles/nosotros.css">
+
+  <link rel="stylesheet" href="../assets/styles/navbar.css">
+  <link rel="stylesheet" href="../assets/styles/footer.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/styles/rastreo.css">
+  <title>Rastreo de envíos | Generation Express</title>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <main>
+    <!-- TITULO Y TEXTO -->
+    <section class="text-center mt-5">
+      <h2 id="title" class="tracking-title">Rastrea tu envio</h2>
+      <p id="subtitle">Consulta el estado de tu paquete en tiempo real ingresando tu número de guía</p>
+    </section>
+
+    <!-- FORM Y BUTTON -->
+    <section class="text-center mt-5">
+      <div class="search-container">
+        <form id="tracking-form" class="search-inner-container">
+          <label
+              class="visually-hidden"
+              for="tracking-input">
+            Número de guía
+          </label>
+          <input
+              id="tracking-input"
+              type="text"
+              placeholder="Ej. TRK-985632147"
+              autocomplete="off">
+          <button
+              id="tracking-button"
+              type="submit"
+              class="btn btn-primary">
+              Rastrear
+          </button>
+        </form>
+      </div>
+      <p id="tracking-error" class="tracking-error" role="alert" hidden></p>
+    </section>
+
+    <!-- VENTAJAS  -->
+    <section class="mt-5 text-center">
+      <div class="advantages">
+        <div>
+          <i class="bi bi-lightning-charge" style="font-size: 20px; color: #70c04f;"></i>
+          <p>Actualizacion en tiempo real</p>
+        </div>
+        <div class="vr"></div>
+        <div>
+          <i class="bi bi-globe-americas" style="font-size: 20px; color: #70c04f;"></i>
+          <p>Corbetura nacional e internacional</p>
+        </div>
+        <div class="vr"></div>
+        <div>
+          <i class="bi bi-shield-check" style="font-size: 20px; color: #70c04f;"></i>
+          <p>Seguimiento seguro</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMAGEN  -->
+    <section class="mt-5">
+      <img src="/assets/images/estados_envio.png" alt="imagen-rastreo"
+        class="mx-auto d-block rastreo-img">
+    </section>
+  </main>
+  <div id="footer-placeholder"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/components/load-components.js"></script>
+  <script src="/js/rastreo/tracking-api.js"></script>
+  <script src="/js/rastreo/rastreo.js"></script>
+</body>
+</html>

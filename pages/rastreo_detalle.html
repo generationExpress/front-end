@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="../assets/styles/navbar.css">
+  <link rel="stylesheet" href="../assets/styles/footer.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="../assets/styles/rastreo_detalle.css">
+  <title>Detalle rastreo de envíos | Generation Express</title>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <main class="tracking-page">
+
+    <!-- ============================================================
+         ESTADO: CARGANDO
+         Visible mientras se espera la respuesta simulada/real.
+    ============================================================= -->
+    <section class="state-panel" id="loadingState">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Buscando información de tu envío…</p>
+    </section>
+
+    <!-- ============================================================
+         ESTADO: NO ENCONTRADO
+         Visible cuando la guía no existe en la respuesta.
+    ============================================================= -->
+    <section class="state-panel" id="notFoundState" hidden>
+      <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+      <p id="notFoundMessage">No encontramos ningún envío con la guía <strong id="notFoundNumber"></strong>.</p>
+      <p class="state-panel-hint" id="notFoundHint">Verifica el número e inténtalo de nuevo.</p>
+      <a href="rastreo.html" class="btn btn-primary">Volver a rastrear</a>
+    </section>
+
+    <!-- ============================================================
+         CONTENIDO REAL: se muestra solo cuando ya hay datos
+    ============================================================= -->
+    <div id="trackingContent" hidden>
+
+      <!-- SECCIÓN: LÍNEA DE TIEMPO Y NÚMERO DE GUÍA
+           data-status en la sección controla el color de acento de
+           todo el bloque (timeline + badge). Valores esperados desde
+           JS: "pendiente" | "en-transito" | "entregado" -->
+      <section class="tracking-timeline" id="trackingTimeline" data-status="en-transito">
+
+        <div class="timeline-title-badge">
+          <div class="tracking-info">
+            <span class="tracking-label">Número de guía</span>
+            <h1 class="tracking-number" id="trackingNumber">TRK-556465464665</h1>
+          </div>
+
+          <div class="badge-container" id="statusBadge">
+            <i class="bi bi-truck" id="statusIcon" aria-hidden="true"></i>
+            <span id="statusLabel">En tránsito</span>
+          </div>
+        </div>
+
+        <!-- TIMELINE: ol porque el orden de los pasos importa.
+             data-step identifica cada paso para que el JS lo llene
+             sin depender del orden en el que vengan en el JSON. -->
+        <ol class="timeline-container" id="timelineContainer">
+
+          <li class="step-container" data-step="pendiente">
+            <div class="timeline-step">
+              <i class="bi bi-check-lg" aria-hidden="true"></i>
+              <span class="present-figure"></span>
+            </div>
+            <div class="step-info">
+              <span class="step-name">Pedido recibido</span>
+              <span class="step-date"></span>
+            </div>
+          </li>
+
+          <li class="step-container" data-step="en-transito">
+            <div class="timeline-step">
+              <i class="bi bi-check-lg" aria-hidden="true"></i>
+              <span class="present-figure"></span>
+            </div>
+            <div class="step-info">
+              <span class="step-name">En tránsito</span>
+              <span class="step-date"></span>
+            </div>
+          </li>
+
+          <li class="step-container" data-step="entregado">
+            <div class="timeline-step">
+              <i class="bi bi-check-lg" aria-hidden="true"></i>
+              <span class="present-figure"></span>
+            </div>
+            <div class="step-info">
+              <span class="step-name">Entregado</span>
+              <span class="step-date"></span>
+            </div>
+          </li>
+
+        </ol>
+      </section>
+
+      <!-- SECCIÓN: DETALLES DE ENTREGA -->
+      <section class="tracking-details">
+        <h2>Detalles de Entrega</h2>
+        <dl class="details-list" id="deliveryDetails">
+          <div class="details-item">
+            <dt>Fecha y hora estimada</dt>
+            <dd id="detailEstimatedDate">—</dd>
+          </div>
+          <div class="details-item" id="detailReceivedByRow">
+            <dt>Recibido por</dt>
+            <dd id="detailReceivedBy">—</dd>
+          </div>
+          <div class="details-item">
+            <dt>Origen</dt>
+            <dd id="detailOrigin">—</dd>
+          </div>
+          <div class="details-item">
+            <dt>Destino</dt>
+            <dd id="detailDestination">—</dd>
+          </div>
+          <div class="details-item">
+            <dt>Remitente</dt>
+            <dd id="detailSender">—</dd>
+          </div>
+          <div class="details-item">
+            <dt>Destinatario</dt>
+            <dd id="detailRecipient">—</dd>
+          </div>
+          <div class="details-item">
+            <dt>Peso</dt>
+            <dd id="detailWeight">—</dd>
+          </div>
+          <div class="details-item">
+            <dt>Costo de envío</dt>
+            <dd id="detailCost">—</dd>
+          </div>
+          <div class="details-item" id="detailDriverRow">
+            <dt>Conductor asignado</dt>
+            <dd id="detailDriver">—</dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/components/load-components.js"></script>
+  <script src="../js/rastreo/tracking-api.js"></script>
+  <script src="../js/rastreo/rastreo_detalle.js"></script>
+</body>
+</html>

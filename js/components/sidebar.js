@@ -39,7 +39,7 @@ function renderSidebar() {
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="./../admin/rutas.html">
         <i class='bi bi-geo-alt'></i>
         <span class="links_name">Rutas</span>
       </a>

@@ -1,15 +1,15 @@
 body{
-    background-color: #FAFAFA;
+    background-color: var(--color-surface-light);
     font-family: "Ubuntu", sans-serif;     
     font-style: normal;   
 }
 
 .contact-section {
-    background: #F8F9FA;
+    background: var(--color-surface-soft);
 }
 
 .contact-subtitle {
-    color: #67c587;
+    color: var(--color-primary);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -35,7 +35,7 @@ body{
 }
 
 .contact-item i {
-    color: #67c587;
+    color: var(--color-primary);
     font-size: 1.2rem;
 }
 
@@ -52,13 +52,13 @@ body{
 }
 
 .contact-input:focus {
-    border-color: #67c587;
-    box-shadow: 0 0 0 .25rem rgba(103,197,135,.2);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 .25rem rgba(112, 192, 79, .2);
 }
 
 .contact-btn {
-    background: #67c587;
-    color: white;
+    background: var(--color-primary);
+    color: var(--color-white);
     padding: 14px 32px;
     border-radius: 10px;
     font-weight: 600;
@@ -67,8 +67,8 @@ body{
 }
 
 .contact-btn:hover {
-    background: #55b977;
-    color: white;
+    background: var(--color-primary-hover);
+    color: var(--color-white);
 }
 
 @media (max-width: 768px) {

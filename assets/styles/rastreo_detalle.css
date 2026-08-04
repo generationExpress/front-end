@@ -1,0 +1,394 @@
+/* =========================================================
+   TOKENS DE ESTADO
+   Un solo lugar para los 3 colores de estado. El badge y el
+   timeline los heredan vía variables, así que el JS solo
+   necesita cambiar el atributo data-status del <section>.
+========================================================= */
+:root {
+  --color-neutral: #ccc;
+  --color-neutral-bg: #F3F4F6;
+
+  --color-pending: #D97706;
+  --color-pending-bg: #FFF7E6;
+
+  --color-transit: #70c04f;
+  --color-transit-bg: #EDF8E7;
+
+  --color-delivered: #3F7D2C;
+  --color-delivered-bg: #E7F3E1;
+
+  --color-cancelled: #DC2626;
+  --color-cancelled-bg: #FEF2F2;
+
+  --text-main: #111827;
+  --text-muted: #6B7280;
+
+  --radius-card: 8px;
+}
+
+body {
+  font-family: "Ubuntu", sans-serif;
+}
+
+/* Bootstrap trae azul por defecto en .btn-primary; lo llevamos a la
+   gama de verde de la marca. */
+.btn-primary {
+  --bs-btn-bg: #70c04f;
+  --bs-btn-border-color: #70c04f;
+  --bs-btn-hover-bg: #5fa941;
+  --bs-btn-hover-border-color: #5fa941;
+  --bs-btn-active-bg: #4f8f37;
+  --bs-btn-active-border-color: #4f8f37;
+  --bs-btn-focus-shadow-rgb: 112, 192, 79;
+}
+
+.tracking-page {
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+/* =========================================================
+   BLOQUE: NÚMERO DE GUÍA + TIMELINE
+   El color de acento de toda la sección sale de --status-color
+   / --status-bg, definidos según data-status.
+========================================================= */
+.tracking-timeline {
+  --status-color: var(--color-transit);
+  --status-bg: var(--color-transit-bg);
+
+  margin: 1.5rem 1rem;
+  background-color: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--radius-card);
+  padding: 1.25rem 1rem 1.75rem;
+}
+
+.tracking-timeline[data-status="pendiente"] {
+  --status-color: var(--color-pending);
+  --status-bg: var(--color-pending-bg);
+}
+
+.tracking-timeline[data-status="en-transito"] {
+  --status-color: var(--color-transit);
+  --status-bg: var(--color-transit-bg);
+}
+
+.tracking-timeline[data-status="entregado"] {
+  --status-color: var(--color-delivered);
+  --status-bg: var(--color-delivered-bg);
+}
+
+.tracking-timeline[data-status="cancelado"] {
+  --status-color: var(--color-cancelled);
+  --status-bg: var(--color-cancelled-bg);
+}
+
+.timeline-title-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .75rem;
+  margin-bottom: 2rem;
+}
+
+.tracking-label {
+  display: block;
+  font-size: .75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+
+.tracking-number {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.badge-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--status-color);
+  background: var(--status-bg);
+  border-radius: 999px;
+  padding: 8px 14px;
+  white-space: nowrap;
+}
+
+.badge-container i {
+  font-size: 1rem;
+}
+
+/* =========================================================
+   TIMELINE
+   Cada paso vive en un <li> (columna: círculo arriba, texto
+   debajo). La línea conectora se dibuja con ::after,
+   posicionada de forma absoluta a la altura del centro del
+   círculo, para que estire con flex sin anchos fijos en px.
+========================================================= */
+.timeline-container {
+  display: flex;
+  align-items: flex-start;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step-container {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-inline: 4px;
+}
+
+/* línea conectora entre este paso y el siguiente */
+.step-container:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 1rem; /* mitad de la altura del círculo (2rem) */
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-neutral);
+  z-index: 0;
+}
+
+.step-container.completed:not(:last-child)::after {
+  background-color: var(--status-color);
+}
+
+.timeline-step {
+  position: relative;
+  z-index: 1;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-neutral);
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+/* Por defecto (paso "upcoming"): ni check ni punto */
+.timeline-step i,
+.timeline-step .present-figure {
+  display: none;
+}
+
+.step-container.completed .timeline-step {
+  border-color: var(--status-color);
+  background-color: var(--status-color);
+}
+
+.step-container.completed .timeline-step i {
+  display: block;
+  color: #fff;
+  font-size: .9rem;
+}
+
+.step-container.present .timeline-step {
+  border-color: var(--status-color);
+}
+
+.step-container.present .timeline-step .present-figure {
+  display: block;
+}
+
+.present-figure {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  background-color: var(--status-color);
+}
+
+.step-info {
+  margin-top: .6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.step-name {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.step-container:not(.completed):not(.present) .step-name {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.step-date {
+  font-size: .68rem;
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   BLOQUE: DETALLES DE ENTREGA
+========================================================= */
+.tracking-details {
+  margin: 1rem;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--radius-card);
+  padding: 1.5rem 1rem;
+}
+
+.tracking-details h2 {
+  font-size: 1.1rem;
+  margin-bottom: 1.25rem;
+}
+
+.details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+}
+
+.details-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.details-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.details-item dt {
+  font-size: .75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.details-item dd {
+  font-size: .95rem;
+  font-weight: 500;
+  color: var(--text-main);
+  margin: 0;
+}
+
+/* =========================================================
+   BREAKPOINTS
+   Mobile first: todo lo de arriba ya funciona en pantallas
+   chicas. A partir de tablet aprovechamos el ancho extra.
+========================================================= */
+@media (min-width: 768px) {
+  .tracking-timeline {
+    margin: 2rem auto;
+    padding: 2rem 2.5rem 2.5rem;
+  }
+
+  .timeline-title-badge {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .tracking-number {
+    font-size: 1.3rem;
+  }
+
+  .step-name {
+    font-size: .85rem;
+  }
+
+  .step-date {
+    font-size: .75rem;
+  }
+
+  .tracking-details {
+    margin: 1.5rem auto;
+    padding: 2rem 2.5rem;
+  }
+
+  .details-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 2rem;
+  }
+
+  .details-item {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tracking-timeline,
+  .tracking-details {
+    padding-inline: 3rem;
+  }
+}
+
+/* Reduce animación para quien lo prefiera */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* =========================================================
+   ESTADOS: CARGANDO / NO ENCONTRADO
+========================================================= */
+.state-panel {
+  max-width: 480px;
+  margin: 3rem auto;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.state-panel i {
+  font-size: 2rem;
+  color: var(--color-pending);
+  margin-bottom: .75rem;
+  display: inline-block;
+}
+
+.state-panel p {
+  margin: 0 0 .5rem;
+}
+
+.state-panel-hint {
+  font-size: .85rem;
+  margin-bottom: 1.25rem !important;
+}
+
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 auto .75rem;
+  border: 3px solid #E5E7EB;
+  border-top-color: var(--color-transit);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* fila oculta hasta que el dato aplique (ej. "Recibido por" antes de
+   entregar, o "Conductor asignado" antes de asignar uno) */
+.details-item.is-hidden {
+  display: none;
+}
