@@ -375,7 +375,8 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* fila "Recibido por" oculta hasta que el estado sea "entregado" */
-#detailReceivedByRow.is-hidden {
+/* fila oculta hasta que el dato aplique (ej. "Recibido por" antes de
+   entregar, o "Conductor asignado" antes de asignar uno) */
+.details-item.is-hidden {
   display: none;
 }

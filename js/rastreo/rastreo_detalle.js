@@ -1,11 +1,22 @@
-// Orden fijo de los 3 estados posibles. Se usa para decidir qué
-// pasos del timeline van "completed" / "present" / sin clase.
+// Orden fijo de los 3 estados que se muestran en el timeline.
 const STATUS_ORDER = ["pendiente", "en-transito", "entregado"];
 
 const STATUS_META = {
   "pendiente": { label: "Pendiente", icon: "bi-hourglass-split" },
   "en-transito": { label: "En tránsito", icon: "bi-truck" },
-  "entregado": { label: "Entregado", icon: "bi-check-circle" }
+  "entregado": { label: "Entregado", icon: "bi-check-circle" },
+  "cancelado": { label: "Cancelado", icon: "bi-x-circle" }
+};
+
+// El backend maneja más estados (PENDING, ASSIGNED, IN_TRANSIT,
+// DELIVERED, CANCELLED) de los que el timeline necesita distinguir.
+// Este mapa los reduce a los 3 (+cancelado) que la UI conoce.
+const SHIPMENT_STATUS_MAP = {
+  PENDING: "pendiente",
+  ASSIGNED: "pendiente",
+  IN_TRANSIT: "en-transito",
+  DELIVERED: "entregado",
+  CANCELLED: "cancelado"
 };
 
 // Referencias a los 3 bloques que se alternan según el estado de la carga
@@ -25,14 +36,14 @@ async function init() {
 
   showLoading();
 
-  const data = await getTrackingData(trackingNumber);
+  const order = await getOrderData(trackingNumber);
 
-  if (!data) {
+  if (!order) {
     showNotFound({ trackingNumber });
     return;
   }
 
-  renderTracking(data);
+  renderTracking(mapOrderToViewModel(order));
   showContent();
 }
 
@@ -48,7 +59,7 @@ function getTrackingNumberFromURL() {
  * está —por ejemplo, si el usuario recargó la página o entró
  * directo con la URL— vuelve a pedirlo con TrackingAPI.
  */
-async function getTrackingData(trackingNumber) {
+async function getOrderData(trackingNumber) {
   const cacheKey = `tracking:${trackingNumber.toUpperCase()}`;
   const cached = sessionStorage.getItem(cacheKey);
 
@@ -60,13 +71,83 @@ async function getTrackingData(trackingNumber) {
     }
   }
 
-  const data = await TrackingAPI.fetchTracking(trackingNumber);
+  const order = await TrackingAPI.fetchTracking(trackingNumber);
 
-  if (data) {
-    sessionStorage.setItem(cacheKey, JSON.stringify(data));
+  if (order) {
+    sessionStorage.setItem(cacheKey, JSON.stringify(order));
   }
 
-  return data;
+  return order;
+}
+
+/**
+ * Traduce el JSON tal como lo entrega el backend a la forma que la
+ * vista necesita para pintarse. Si el día de mañana el backend
+ * cambia nombres de campos, este es el único lugar que hay que
+ * tocar — el resto del archivo no sabe nada de la forma real del
+ * JSON.
+ */
+function mapOrderToViewModel(order) {
+  const status = resolveCurrentStatus(order);
+  const history = Array.isArray(order.statusHistory) ? order.statusHistory : [];
+
+  const inTransitDate = findHistoryDate(history, "IN_TRANSIT");
+  const deliveredDate = order.delivery
+    ? order.delivery.deliveredAt
+    : findHistoryDate(history, "DELIVERED");
+
+  return {
+    trackingNumber: order.trackingNumber,
+    status,
+    origin: order.route ? order.route.origin : "Por asignar",
+    destination: order.route ? order.route.destination : "Por asignar",
+    estimatedDelivery: order.estimatedDeliveryDate,
+    receivedBy: order.delivery ? order.delivery.receiverName : null,
+    weightKg: order.weightKg,
+    totalCost: order.totalCost,
+    sender: formatPersonName(order.sender),
+    recipient: formatPersonName(order.recipient),
+    driver: order.driver ? formatPersonName(order.driver.user) : null,
+    timeline: [
+      { step: "pendiente", label: "Pedido recibido", date: order.requestDate },
+      { step: "en-transito", label: "En tránsito", date: inTransitDate },
+      { step: "entregado", label: "Entregado", date: deliveredDate }
+    ]
+  };
+}
+
+/**
+ * El estado "oficial" de la orden (order.status) refleja su estado
+ * administrativo (ej. "ASSIGNED" = ya tiene conductor asignado),
+ * que no siempre coincide con el estado más reciente del historial
+ * de envío. Para el timeline usamos, en este orden de prioridad:
+ * 1) si hay `delivery`, ya se entregó, sin importar lo demás.
+ * 2) si hay historial, el registro más reciente por `updatedAt`.
+ * 3) si no hay historial todavía, el `order.status` de la orden.
+ */
+function resolveCurrentStatus(order) {
+  if (order.delivery) return "entregado";
+
+  const history = Array.isArray(order.statusHistory) ? order.statusHistory : [];
+
+  if (history.length > 0) {
+    const latest = [...history].sort(
+      (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+    )[0];
+    return SHIPMENT_STATUS_MAP[latest.shipmentStatus] || "pendiente";
+  }
+
+  return SHIPMENT_STATUS_MAP[order.status] || "pendiente";
+}
+
+function findHistoryDate(history, shipmentStatus) {
+  const entry = history.find((item) => item.shipmentStatus === shipmentStatus);
+  return entry ? entry.updatedAt : null;
+}
+
+function formatPersonName(person) {
+  if (!person) return null;
+  return `${person.firstName} ${person.lastName}`.trim();
 }
 
 function renderTracking(data) {
@@ -96,6 +177,8 @@ function renderTimeline(data) {
     li.classList.remove("completed", "present");
     li.removeAttribute("aria-current");
 
+    // Si la orden se canceló, no marcamos ningún paso futuro como
+    // completado/actual más allá de donde se quedó.
     if (stepIndex < currentIndex) {
       li.classList.add("completed");
     } else if (stepIndex === currentIndex) {
@@ -116,14 +199,38 @@ function renderDetails(data) {
 
   document.getElementById("detailOrigin").textContent = data.origin || "—";
   document.getElementById("detailDestination").textContent = data.destination || "—";
+  document.getElementById("detailSender").textContent = data.sender || "—";
+  document.getElementById("detailRecipient").textContent = data.recipient || "—";
+  document.getElementById("detailWeight").textContent = formatWeight(data.weightKg);
+  document.getElementById("detailCost").textContent = formatCurrency(data.totalCost);
 
-  const receivedByRow = document.getElementById("detailReceivedByRow");
-  if (data.status === "entregado" && data.receivedBy) {
-    receivedByRow.classList.remove("is-hidden");
+  toggleRow("detailReceivedByRow", data.status === "entregado" && !!data.receivedBy, () => {
     document.getElementById("detailReceivedBy").textContent = data.receivedBy;
-  } else {
-    receivedByRow.classList.add("is-hidden");
-  }
+  });
+
+  toggleRow("detailDriverRow", !!data.driver, () => {
+    document.getElementById("detailDriver").textContent = data.driver;
+  });
+}
+
+function toggleRow(rowId, shouldShow, fillContent) {
+  const row = document.getElementById(rowId);
+  row.classList.toggle("is-hidden", !shouldShow);
+  if (shouldShow) fillContent();
+}
+
+function formatWeight(weightKg) {
+  if (weightKg === null || weightKg === undefined) return "—";
+  return `${weightKg} kg`;
+}
+
+function formatCurrency(amount) {
+  if (amount === null || amount === undefined) return "—";
+  return new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0
+  }).format(amount);
 }
 
 function formatDateTime(isoString) {
