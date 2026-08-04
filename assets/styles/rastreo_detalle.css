@@ -11,11 +11,11 @@
   --color-pending: #D97706;
   --color-pending-bg: #FFF7E6;
 
-  --color-transit: #2563EB;
-  --color-transit-bg: #EAF4FF;
+  --color-transit: #70c04f;
+  --color-transit-bg: #EDF8E7;
 
-  --color-delivered: #16A34A;
-  --color-delivered-bg: #ECFDF3;
+  --color-delivered: #3F7D2C;
+  --color-delivered-bg: #E7F3E1;
 
   --color-cancelled: #DC2626;
   --color-cancelled-bg: #FEF2F2;
@@ -28,6 +28,18 @@
 
 body {
   font-family: "Ubuntu", sans-serif;
+}
+
+/* Bootstrap trae azul por defecto en .btn-primary; lo llevamos a la
+   gama de verde de la marca. */
+.btn-primary {
+  --bs-btn-bg: #70c04f;
+  --bs-btn-border-color: #70c04f;
+  --bs-btn-hover-bg: #5fa941;
+  --bs-btn-hover-border-color: #5fa941;
+  --bs-btn-active-bg: #4f8f37;
+  --bs-btn-active-border-color: #4f8f37;
+  --bs-btn-focus-shadow-rgb: 112, 192, 79;
 }
 
 .tracking-page {
