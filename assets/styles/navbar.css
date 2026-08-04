@@ -18,6 +18,17 @@
   letter-spacing: -0.3px;
   color: #1a1a1a;
   line-height: 1.2;
+  align-items: flex-start;
+}
+
+.navbar-brand .d-flex {
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.navbar-logo {
+  height: 36px;
+  width: auto;
 }
 
 .navbar-brand .brand-green {
