@@ -1,4 +1,4 @@
- .custom-navbar {
+.custom-navbar {
   transition: all 0.3s ease;
   padding: 15px 0;
   background-color: var(--color-white);
@@ -10,28 +10,37 @@
   background-color: var(--color-white);
 }
 
+/* Ahora el navbar-brand es una fila: [logo] [columna de texto].
+   Antes era una columna que apilaba TODO (logo+texto y luego el
+   tagline), por eso el tagline quedaba debajo del logo. */
 .navbar-brand {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--color-text-dark);
+}
+
+/* Columna que agrupa solo el nombre y el tagline, separada del logo */
+.brand-text {
+  display: flex;
   flex-direction: column;
+  line-height: 1.2;
+}
+
+.brand-name {
   font-weight: 700;
   font-size: 1.65rem;
   letter-spacing: -0.3px;
-  color: var(--color-text-dark);
-  line-height: 1.2;
-  align-items: flex-start;
-}
-
-.navbar-brand .d-flex {
-  align-items: center;
-  gap: 0.6rem;
 }
 
 .navbar-logo {
   height: 36px;
   width: auto;
+  flex-shrink: 0;
 }
 
-.navbar-brand .brand-green {
+.brand-name .brand-green {
   color: var(--color-primary);
 }
 
@@ -102,7 +111,7 @@
         padding: 12px 0;
     }
 
-    .navbar-brand {
+    .brand-name {
         font-size: 1.35rem;
     }
 
@@ -138,7 +147,7 @@
 }
 
 @media (max-width: 575.98px) {
-    .navbar-brand {
+    .brand-name {
         font-size: 1.15rem;
     }
 
