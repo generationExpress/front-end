@@ -40,6 +40,9 @@ body {
   --bs-btn-active-bg: #4f8f37;
   --bs-btn-active-border-color: #4f8f37;
   --bs-btn-focus-shadow-rgb: 112, 192, 79;
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #70c04f;
+  --bs-btn-disabled-border-color: #70c04f;
 }
 
 .tracking-page {

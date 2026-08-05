@@ -19,31 +19,34 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/styles/variables.css">
+    <link rel="stylesheet" href="../assets/styles/navbar.css">
+    <link rel="stylesheet" href="../assets/styles/footer.css">
     <link rel="stylesheet" href="../assets/styles/login.css">
-    
+
 </head>
 <body>
     <div id="navbar-placeholder"></div>
     
-    <div class="form-container">
-        <h2>Crear Cuenta</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="correo" class="form-label">Correo Electrónico</label>
-                <input type="email" id="correo" class="form-control" placeholder="ejemplo@correo.com" required>
-                <div class="error-message" id="errorCorreo"></div>
-            </div>
+    <div class="page-content">
+        <div class="form-container">
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="correo" class="form-label">Correo Electrónico</label>
+                    <input type="email" id="correo" class="form-control" placeholder="ejemplo@correo.com" required>
+                    <div class="error-message" id="errorCorreo"></div>
+                </div>
 
-            <div class="form-group">
-                <label for="contrasena" class="form-label">Contraseña</label>
-                <input type="password" id="contrasena" class="form-control" placeholder="Ingrese su contraseña" required>
-                <div class="error-message" id="errorContrasena"></div>
-            </div>
+                <div class="form-group">
+                    <label for="contrasena" class="form-label">Contraseña</label>
+                    <input type="password" id="contrasena" class="form-control" placeholder="Ingrese su contraseña" required>
+                    <div class="error-message" id="errorContrasena"></div>
+                </div>
 
-            <button type="submit" class="btn-login">Iniciar Sesión</button>
-            <button type="submit" class="btn-login">Crear Cuenta</button>
-            <div class="success-message" id="successMessage">¡Datos guardados correctamente!</div>
-        </form>
+                <button type="submit" class="btn-login">Iniciar Sesión</button>
+                <div class="success-message" id="successMessage">¡Datos guardados correctamente!</div>
+            </form>
+        </div>
     </div>
     <div id="footer-placeholder"></div>
 
