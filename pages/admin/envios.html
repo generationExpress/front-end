@@ -119,11 +119,11 @@
                             </div>
                             <div class="col-md-4 col-lg-3 d-flex gap-2">
                                 <select class="form-select flex-grow-1 text-muted shadow-none">
-                                    <option>En tránsito</option>
-                                    <option>Entregados</option>
-                                    <option>Pendientes</option>
-                                    <option>Retrasados</option>
-                                    <option>Todos los estados</option>
+                                    <option value="todos">Todos los estados</option>
+                                    <option value="en tránsito">En tránsito</option>
+                                    <option value="entregados">Entregados</option>
+                                    <option value="pendientes">Pendientes</option>
+                                    <option value="retrasados">Retrasados</option>
                                 </select>
 
                             </div>
@@ -136,7 +136,7 @@
                                         <th class="text-muted pb-3">Tracking</th>
                                         <th class="text-muted pb-3">Cliente </th>
                                         <th class="text-muted pb-3">Ruta </th>
-                                        <th class="text-muted pb-3">Conductor</i></th>
+                                        <th class="text-muted pb-3">Conductor</th>
                                         <th class="text-muted pb-3">Vehículo </th>
                                         <th class="text-muted pb-3">Peso </th>
                                         <th class="text-muted pb-3">Estado </th>
@@ -145,36 +145,186 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><a href="#"
-                                                class="fw-bold text-primary text-decoration-none">LOG-2024-<br>001</a>
-                                        </td>
+                                    <tr data-status="en tránsito">
+                                        <td><a href="#" class="fw-bold text-primary text-decoration-none">LOG-2024-<br>001</a></td>
                                         <td>
                                             <div class="fw-bold text-dark">Electrónica Sur S.L.</div>
                                             <div class="text-muted small">+34 612 345 678</div>
                                         </td>
-                                        <td>Madrid <i class="bi bi-chevron-right mx-1 small text-muted"></i> Barcelona
-                                        </td>
+                                        <td>Madrid <i class="bi bi-chevron-right mx-1 small text-muted"></i> Barcelona</td>
                                         <td>Carlos García</td>
                                         <td><span class="badge bg-light text-dark border px-2 py-1">MV-001</span></td>
                                         <td>2,500<br>kg</td>
-                                        <td><span
-                                                class="badge badge-soft bg-primary bg-opacity-10 text-primary fw-bold"><i
-                                                    class="bi bi-truck me-1"></i> En Tránsito</span></td>
+                                        <td><span class="badge badge-soft bg-primary bg-opacity-10 text-primary fw-bold"><i class="bi bi-truck me-1"></i> En Tránsito</span></td>
                                         <td class="text-muted">2024-01-15</td>
                                         <td>
-                                            <button
-                                                class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i
-                                                    class="bi bi-eye"></i></button>
-                                            <button
-                                                class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i
-                                                    class="bi bi-pencil-square"></i></button>
-                                            <button
-                                                class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i
-                                                    class="bi bi-trash"></i></button>
+                                            <button class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i class="bi bi-trash"></i></button>
                                         </td>
                                     </tr>
-
+                                    <tr data-status="entregados">
+                                        <td><a href="#" class="fw-bold text-primary text-decoration-none">LOG-2024-<br>002</a></td>
+                                        <td>
+                                            <div class="fw-bold text-dark">Moda Levante S.A.</div>
+                                            <div class="text-muted small">+34 963 111 222</div>
+                                        </td>
+                                        <td>Valencia <i class="bi bi-chevron-right mx-1 small text-muted"></i> Sevilla</td>
+                                        <td>Ana Martínez</td>
+                                        <td><span class="badge bg-light text-dark border px-2 py-1">MV-002</span></td>
+                                        <td>1,800<br>kg</td>
+                                        <td><span class="badge badge-soft bg-success bg-opacity-10 text-success fw-bold"><i class="bi bi-check-circle me-1"></i> Entregado</span></td>
+                                        <td class="text-muted">2024-01-14</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr data-status="en tránsito">
+                                        <td><a href="#" class="fw-bold text-primary text-decoration-none">LOG-2024-<br>003</a></td>
+                                        <td>
+                                            <div class="fw-bold text-dark">Distribuciones del Norte</div>
+                                            <div class="text-muted small">+34 981 555 123</div>
+                                        </td>
+                                        <td>Bilbao <i class="bi bi-chevron-right mx-1 small text-muted"></i> Zaragoza</td>
+                                        <td>Javier López</td>
+                                        <td><span class="badge bg-light text-dark border px-2 py-1">MV-003</span></td>
+                                        <td>3,200<br>kg</td>
+                                        <td><span class="badge badge-soft bg-primary bg-opacity-10 text-primary fw-bold"><i class="bi bi-truck me-1"></i> En Tránsito</span></td>
+                                        <td class="text-muted">2024-01-16</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr data-status="pendientes">
+                                        <td><a href="#" class="fw-bold text-primary text-decoration-none">LOG-2024-<br>004</a></td>
+                                        <td>
+                                            <div class="fw-bold text-dark">Farmacéutica Central</div>
+                                            <div class="text-muted small">+34 915 888 999</div>
+                                        </td>
+                                        <td>Madrid <i class="bi bi-chevron-right mx-1 small text-muted"></i> Toledo</td>
+                                        <td>Pedro Sánchez</td>
+                                        <td><span class="badge bg-light text-dark border px-2 py-1">MV-004</span></td>
+                                        <td>950<br>kg</td>
+                                        <td><span class="badge badge-soft bg-warning bg-opacity-10 text-warning fw-bold"><i class="bi bi-clock me-1"></i> Pendiente</span></td>
+                                        <td class="text-muted">2024-01-17</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr data-status="entregados">
+                                        <td><a href="#" class="fw-bold text-primary text-decoration-none">LOG-2024-<br>005</a></td>
+                                        <td>
+                                            <div class="fw-bold text-dark">Alimentos Frescos S.L.</div>
+                                            <div class="text-muted small">+34 954 777 333</div>
+                                        </td>
+                                        <td>Sevilla <i class="bi bi-chevron-right mx-1 small text-muted"></i> Málaga</td>
+                                        <td>Laura Fernández</td>
+                                        <td><span class="badge bg-light text-dark border px-2 py-1">MV-005</span></td>
+                                        <td>4,100<br>kg</td>
+                                        <td><span class="badge badge-soft bg-success bg-opacity-10 text-success fw-bold"><i class="bi bi-check-circle me-1"></i> Entregado</span></td>
+                                        <td class="text-muted">2024-01-13</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr data-status="retrasados">
+                                        <td><a href="#" class="fw-bold text-primary text-decoration-none">LOG-2024-<br>006</a></td>
+                                        <td>
+                                            <div class="fw-bold text-dark">Tecnología y Soluciones</div>
+                                            <div class="text-muted small">+34 932 444 888</div>
+                                        </td>
+                                        <td>Barcelona <i class="bi bi-chevron-right mx-1 small text-muted"></i> Girona</td>
+                                        <td>David Ruiz</td>
+                                        <td><span class="badge bg-light text-dark border px-2 py-1">MV-006</span></td>
+                                        <td>1,150<br>kg</td>
+                                        <td><span class="badge badge-soft bg-danger bg-opacity-10 text-danger fw-bold"><i class="bi bi-exclamation-triangle me-1"></i> Retrasado</span></td>
+                                        <td class="text-muted">2024-01-12</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr data-status="en tránsito">
+                                        <td><a href="#" class="fw-bold text-primary text-decoration-none">LOG-2024-<br>007</a></td>
+                                        <td>
+                                            <div class="fw-bold text-dark">Textil España</div>
+                                            <div class="text-muted small">+34 968 222 111</div>
+                                        </td>
+                                        <td>Murcia <i class="bi bi-chevron-right mx-1 small text-muted"></i> Alicante</td>
+                                        <td>Roberto Gómez</td>
+                                        <td><span class="badge bg-light text-dark border px-2 py-1">MV-007</span></td>
+                                        <td>2,100<br>kg</td>
+                                        <td><span class="badge badge-soft bg-primary bg-opacity-10 text-primary fw-bold"><i class="bi bi-truck me-1"></i> En Tránsito</span></td>
+                                        <td class="text-muted">2024-01-16</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr data-status="entregados">
+                                        <td><a href="#" class="fw-bold text-primary text-decoration-none">LOG-2024-<br>008</a></td>
+                                        <td>
+                                            <div class="fw-bold text-dark">Ferretería Industrial</div>
+                                            <div class="text-muted small">+34 985 666 444</div>
+                                        </td>
+                                        <td>Oviedo <i class="bi bi-chevron-right mx-1 small text-muted"></i> Santander</td>
+                                        <td>Elena Torres</td>
+                                        <td><span class="badge bg-light text-dark border px-2 py-1">MV-008</span></td>
+                                        <td>5,000<br>kg</td>
+                                        <td><span class="badge badge-soft bg-success bg-opacity-10 text-success fw-bold"><i class="bi bi-check-circle me-1"></i> Entregado</span></td>
+                                        <td class="text-muted">2024-01-11</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr data-status="pendientes">
+                                        <td><a href="#" class="fw-bold text-primary text-decoration-none">LOG-2024-<br>009</a></td>
+                                        <td>
+                                            <div class="fw-bold text-dark">Importaciones Globales</div>
+                                            <div class="text-muted small">+34 944 333 222</div>
+                                        </td>
+                                        <td>Bilbao <i class="bi bi-chevron-right mx-1 small text-muted"></i> Madrid</td>
+                                        <td>Miguel Ángel</td>
+                                        <td><span class="badge bg-light text-dark border px-2 py-1">MV-001</span></td>
+                                        <td>1,600<br>kg</td>
+                                        <td><span class="badge badge-soft bg-warning bg-opacity-10 text-warning fw-bold"><i class="bi bi-clock me-1"></i> Pendiente</span></td>
+                                        <td class="text-muted">2024-01-18</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr data-status="retrasados">
+                                        <td><a href="#" class="fw-bold text-primary text-decoration-none">LOG-2024-<br>010</a></td>
+                                        <td>
+                                            <div class="fw-bold text-dark">Construcciones del Sur</div>
+                                            <div class="text-muted small">+34 958 111 999</div>
+                                        </td>
+                                        <td>Granada <i class="bi bi-chevron-right mx-1 small text-muted"></i> Almería</td>
+                                        <td>Antonio Navarro</td>
+                                        <td><span class="badge bg-light text-dark border px-2 py-1">MV-003</span></td>
+                                        <td>6,300<br>kg</td>
+                                        <td><span class="badge badge-soft bg-danger bg-opacity-10 text-danger fw-bold"><i class="bi bi-exclamation-triangle me-1"></i> Retrasado</span></td>
+                                        <td class="text-muted">2024-01-10</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary border-0 rounded-circle action-btn mx-1"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success border-0 rounded-circle action-btn mx-1"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger border-0 rounded-circle action-btn mx-1"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
