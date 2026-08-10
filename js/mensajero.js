@@ -23,6 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalFilas = document.querySelectorAll(".modal-reparto__fila strong");
   const btnConfirmar = document.querySelector(".modal-reparto__btn-confirmar");
 
+  //  obtener datos de la API mock
+
   function cargarShipments() {
     shipments = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
   }
