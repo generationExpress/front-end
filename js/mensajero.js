@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let shipments = [];
 
   // URL de la API (Variable de entorno para desarrollo)
-  const API_URL = "http://localhost:8080/api/v1/route/d1000001-0001-4000-8000-000000000001/orders";
+  const API_URL = "http://localhost:8080/api/v1/route/route-001/orders";
   const API_URL_UPDATE = "http://localhost:8080/api/v1/orderStatus";
   const API_URL_DELIVERY = "http://localhost:8080/api/v1/delivery";
   // URL de la API (Comentada para producción)
