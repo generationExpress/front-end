@@ -367,6 +367,10 @@ body {
   display: inline-block;
 }
 
+.state-panel-error i {
+  color: var(--color-cancelled);
+}
+
 .state-panel p {
   margin: 0 0 .5rem;
 }

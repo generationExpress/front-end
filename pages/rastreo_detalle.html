@@ -43,6 +43,20 @@
     </section>
 
     <!-- ============================================================
+         ESTADO: ERROR
+         Visible cuando la petición falla
+    ============================================================= -->
+
+    <section class="state-panel state-panel-error" id="errorState" hidden>
+      <i class="bi bi-wifi-off" aria-hidden="true"></i>
+      <p>Ocurrió un problema al consultar tu envio.</p>
+      <p class="state-panel-hint">Revisa tu conexión e inténtalo de nuevo.</p>
+      <button type="button" class="btn btn-primary" id="retryButton">
+        Reintentar
+      </button>
+    </section>
+
+    <!-- ============================================================
          CONTENIDO REAL: se muestra solo cuando ya hay datos
     ============================================================= -->
     <div id="trackingContent" hidden>

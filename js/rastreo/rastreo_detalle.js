@@ -24,6 +24,9 @@ const loadingState = document.getElementById("loadingState");
 const notFoundState = document.getElementById("notFoundState");
 const trackingContent = document.getElementById("trackingContent");
 
+const errorState = document.getElementById("errorState");
+const retryButton = document.getElementById("retryButton");
+
 init();
 
 async function init() {
@@ -36,7 +39,14 @@ async function init() {
 
   showLoading();
 
-  const order = await getOrderData(trackingNumber);
+  let order; 
+  try{
+    order = await getOrderData(trackingNumber);
+  } catch (error) {
+    console.log("Error al consultar el rastreo: ", error);
+    showError(); //tengo que crearla
+    return;
+  }
 
   if (!order) {
     showNotFound({ trackingNumber });
@@ -257,12 +267,14 @@ function showLoading() {
   loadingState.hidden = false;
   notFoundState.hidden = true;
   trackingContent.hidden = true;
+  errorState.hidden = true;
 }
 
 function showNotFound({ trackingNumber, noNumber }) {
   loadingState.hidden = true;
   trackingContent.hidden = true;
   notFoundState.hidden = false;
+  errorState.hidden = true;
 
   const messageEl = document.getElementById("notFoundMessage");
   const hintEl = document.getElementById("notFoundHint");
@@ -276,10 +288,18 @@ function showNotFound({ trackingNumber, noNumber }) {
   }
 }
 
+function showError(){
+  loadingState.hidden = true;
+  notFoundState.hidden = true;
+  trackingContent.hidden = true;
+  errorState.hidden = false;
+}
+
 function showContent() {
   loadingState.hidden = true;
   notFoundState.hidden = true;
   trackingContent.hidden = false;
+  errorState.hidden = true;
 }
 
 function escapeHTML(str) {
