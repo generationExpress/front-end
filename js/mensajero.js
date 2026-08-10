@@ -17,1767 +17,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let shipments = [];
 
-  // API mock response
-  const mockApiData = [
-    {
-        "id": "e1000001-0001-4000-8000-000000000001",
-        "trackingNumber": "TRK000001",
-        "weightKg": 150.00,
-        "status": "ASSIGNED",
-        "requestDate": "2026-08-04T03:31:58",
-        "assignedDate": "2026-08-03T22:31:58",
-        "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-        "totalCost": 120000.00,
-        "driver": {
-            "id": "a1000001-0001-4000-8000-000000000001",
-            "license": "C2",
-            "available": true,
-            "user": {
-                "id": "11111111-1111-4111-8111-111111111111",
-                "firstName": "Carlos",
-                "lastName": "Gómez",
-                "email": "carlos.driver@gmail.com",
-                "role": "DRIVER",
-                "createdAt": "2026-08-03T22:23:34.000-05:00"
-            }
-        },
-        "driverName": "Carlos Gómez",
-        "sender": {
-            "id": "c1000001-0001-4000-8000-000000000001",
-            "firstName": "Ana",
-            "lastName": "Martínez",
-            "documentNumber": "1010101010",
-            "email": "ana@gmail.com",
-            "phone": "3001234567",
-            "address": "Cra 45 #10-20",
-            "city": "Medellín",
-            "shippingPersonType": "SENDER"
-        },
-        "recipient": {
-            "id": "c1000006-0006-4000-8000-000000000006",
-            "firstName": "Pedro",
-            "lastName": "Sánchez",
-            "documentNumber": "6060606060",
-            "email": "pedro@gmail.com",
-            "phone": "3056789012",
-            "address": "Calle 80 #25-10",
-            "city": "Bogotá",
-            "shippingPersonType": "RECIPIENT"
-        },
-        "statusHistory": [
-            {
-                "id": "f1000001-0001-4000-8000-000000000001",
-                "shipmentStatus": "ASSIGNED",
-                "updatedAt": "2026-08-03T22:32:36",
-                "observations": "Pedido asignado",
-                "order": {
-                    "id": "e1000001-0001-4000-8000-000000000001",
-                    "trackingNumber": "TRK000001",
-                    "status": "ASSIGNED",
-                    "totalCost": 120000.00,
-                    "weightKg": 150.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                }
-            }
-        ],
-        "route": {
-            "id": "d1000001-0001-4000-8000-000000000001",
-            "origin": "Medellín",
-            "destination": "Bogotá",
-            "estimatedTimeMinutes": 480,
-            "createdAt": "2026-08-03T22:30:06",
-            "orders": [
-                {
-                    "id": "e1000001-0001-4000-8000-000000000001",
-                    "trackingNumber": "TRK000001",
-                    "status": "ASSIGNED",
-                    "totalCost": 120000.00,
-                    "weightKg": 150.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                },
-                {
-                    "id": "e1000002-0002-4000-8000-000000000002",
-                    "trackingNumber": "TRK000002",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 85000.00,
-                    "weightKg": 80.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Andrés Martínez"
-                },
-                {
-                    "id": "e1000003-0003-4000-8000-000000000003",
-                    "trackingNumber": "TRK000003",
-                    "status": "PENDING",
-                    "totalCost": 230000.00,
-                    "weightKg": 450.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-                    "driverName": "Miguel Rodríguez"
-                },
-                {
-                    "id": "e1000004-0004-4000-8000-000000000004",
-                    "trackingNumber": "TRK000004",
-                    "status": "DELIVERED",
-                    "totalCost": 95000.00,
-                    "weightKg": 65.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Juan Pérez"
-                },
-                {
-                    "id": "e1000005-0005-4000-8000-000000000005",
-                    "trackingNumber": "TRK000005",
-                    "status": "ASSIGNED",
-                    "totalCost": 180000.00,
-                    "weightKg": 300.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-                    "driverName": "Laura García"
-                },
-                {
-                    "id": "e1000006-0006-4000-8000-000000000006",
-                    "trackingNumber": "TRK000006",
-                    "status": "PENDING",
-                    "totalCost": 75000.00,
-                    "weightKg": 40.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-                    "driverName": "David López"
-                },
-                {
-                    "id": "e1000007-0007-4000-8000-000000000007",
-                    "trackingNumber": "TRK000007",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 210000.00,
-                    "weightKg": 520.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Camilo Hernández"
-                },
-                {
-                    "id": "e1000008-0008-4000-8000-000000000008",
-                    "trackingNumber": "TRK000008",
-                    "status": "ASSIGNED",
-                    "totalCost": 68000.00,
-                    "weightKg": 25.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Sebastián Torres"
-                },
-                {
-                    "id": "e1000009-0009-4000-8000-000000000009",
-                    "trackingNumber": "TRK000009",
-                    "status": "PENDING",
-                    "totalCost": 305000.00,
-                    "weightKg": 650.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-                    "driverName": "Daniel Ramírez"
-                },
-                {
-                    "id": "e1000010-0010-4000-8000-000000000010",
-                    "trackingNumber": "TRK000010",
-                    "status": "DELIVERED",
-                    "totalCost": 98000.00,
-                    "weightKg": 95.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                }
-            ]
-        },
-        "delivery": null
-    },
-    {
-        "id": "e1000002-0002-4000-8000-000000000002",
-        "trackingNumber": "TRK000002",
-        "weightKg": 80.00,
-        "status": "IN_TRANSIT",
-        "requestDate": "2026-08-04T03:31:58",
-        "assignedDate": "2026-08-03T22:31:58",
-        "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-        "totalCost": 85000.00,
-        "driver": {
-            "id": "a1000002-0002-4000-8000-000000000002",
-            "license": "C3",
-            "available": true,
-            "user": {
-                "id": "22222222-2222-4222-8222-222222222222",
-                "firstName": "Andrés",
-                "lastName": "Martínez",
-                "email": "andres.driver@gmail.com",
-                "role": "DRIVER",
-                "createdAt": "2026-08-03T22:23:34.000-05:00"
-            }
-        },
-        "driverName": "Andrés Martínez",
-        "sender": {
-            "id": "c1000002-0002-4000-8000-000000000002",
-            "firstName": "Lina",
-            "lastName": "Rodríguez",
-            "documentNumber": "2020202020",
-            "email": "lina@gmail.com",
-            "phone": "3012345678",
-            "address": "Cra 20 #15-40",
-            "city": "Cali",
-            "shippingPersonType": "SENDER"
-        },
-        "recipient": {
-            "id": "c1000007-0007-4000-8000-000000000007",
-            "firstName": "Jorge",
-            "lastName": "Ruiz",
-            "documentNumber": "7070707070",
-            "email": "jorge@gmail.com",
-            "phone": "3067890123",
-            "address": "Av 30 #18-15",
-            "city": "Barranquilla",
-            "shippingPersonType": "RECIPIENT"
-        },
-        "statusHistory": [
-            {
-                "id": "f1000002-0002-4000-8000-000000000002",
-                "shipmentStatus": "IN_TRANSIT",
-                "updatedAt": "2026-08-03T22:32:36",
-                "observations": "Pedido en tránsito",
-                "order": {
-                    "id": "e1000002-0002-4000-8000-000000000002",
-                    "trackingNumber": "TRK000002",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 85000.00,
-                    "weightKg": 80.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Andrés Martínez"
-                }
-            }
-        ],
-        "route": {
-            "id": "d1000001-0001-4000-8000-000000000001",
-            "origin": "Medellín",
-            "destination": "Bogotá",
-            "estimatedTimeMinutes": 480,
-            "createdAt": "2026-08-03T22:30:06",
-            "orders": [
-                {
-                    "id": "e1000001-0001-4000-8000-000000000001",
-                    "trackingNumber": "TRK000001",
-                    "status": "ASSIGNED",
-                    "totalCost": 120000.00,
-                    "weightKg": 150.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                },
-                {
-                    "id": "e1000002-0002-4000-8000-000000000002",
-                    "trackingNumber": "TRK000002",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 85000.00,
-                    "weightKg": 80.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Andrés Martínez"
-                },
-                {
-                    "id": "e1000003-0003-4000-8000-000000000003",
-                    "trackingNumber": "TRK000003",
-                    "status": "PENDING",
-                    "totalCost": 230000.00,
-                    "weightKg": 450.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-                    "driverName": "Miguel Rodríguez"
-                },
-                {
-                    "id": "e1000004-0004-4000-8000-000000000004",
-                    "trackingNumber": "TRK000004",
-                    "status": "DELIVERED",
-                    "totalCost": 95000.00,
-                    "weightKg": 65.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Juan Pérez"
-                },
-                {
-                    "id": "e1000005-0005-4000-8000-000000000005",
-                    "trackingNumber": "TRK000005",
-                    "status": "ASSIGNED",
-                    "totalCost": 180000.00,
-                    "weightKg": 300.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-                    "driverName": "Laura García"
-                },
-                {
-                    "id": "e1000006-0006-4000-8000-000000000006",
-                    "trackingNumber": "TRK000006",
-                    "status": "PENDING",
-                    "totalCost": 75000.00,
-                    "weightKg": 40.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-                    "driverName": "David López"
-                },
-                {
-                    "id": "e1000007-0007-4000-8000-000000000007",
-                    "trackingNumber": "TRK000007",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 210000.00,
-                    "weightKg": 520.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Camilo Hernández"
-                },
-                {
-                    "id": "e1000008-0008-4000-8000-000000000008",
-                    "trackingNumber": "TRK000008",
-                    "status": "ASSIGNED",
-                    "totalCost": 68000.00,
-                    "weightKg": 25.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Sebastián Torres"
-                },
-                {
-                    "id": "e1000009-0009-4000-8000-000000000009",
-                    "trackingNumber": "TRK000009",
-                    "status": "PENDING",
-                    "totalCost": 305000.00,
-                    "weightKg": 650.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-                    "driverName": "Daniel Ramírez"
-                },
-                {
-                    "id": "e1000010-0010-4000-8000-000000000010",
-                    "trackingNumber": "TRK000010",
-                    "status": "DELIVERED",
-                    "totalCost": 98000.00,
-                    "weightKg": 95.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                }
-            ]
-        },
-        "delivery": null
-    },
-    {
-        "id": "e1000003-0003-4000-8000-000000000003",
-        "trackingNumber": "TRK000003",
-        "weightKg": 450.00,
-        "status": "PENDING",
-        "requestDate": "2026-08-04T03:31:58",
-        "assignedDate": "2026-08-03T22:31:58",
-        "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-        "totalCost": 230000.00,
-        "driver": {
-            "id": "a1000003-0003-4000-8000-000000000003",
-            "license": "B2",
-            "available": true,
-            "user": {
-                "id": "33333333-3333-4333-8333-333333333333",
-                "firstName": "Miguel",
-                "lastName": "Rodríguez",
-                "email": "miguel.driver@gmail.com",
-                "role": "DRIVER",
-                "createdAt": "2026-08-03T22:23:34.000-05:00"
-            }
-        },
-        "driverName": "Miguel Rodríguez",
-        "sender": {
-            "id": "c1000003-0003-4000-8000-000000000003",
-            "firstName": "Diana",
-            "lastName": "Moreno",
-            "documentNumber": "3030303030",
-            "email": "diana@gmail.com",
-            "phone": "3023456789",
-            "address": "Cra 70 #45-10",
-            "city": "Bucaramanga",
-            "shippingPersonType": "SENDER"
-        },
-        "recipient": {
-            "id": "c1000008-0008-4000-8000-000000000008",
-            "firstName": "Felipe",
-            "lastName": "García",
-            "documentNumber": "8080808080",
-            "email": "felipe@gmail.com",
-            "phone": "3078901234",
-            "address": "Calle 12 #5-60",
-            "city": "Pereira",
-            "shippingPersonType": "RECIPIENT"
-        },
-        "statusHistory": [
-            {
-                "id": "f1000003-0003-4000-8000-000000000003",
-                "shipmentStatus": "PENDING",
-                "updatedAt": "2026-08-03T22:32:36",
-                "observations": "Esperando despacho",
-                "order": {
-                    "id": "e1000003-0003-4000-8000-000000000003",
-                    "trackingNumber": "TRK000003",
-                    "status": "PENDING",
-                    "totalCost": 230000.00,
-                    "weightKg": 450.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-                    "driverName": "Miguel Rodríguez"
-                }
-            }
-        ],
-        "route": {
-            "id": "d1000001-0001-4000-8000-000000000001",
-            "origin": "Medellín",
-            "destination": "Bogotá",
-            "estimatedTimeMinutes": 480,
-            "createdAt": "2026-08-03T22:30:06",
-            "orders": [
-                {
-                    "id": "e1000001-0001-4000-8000-000000000001",
-                    "trackingNumber": "TRK000001",
-                    "status": "ASSIGNED",
-                    "totalCost": 120000.00,
-                    "weightKg": 150.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                },
-                {
-                    "id": "e1000002-0002-4000-8000-000000000002",
-                    "trackingNumber": "TRK000002",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 85000.00,
-                    "weightKg": 80.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Andrés Martínez"
-                },
-                {
-                    "id": "e1000003-0003-4000-8000-000000000003",
-                    "trackingNumber": "TRK000003",
-                    "status": "PENDING",
-                    "totalCost": 230000.00,
-                    "weightKg": 450.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-                    "driverName": "Miguel Rodríguez"
-                },
-                {
-                    "id": "e1000004-0004-4000-8000-000000000004",
-                    "trackingNumber": "TRK000004",
-                    "status": "DELIVERED",
-                    "totalCost": 95000.00,
-                    "weightKg": 65.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Juan Pérez"
-                },
-                {
-                    "id": "e1000005-0005-4000-8000-000000000005",
-                    "trackingNumber": "TRK000005",
-                    "status": "ASSIGNED",
-                    "totalCost": 180000.00,
-                    "weightKg": 300.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-                    "driverName": "Laura García"
-                },
-                {
-                    "id": "e1000006-0006-4000-8000-000000000006",
-                    "trackingNumber": "TRK000006",
-                    "status": "PENDING",
-                    "totalCost": 75000.00,
-                    "weightKg": 40.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-                    "driverName": "David López"
-                },
-                {
-                    "id": "e1000007-0007-4000-8000-000000000007",
-                    "trackingNumber": "TRK000007",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 210000.00,
-                    "weightKg": 520.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Camilo Hernández"
-                },
-                {
-                    "id": "e1000008-0008-4000-8000-000000000008",
-                    "trackingNumber": "TRK000008",
-                    "status": "ASSIGNED",
-                    "totalCost": 68000.00,
-                    "weightKg": 25.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Sebastián Torres"
-                },
-                {
-                    "id": "e1000009-0009-4000-8000-000000000009",
-                    "trackingNumber": "TRK000009",
-                    "status": "PENDING",
-                    "totalCost": 305000.00,
-                    "weightKg": 650.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-                    "driverName": "Daniel Ramírez"
-                },
-                {
-                    "id": "e1000010-0010-4000-8000-000000000010",
-                    "trackingNumber": "TRK000010",
-                    "status": "DELIVERED",
-                    "totalCost": 98000.00,
-                    "weightKg": 95.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                }
-            ]
-        },
-        "delivery": null
-    },
-    {
-        "id": "e1000004-0004-4000-8000-000000000004",
-        "trackingNumber": "TRK000004",
-        "weightKg": 65.00,
-        "status": "DELIVERED",
-        "requestDate": "2026-08-04T03:31:58",
-        "assignedDate": "2026-08-03T22:31:58",
-        "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-        "totalCost": 95000.00,
-        "driver": {
-            "id": "a1000004-0004-4000-8000-000000000004",
-            "license": "C1",
-            "available": false,
-            "user": {
-                "id": "44444444-4444-4444-8444-444444444444",
-                "firstName": "Juan",
-                "lastName": "Pérez",
-                "email": "juan.driver@gmail.com",
-                "role": "DRIVER",
-                "createdAt": "2026-08-03T22:23:34.000-05:00"
-            }
-        },
-        "driverName": "Juan Pérez",
-        "sender": {
-            "id": "c1000004-0004-4000-8000-000000000004",
-            "firstName": "Paula",
-            "lastName": "Navarro",
-            "documentNumber": "4040404040",
-            "email": "paula@gmail.com",
-            "phone": "3034567890",
-            "address": "Cra 18 #90-12",
-            "city": "Cartagena",
-            "shippingPersonType": "SENDER"
-        },
-        "recipient": {
-            "id": "c1000009-0009-4000-8000-000000000009",
-            "firstName": "Óscar",
-            "lastName": "Mejía",
-            "documentNumber": "9090909090",
-            "email": "oscar@gmail.com",
-            "phone": "3089012345",
-            "address": "Calle 25 #30-40",
-            "city": "Manizales",
-            "shippingPersonType": "RECIPIENT"
-        },
-        "statusHistory": [
-            {
-                "id": "f1000004-0004-4000-8000-000000000004",
-                "shipmentStatus": "DELIVERED",
-                "updatedAt": "2026-08-03T22:32:36",
-                "observations": "Entrega realizada",
-                "order": {
-                    "id": "e1000004-0004-4000-8000-000000000004",
-                    "trackingNumber": "TRK000004",
-                    "status": "DELIVERED",
-                    "totalCost": 95000.00,
-                    "weightKg": 65.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Juan Pérez"
-                }
-            }
-        ],
-        "route": {
-            "id": "d1000001-0001-4000-8000-000000000001",
-            "origin": "Medellín",
-            "destination": "Bogotá",
-            "estimatedTimeMinutes": 480,
-            "createdAt": "2026-08-03T22:30:06",
-            "orders": [
-                {
-                    "id": "e1000001-0001-4000-8000-000000000001",
-                    "trackingNumber": "TRK000001",
-                    "status": "ASSIGNED",
-                    "totalCost": 120000.00,
-                    "weightKg": 150.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                },
-                {
-                    "id": "e1000002-0002-4000-8000-000000000002",
-                    "trackingNumber": "TRK000002",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 85000.00,
-                    "weightKg": 80.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Andrés Martínez"
-                },
-                {
-                    "id": "e1000003-0003-4000-8000-000000000003",
-                    "trackingNumber": "TRK000003",
-                    "status": "PENDING",
-                    "totalCost": 230000.00,
-                    "weightKg": 450.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-                    "driverName": "Miguel Rodríguez"
-                },
-                {
-                    "id": "e1000004-0004-4000-8000-000000000004",
-                    "trackingNumber": "TRK000004",
-                    "status": "DELIVERED",
-                    "totalCost": 95000.00,
-                    "weightKg": 65.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Juan Pérez"
-                },
-                {
-                    "id": "e1000005-0005-4000-8000-000000000005",
-                    "trackingNumber": "TRK000005",
-                    "status": "ASSIGNED",
-                    "totalCost": 180000.00,
-                    "weightKg": 300.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-                    "driverName": "Laura García"
-                },
-                {
-                    "id": "e1000006-0006-4000-8000-000000000006",
-                    "trackingNumber": "TRK000006",
-                    "status": "PENDING",
-                    "totalCost": 75000.00,
-                    "weightKg": 40.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-                    "driverName": "David López"
-                },
-                {
-                    "id": "e1000007-0007-4000-8000-000000000007",
-                    "trackingNumber": "TRK000007",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 210000.00,
-                    "weightKg": 520.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Camilo Hernández"
-                },
-                {
-                    "id": "e1000008-0008-4000-8000-000000000008",
-                    "trackingNumber": "TRK000008",
-                    "status": "ASSIGNED",
-                    "totalCost": 68000.00,
-                    "weightKg": 25.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Sebastián Torres"
-                },
-                {
-                    "id": "e1000009-0009-4000-8000-000000000009",
-                    "trackingNumber": "TRK000009",
-                    "status": "PENDING",
-                    "totalCost": 305000.00,
-                    "weightKg": 650.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-                    "driverName": "Daniel Ramírez"
-                },
-                {
-                    "id": "e1000010-0010-4000-8000-000000000010",
-                    "trackingNumber": "TRK000010",
-                    "status": "DELIVERED",
-                    "totalCost": 98000.00,
-                    "weightKg": 95.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                }
-            ]
-        },
-        "delivery": {
-            "id": "g1000001-0001-4000-8000-000000000001",
-            "deliveredAt": "2026-08-03T22:32:53",
-            "receiverName": "Óscar Mejía",
-            "deliveryPhoto": "delivery_ord004.jpg",
-            "order": {
-                "id": "e1000004-0004-4000-8000-000000000004",
-                "trackingNumber": "TRK000004",
-                "status": "DELIVERED",
-                "totalCost": 95000.00,
-                "weightKg": 65.00,
-                "requestDate": "2026-08-04T03:31:58",
-                "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                "driverName": "Juan Pérez"
-            }
-        }
-    },
-    {
-        "id": "e1000005-0005-4000-8000-000000000005",
-        "trackingNumber": "TRK000005",
-        "weightKg": 300.00,
-        "status": "ASSIGNED",
-        "requestDate": "2026-08-04T03:31:58",
-        "assignedDate": "2026-08-03T22:31:58",
-        "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-        "totalCost": 180000.00,
-        "driver": {
-            "id": "a1000005-0005-4000-8000-000000000005",
-            "license": "C2",
-            "available": true,
-            "user": {
-                "id": "55555555-5555-4555-8555-555555555555",
-                "firstName": "Laura",
-                "lastName": "García",
-                "email": "laura.driver@gmail.com",
-                "role": "DRIVER",
-                "createdAt": "2026-08-03T22:23:34.000-05:00"
-            }
-        },
-        "driverName": "Laura García",
-        "sender": {
-            "id": "c1000005-0005-4000-8000-000000000005",
-            "firstName": "Juliana",
-            "lastName": "Ortiz",
-            "documentNumber": "5050505050",
-            "email": "juliana@gmail.com",
-            "phone": "3045678901",
-            "address": "Cra 9 #40-20",
-            "city": "Santa Marta",
-            "shippingPersonType": "SENDER"
-        },
-        "recipient": {
-            "id": "c1000010-0010-4000-8000-000000000010",
-            "firstName": "Sergio",
-            "lastName": "Jiménez",
-            "documentNumber": "1001001001",
-            "email": "sergio@gmail.com",
-            "phone": "3090123456",
-            "address": "Calle 50 #20-90",
-            "city": "Ibagué",
-            "shippingPersonType": "RECIPIENT"
-        },
-        "statusHistory": [
-            {
-                "id": "f1000005-0005-4000-8000-000000000005",
-                "shipmentStatus": "ASSIGNED",
-                "updatedAt": "2026-08-03T22:32:36",
-                "observations": "Pedido asignado",
-                "order": {
-                    "id": "e1000005-0005-4000-8000-000000000005",
-                    "trackingNumber": "TRK000005",
-                    "status": "ASSIGNED",
-                    "totalCost": 180000.00,
-                    "weightKg": 300.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-                    "driverName": "Laura García"
-                }
-            }
-        ],
-        "route": {
-            "id": "d1000001-0001-4000-8000-000000000001",
-            "origin": "Medellín",
-            "destination": "Bogotá",
-            "estimatedTimeMinutes": 480,
-            "createdAt": "2026-08-03T22:30:06",
-            "orders": [
-                {
-                    "id": "e1000001-0001-4000-8000-000000000001",
-                    "trackingNumber": "TRK000001",
-                    "status": "ASSIGNED",
-                    "totalCost": 120000.00,
-                    "weightKg": 150.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                },
-                {
-                    "id": "e1000002-0002-4000-8000-000000000002",
-                    "trackingNumber": "TRK000002",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 85000.00,
-                    "weightKg": 80.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Andrés Martínez"
-                },
-                {
-                    "id": "e1000003-0003-4000-8000-000000000003",
-                    "trackingNumber": "TRK000003",
-                    "status": "PENDING",
-                    "totalCost": 230000.00,
-                    "weightKg": 450.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-                    "driverName": "Miguel Rodríguez"
-                },
-                {
-                    "id": "e1000004-0004-4000-8000-000000000004",
-                    "trackingNumber": "TRK000004",
-                    "status": "DELIVERED",
-                    "totalCost": 95000.00,
-                    "weightKg": 65.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Juan Pérez"
-                },
-                {
-                    "id": "e1000005-0005-4000-8000-000000000005",
-                    "trackingNumber": "TRK000005",
-                    "status": "ASSIGNED",
-                    "totalCost": 180000.00,
-                    "weightKg": 300.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-                    "driverName": "Laura García"
-                },
-                {
-                    "id": "e1000006-0006-4000-8000-000000000006",
-                    "trackingNumber": "TRK000006",
-                    "status": "PENDING",
-                    "totalCost": 75000.00,
-                    "weightKg": 40.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-                    "driverName": "David López"
-                },
-                {
-                    "id": "e1000007-0007-4000-8000-000000000007",
-                    "trackingNumber": "TRK000007",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 210000.00,
-                    "weightKg": 520.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Camilo Hernández"
-                },
-                {
-                    "id": "e1000008-0008-4000-8000-000000000008",
-                    "trackingNumber": "TRK000008",
-                    "status": "ASSIGNED",
-                    "totalCost": 68000.00,
-                    "weightKg": 25.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Sebastián Torres"
-                },
-                {
-                    "id": "e1000009-0009-4000-8000-000000000009",
-                    "trackingNumber": "TRK000009",
-                    "status": "PENDING",
-                    "totalCost": 305000.00,
-                    "weightKg": 650.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-                    "driverName": "Daniel Ramírez"
-                },
-                {
-                    "id": "e1000010-0010-4000-8000-000000000010",
-                    "trackingNumber": "TRK000010",
-                    "status": "DELIVERED",
-                    "totalCost": 98000.00,
-                    "weightKg": 95.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                }
-            ]
-        },
-        "delivery": null
-    },
-    {
-        "id": "e1000006-0006-4000-8000-000000000006",
-        "trackingNumber": "TRK000006",
-        "weightKg": 40.00,
-        "status": "PENDING",
-        "requestDate": "2026-08-04T03:31:58",
-        "assignedDate": "2026-08-03T22:31:58",
-        "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-        "totalCost": 75000.00,
-        "driver": {
-            "id": "a1000006-0006-4000-8000-000000000006",
-            "license": "B3",
-            "available": true,
-            "user": {
-                "id": "66666666-6666-4666-8666-666666666666",
-                "firstName": "David",
-                "lastName": "López",
-                "email": "david.driver@gmail.com",
-                "role": "DRIVER",
-                "createdAt": "2026-08-03T22:23:34.000-05:00"
-            }
-        },
-        "driverName": "David López",
-        "sender": {
-            "id": "c1000001-0001-4000-8000-000000000001",
-            "firstName": "Ana",
-            "lastName": "Martínez",
-            "documentNumber": "1010101010",
-            "email": "ana@gmail.com",
-            "phone": "3001234567",
-            "address": "Cra 45 #10-20",
-            "city": "Medellín",
-            "shippingPersonType": "SENDER"
-        },
-        "recipient": {
-            "id": "c1000007-0007-4000-8000-000000000007",
-            "firstName": "Jorge",
-            "lastName": "Ruiz",
-            "documentNumber": "7070707070",
-            "email": "jorge@gmail.com",
-            "phone": "3067890123",
-            "address": "Av 30 #18-15",
-            "city": "Barranquilla",
-            "shippingPersonType": "RECIPIENT"
-        },
-        "statusHistory": [
-            {
-                "id": "f1000006-0006-4000-8000-000000000006",
-                "shipmentStatus": "PENDING",
-                "updatedAt": "2026-08-03T22:32:36",
-                "observations": "Esperando asignación",
-                "order": {
-                    "id": "e1000006-0006-4000-8000-000000000006",
-                    "trackingNumber": "TRK000006",
-                    "status": "PENDING",
-                    "totalCost": 75000.00,
-                    "weightKg": 40.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-                    "driverName": "David López"
-                }
-            }
-        ],
-        "route": {
-            "id": "d1000001-0001-4000-8000-000000000001",
-            "origin": "Medellín",
-            "destination": "Bogotá",
-            "estimatedTimeMinutes": 480,
-            "createdAt": "2026-08-03T22:30:06",
-            "orders": [
-                {
-                    "id": "e1000001-0001-4000-8000-000000000001",
-                    "trackingNumber": "TRK000001",
-                    "status": "ASSIGNED",
-                    "totalCost": 120000.00,
-                    "weightKg": 150.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                },
-                {
-                    "id": "e1000002-0002-4000-8000-000000000002",
-                    "trackingNumber": "TRK000002",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 85000.00,
-                    "weightKg": 80.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Andrés Martínez"
-                },
-                {
-                    "id": "e1000003-0003-4000-8000-000000000003",
-                    "trackingNumber": "TRK000003",
-                    "status": "PENDING",
-                    "totalCost": 230000.00,
-                    "weightKg": 450.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-                    "driverName": "Miguel Rodríguez"
-                },
-                {
-                    "id": "e1000004-0004-4000-8000-000000000004",
-                    "trackingNumber": "TRK000004",
-                    "status": "DELIVERED",
-                    "totalCost": 95000.00,
-                    "weightKg": 65.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Juan Pérez"
-                },
-                {
-                    "id": "e1000005-0005-4000-8000-000000000005",
-                    "trackingNumber": "TRK000005",
-                    "status": "ASSIGNED",
-                    "totalCost": 180000.00,
-                    "weightKg": 300.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-                    "driverName": "Laura García"
-                },
-                {
-                    "id": "e1000006-0006-4000-8000-000000000006",
-                    "trackingNumber": "TRK000006",
-                    "status": "PENDING",
-                    "totalCost": 75000.00,
-                    "weightKg": 40.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-                    "driverName": "David López"
-                },
-                {
-                    "id": "e1000007-0007-4000-8000-000000000007",
-                    "trackingNumber": "TRK000007",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 210000.00,
-                    "weightKg": 520.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Camilo Hernández"
-                },
-                {
-                    "id": "e1000008-0008-4000-8000-000000000008",
-                    "trackingNumber": "TRK000008",
-                    "status": "ASSIGNED",
-                    "totalCost": 68000.00,
-                    "weightKg": 25.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Sebastián Torres"
-                },
-                {
-                    "id": "e1000009-0009-4000-8000-000000000009",
-                    "trackingNumber": "TRK000009",
-                    "status": "PENDING",
-                    "totalCost": 305000.00,
-                    "weightKg": 650.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-                    "driverName": "Daniel Ramírez"
-                },
-                {
-                    "id": "e1000010-0010-4000-8000-000000000010",
-                    "trackingNumber": "TRK000010",
-                    "status": "DELIVERED",
-                    "totalCost": 98000.00,
-                    "weightKg": 95.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                }
-            ]
-        },
-        "delivery": null
-    },
-    {
-        "id": "e1000007-0007-4000-8000-000000000007",
-        "trackingNumber": "TRK000007",
-        "weightKg": 520.00,
-        "status": "IN_TRANSIT",
-        "requestDate": "2026-08-04T03:31:58",
-        "assignedDate": "2026-08-03T22:31:58",
-        "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-        "totalCost": 210000.00,
-        "driver": {
-            "id": "a1000007-0007-4000-8000-000000000007",
-            "license": "C3",
-            "available": false,
-            "user": {
-                "id": "77777777-7777-4777-8777-777777777777",
-                "firstName": "Camilo",
-                "lastName": "Hernández",
-                "email": "camilo.driver@gmail.com",
-                "role": "DRIVER",
-                "createdAt": "2026-08-03T22:23:34.000-05:00"
-            }
-        },
-        "driverName": "Camilo Hernández",
-        "sender": {
-            "id": "c1000002-0002-4000-8000-000000000002",
-            "firstName": "Lina",
-            "lastName": "Rodríguez",
-            "documentNumber": "2020202020",
-            "email": "lina@gmail.com",
-            "phone": "3012345678",
-            "address": "Cra 20 #15-40",
-            "city": "Cali",
-            "shippingPersonType": "SENDER"
-        },
-        "recipient": {
-            "id": "c1000008-0008-4000-8000-000000000008",
-            "firstName": "Felipe",
-            "lastName": "García",
-            "documentNumber": "8080808080",
-            "email": "felipe@gmail.com",
-            "phone": "3078901234",
-            "address": "Calle 12 #5-60",
-            "city": "Pereira",
-            "shippingPersonType": "RECIPIENT"
-        },
-        "statusHistory": [
-            {
-                "id": "f1000007-0007-4000-8000-000000000007",
-                "shipmentStatus": "IN_TRANSIT",
-                "updatedAt": "2026-08-03T22:32:36",
-                "observations": "Vehículo en ruta",
-                "order": {
-                    "id": "e1000007-0007-4000-8000-000000000007",
-                    "trackingNumber": "TRK000007",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 210000.00,
-                    "weightKg": 520.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Camilo Hernández"
-                }
-            }
-        ],
-        "route": {
-            "id": "d1000001-0001-4000-8000-000000000001",
-            "origin": "Medellín",
-            "destination": "Bogotá",
-            "estimatedTimeMinutes": 480,
-            "createdAt": "2026-08-03T22:30:06",
-            "orders": [
-                {
-                    "id": "e1000001-0001-4000-8000-000000000001",
-                    "trackingNumber": "TRK000001",
-                    "status": "ASSIGNED",
-                    "totalCost": 120000.00,
-                    "weightKg": 150.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                },
-                {
-                    "id": "e1000002-0002-4000-8000-000000000002",
-                    "trackingNumber": "TRK000002",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 85000.00,
-                    "weightKg": 80.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Andrés Martínez"
-                },
-                {
-                    "id": "e1000003-0003-4000-8000-000000000003",
-                    "trackingNumber": "TRK000003",
-                    "status": "PENDING",
-                    "totalCost": 230000.00,
-                    "weightKg": 450.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-                    "driverName": "Miguel Rodríguez"
-                },
-                {
-                    "id": "e1000004-0004-4000-8000-000000000004",
-                    "trackingNumber": "TRK000004",
-                    "status": "DELIVERED",
-                    "totalCost": 95000.00,
-                    "weightKg": 65.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Juan Pérez"
-                },
-                {
-                    "id": "e1000005-0005-4000-8000-000000000005",
-                    "trackingNumber": "TRK000005",
-                    "status": "ASSIGNED",
-                    "totalCost": 180000.00,
-                    "weightKg": 300.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-                    "driverName": "Laura García"
-                },
-                {
-                    "id": "e1000006-0006-4000-8000-000000000006",
-                    "trackingNumber": "TRK000006",
-                    "status": "PENDING",
-                    "totalCost": 75000.00,
-                    "weightKg": 40.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-                    "driverName": "David López"
-                },
-                {
-                    "id": "e1000007-0007-4000-8000-000000000007",
-                    "trackingNumber": "TRK000007",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 210000.00,
-                    "weightKg": 520.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Camilo Hernández"
-                },
-                {
-                    "id": "e1000008-0008-4000-8000-000000000008",
-                    "trackingNumber": "TRK000008",
-                    "status": "ASSIGNED",
-                    "totalCost": 68000.00,
-                    "weightKg": 25.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Sebastián Torres"
-                },
-                {
-                    "id": "e1000009-0009-4000-8000-000000000009",
-                    "trackingNumber": "TRK000009",
-                    "status": "PENDING",
-                    "totalCost": 305000.00,
-                    "weightKg": 650.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-                    "driverName": "Daniel Ramírez"
-                },
-                {
-                    "id": "e1000010-0010-4000-8000-000000000010",
-                    "trackingNumber": "TRK000010",
-                    "status": "DELIVERED",
-                    "totalCost": 98000.00,
-                    "weightKg": 95.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                }
-            ]
-        },
-        "delivery": null
-    },
-    {
-        "id": "e1000008-0008-4000-8000-000000000008",
-        "trackingNumber": "TRK000008",
-        "weightKg": 25.00,
-        "status": "ASSIGNED",
-        "requestDate": "2026-08-04T03:31:58",
-        "assignedDate": "2026-08-03T22:31:58",
-        "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-        "totalCost": 68000.00,
-        "driver": {
-            "id": "a1000008-0008-4000-8000-000000000008",
-            "license": "C1",
-            "available": true,
-            "user": {
-                "id": "88888888-8888-4888-888888888888",
-                "firstName": "Sebastián",
-                "lastName": "Torres",
-                "email": "sebastian.driver@gmail.com",
-                "role": "DRIVER",
-                "createdAt": "2026-08-03T22:23:34.000-05:00"
-            }
-        },
-        "driverName": "Sebastián Torres",
-        "sender": {
-            "id": "c1000003-0003-4000-8000-000000000003",
-            "firstName": "Diana",
-            "lastName": "Moreno",
-            "documentNumber": "3030303030",
-            "email": "diana@gmail.com",
-            "phone": "3023456789",
-            "address": "Cra 70 #45-10",
-            "city": "Bucaramanga",
-            "shippingPersonType": "SENDER"
-        },
-        "recipient": {
-            "id": "c1000009-0009-4000-8000-000000000009",
-            "firstName": "Óscar",
-            "lastName": "Mejía",
-            "documentNumber": "9090909090",
-            "email": "oscar@gmail.com",
-            "phone": "3089012345",
-            "address": "Calle 25 #30-40",
-            "city": "Manizales",
-            "shippingPersonType": "RECIPIENT"
-        },
-        "statusHistory": [
-            {
-                "id": "f1000008-0008-4000-8000-000000000008",
-                "shipmentStatus": "ASSIGNED",
-                "updatedAt": "2026-08-03T22:32:36",
-                "observations": "Conductor asignado",
-                "order": {
-                    "id": "e1000008-0008-4000-8000-000000000008",
-                    "trackingNumber": "TRK000008",
-                    "status": "ASSIGNED",
-                    "totalCost": 68000.00,
-                    "weightKg": 25.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Sebastián Torres"
-                }
-            }
-        ],
-        "route": {
-            "id": "d1000001-0001-4000-8000-000000000001",
-            "origin": "Medellín",
-            "destination": "Bogotá",
-            "estimatedTimeMinutes": 480,
-            "createdAt": "2026-08-03T22:30:06",
-            "orders": [
-                {
-                    "id": "e1000001-0001-4000-8000-000000000001",
-                    "trackingNumber": "TRK000001",
-                    "status": "ASSIGNED",
-                    "totalCost": 120000.00,
-                    "weightKg": 150.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                },
-                {
-                    "id": "e1000002-0002-4000-8000-000000000002",
-                    "trackingNumber": "TRK000002",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 85000.00,
-                    "weightKg": 80.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Andrés Martínez"
-                },
-                {
-                    "id": "e1000003-0003-4000-8000-000000000003",
-                    "trackingNumber": "TRK000003",
-                    "status": "PENDING",
-                    "totalCost": 230000.00,
-                    "weightKg": 450.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-                    "driverName": "Miguel Rodríguez"
-                },
-                {
-                    "id": "e1000004-0004-4000-8000-000000000004",
-                    "trackingNumber": "TRK000004",
-                    "status": "DELIVERED",
-                    "totalCost": 95000.00,
-                    "weightKg": 65.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Juan Pérez"
-                },
-                {
-                    "id": "e1000005-0005-4000-8000-000000000005",
-                    "trackingNumber": "TRK000005",
-                    "status": "ASSIGNED",
-                    "totalCost": 180000.00,
-                    "weightKg": 300.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-                    "driverName": "Laura García"
-                },
-                {
-                    "id": "e1000006-0006-4000-8000-000000000006",
-                    "trackingNumber": "TRK000006",
-                    "status": "PENDING",
-                    "totalCost": 75000.00,
-                    "weightKg": 40.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-                    "driverName": "David López"
-                },
-                {
-                    "id": "e1000007-0007-4000-8000-000000000007",
-                    "trackingNumber": "TRK000007",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 210000.00,
-                    "weightKg": 520.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Camilo Hernández"
-                },
-                {
-                    "id": "e1000008-0008-4000-8000-000000000008",
-                    "trackingNumber": "TRK000008",
-                    "status": "ASSIGNED",
-                    "totalCost": 68000.00,
-                    "weightKg": 25.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Sebastián Torres"
-                },
-                {
-                    "id": "e1000009-0009-4000-8000-000000000009",
-                    "trackingNumber": "TRK000009",
-                    "status": "PENDING",
-                    "totalCost": 305000.00,
-                    "weightKg": 650.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-                    "driverName": "Daniel Ramírez"
-                },
-                {
-                    "id": "e1000010-0010-4000-8000-000000000010",
-                    "trackingNumber": "TRK000010",
-                    "status": "DELIVERED",
-                    "totalCost": 98000.00,
-                    "weightKg": 95.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                }
-            ]
-        },
-        "delivery": null
-    },
-    {
-        "id": "e1000009-0009-4000-8000-000000000009",
-        "trackingNumber": "TRK000009",
-        "weightKg": 650.00,
-        "status": "PENDING",
-        "requestDate": "2026-08-04T03:31:58",
-        "assignedDate": "2026-08-03T22:31:58",
-        "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-        "totalCost": 305000.00,
-        "driver": {
-            "id": "a1000009-0009-4000-8000-000000000009",
-            "license": "B2",
-            "available": true,
-            "user": {
-                "id": "99999999-9999-4999-8999-999999999999",
-                "firstName": "Daniel",
-                "lastName": "Ramírez",
-                "email": "daniel.driver@gmail.com",
-                "role": "DRIVER",
-                "createdAt": "2026-08-03T22:23:34.000-05:00"
-            }
-        },
-        "driverName": "Daniel Ramírez",
-        "sender": {
-            "id": "c1000004-0004-4000-8000-000000000004",
-            "firstName": "Paula",
-            "lastName": "Navarro",
-            "documentNumber": "4040404040",
-            "email": "paula@gmail.com",
-            "phone": "3034567890",
-            "address": "Cra 18 #90-12",
-            "city": "Cartagena",
-            "shippingPersonType": "SENDER"
-        },
-        "recipient": {
-            "id": "c1000010-0010-4000-8000-000000000010",
-            "firstName": "Sergio",
-            "lastName": "Jiménez",
-            "documentNumber": "1001001001",
-            "email": "sergio@gmail.com",
-            "phone": "3090123456",
-            "address": "Calle 50 #20-90",
-            "city": "Ibagué",
-            "shippingPersonType": "RECIPIENT"
-        },
-        "statusHistory": [
-            {
-                "id": "f1000009-0009-4000-8000-000000000009",
-                "shipmentStatus": "PENDING",
-                "updatedAt": "2026-08-03T22:32:36",
-                "observations": "Esperando despacho",
-                "order": {
-                    "id": "e1000009-0009-4000-8000-000000000009",
-                    "trackingNumber": "TRK000009",
-                    "status": "PENDING",
-                    "totalCost": 305000.00,
-                    "weightKg": 650.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-                    "driverName": "Daniel Ramírez"
-                }
-            }
-        ],
-        "route": {
-            "id": "d1000001-0001-4000-8000-000000000001",
-            "origin": "Medellín",
-            "destination": "Bogotá",
-            "estimatedTimeMinutes": 480,
-            "createdAt": "2026-08-03T22:30:06",
-            "orders": [
-                {
-                    "id": "e1000001-0001-4000-8000-000000000001",
-                    "trackingNumber": "TRK000001",
-                    "status": "ASSIGNED",
-                    "totalCost": 120000.00,
-                    "weightKg": 150.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                },
-                {
-                    "id": "e1000002-0002-4000-8000-000000000002",
-                    "trackingNumber": "TRK000002",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 85000.00,
-                    "weightKg": 80.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Andrés Martínez"
-                },
-                {
-                    "id": "e1000003-0003-4000-8000-000000000003",
-                    "trackingNumber": "TRK000003",
-                    "status": "PENDING",
-                    "totalCost": 230000.00,
-                    "weightKg": 450.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-                    "driverName": "Miguel Rodríguez"
-                },
-                {
-                    "id": "e1000004-0004-4000-8000-000000000004",
-                    "trackingNumber": "TRK000004",
-                    "status": "DELIVERED",
-                    "totalCost": 95000.00,
-                    "weightKg": 65.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Juan Pérez"
-                },
-                {
-                    "id": "e1000005-0005-4000-8000-000000000005",
-                    "trackingNumber": "TRK000005",
-                    "status": "ASSIGNED",
-                    "totalCost": 180000.00,
-                    "weightKg": 300.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-                    "driverName": "Laura García"
-                },
-                {
-                    "id": "e1000006-0006-4000-8000-000000000006",
-                    "trackingNumber": "TRK000006",
-                    "status": "PENDING",
-                    "totalCost": 75000.00,
-                    "weightKg": 40.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-                    "driverName": "David López"
-                },
-                {
-                    "id": "e1000007-0007-4000-8000-000000000007",
-                    "trackingNumber": "TRK000007",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 210000.00,
-                    "weightKg": 520.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Camilo Hernández"
-                },
-                {
-                    "id": "e1000008-0008-4000-8000-000000000008",
-                    "trackingNumber": "TRK000008",
-                    "status": "ASSIGNED",
-                    "totalCost": 68000.00,
-                    "weightKg": 25.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Sebastián Torres"
-                },
-                {
-                    "id": "e1000009-0009-4000-8000-000000000009",
-                    "trackingNumber": "TRK000009",
-                    "status": "PENDING",
-                    "totalCost": 305000.00,
-                    "weightKg": 650.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-                    "driverName": "Daniel Ramírez"
-                },
-                {
-                    "id": "e1000010-0010-4000-8000-000000000010",
-                    "trackingNumber": "TRK000010",
-                    "status": "DELIVERED",
-                    "totalCost": 98000.00,
-                    "weightKg": 95.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                }
-            ]
-        },
-        "delivery": null
-    },
-    {
-        "id": "e1000010-0010-4000-8000-000000000010",
-        "trackingNumber": "TRK000010",
-        "weightKg": 95.00,
-        "status": "DELIVERED",
-        "requestDate": "2026-08-04T03:31:58",
-        "assignedDate": "2026-08-03T22:31:58",
-        "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-        "totalCost": 98000.00,
-        "driver": {
-            "id": "a1000001-0001-4000-8000-000000000001",
-            "license": "C2",
-            "available": true,
-            "user": {
-                "id": "11111111-1111-4111-8111-111111111111",
-                "firstName": "Carlos",
-                "lastName": "Gómez",
-                "email": "carlos.driver@gmail.com",
-                "role": "DRIVER",
-                "createdAt": "2026-08-03T22:23:34.000-05:00"
-            }
-        },
-        "driverName": "Carlos Gómez",
-        "sender": {
-            "id": "c1000005-0005-4000-8000-000000000005",
-            "firstName": "Juliana",
-            "lastName": "Ortiz",
-            "documentNumber": "5050505050",
-            "email": "juliana@gmail.com",
-            "phone": "3045678901",
-            "address": "Cra 9 #40-20",
-            "city": "Santa Marta",
-            "shippingPersonType": "SENDER"
-        },
-        "recipient": {
-            "id": "c1000006-0006-4000-8000-000000000006",
-            "firstName": "Pedro",
-            "lastName": "Sánchez",
-            "documentNumber": "6060606060",
-            "email": "pedro@gmail.com",
-            "phone": "3056789012",
-            "address": "Calle 80 #25-10",
-            "city": "Bogotá",
-            "shippingPersonType": "RECIPIENT"
-        },
-        "statusHistory": [],
-        "route": {
-            "id": "d1000001-0001-4000-8000-000000000001",
-            "origin": "Medellín",
-            "destination": "Bogotá",
-            "estimatedTimeMinutes": 480,
-            "createdAt": "2026-08-03T22:30:06",
-            "orders": [
-                {
-                    "id": "e1000001-0001-4000-8000-000000000001",
-                    "trackingNumber": "TRK000001",
-                    "status": "ASSIGNED",
-                    "totalCost": 120000.00,
-                    "weightKg": 150.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                },
-                {
-                    "id": "e1000002-0002-4000-8000-000000000002",
-                    "trackingNumber": "TRK000002",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 85000.00,
-                    "weightKg": 80.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Andrés Martínez"
-                },
-                {
-                    "id": "e1000003-0003-4000-8000-000000000003",
-                    "trackingNumber": "TRK000003",
-                    "status": "PENDING",
-                    "totalCost": 230000.00,
-                    "weightKg": 450.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-06T22:31:58.000-05:00",
-                    "driverName": "Miguel Rodríguez"
-                },
-                {
-                    "id": "e1000004-0004-4000-8000-000000000004",
-                    "trackingNumber": "TRK000004",
-                    "status": "DELIVERED",
-                    "totalCost": 95000.00,
-                    "weightKg": 65.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Juan Pérez"
-                },
-                {
-                    "id": "e1000005-0005-4000-8000-000000000005",
-                    "trackingNumber": "TRK000005",
-                    "status": "ASSIGNED",
-                    "totalCost": 180000.00,
-                    "weightKg": 300.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-08T22:31:58.000-05:00",
-                    "driverName": "Laura García"
-                },
-                {
-                    "id": "e1000006-0006-4000-8000-000000000006",
-                    "trackingNumber": "TRK000006",
-                    "status": "PENDING",
-                    "totalCost": 75000.00,
-                    "weightKg": 40.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-07T22:31:58.000-05:00",
-                    "driverName": "David López"
-                },
-                {
-                    "id": "e1000007-0007-4000-8000-000000000007",
-                    "trackingNumber": "TRK000007",
-                    "status": "IN_TRANSIT",
-                    "totalCost": 210000.00,
-                    "weightKg": 520.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Camilo Hernández"
-                },
-                {
-                    "id": "e1000008-0008-4000-8000-000000000008",
-                    "trackingNumber": "TRK000008",
-                    "status": "ASSIGNED",
-                    "totalCost": 68000.00,
-                    "weightKg": 25.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-04T22:31:58.000-05:00",
-                    "driverName": "Sebastián Torres"
-                },
-                {
-                    "id": "e1000009-0009-4000-8000-000000000009",
-                    "trackingNumber": "TRK000009",
-                    "status": "PENDING",
-                    "totalCost": 305000.00,
-                    "weightKg": 650.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-09T22:31:58.000-05:00",
-                    "driverName": "Daniel Ramírez"
-                },
-                {
-                    "id": "e1000010-0010-4000-8000-000000000010",
-                    "trackingNumber": "TRK000010",
-                    "status": "DELIVERED",
-                    "totalCost": 98000.00,
-                    "weightKg": 95.00,
-                    "requestDate": "2026-08-04T03:31:58",
-                    "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                    "driverName": "Carlos Gómez"
-                }
-            ]
-        },
-        "delivery": {
-            "id": "g1000002-0002-4000-8000-000000000002",
-            "deliveredAt": "2026-08-03T22:32:53",
-            "receiverName": "Pedro Sánchez",
-            "deliveryPhoto": "delivery_ord010.jpg",
-            "order": {
-                "id": "e1000010-0010-4000-8000-000000000010",
-                "trackingNumber": "TRK000010",
-                "status": "DELIVERED",
-                "totalCost": 98000.00,
-                "weightKg": 95.00,
-                "requestDate": "2026-08-04T03:31:58",
-                "estimatedDeliveryDate": "2026-08-05T22:31:58.000-05:00",
-                "driverName": "Carlos Gómez"
-            }
-        }
-    }
-  ];
+  // URL de la API (Variable de entorno para desarrollo)
+  const API_URL = "http://localhost:8080/api/v1/route/d1000001-0001-4000-8000-000000000001/orders";
+  const API_URL_UPDATE = "http://localhost:8080/api/v1/orderStatus";
+  const API_URL_DELIVERY = "http://localhost:8080/api/v1/delivery";
+  // URL de la API (Comentada para producción)
+  // const API_URL = "https://tu-dominio.com/api/v1/route/d1000001-0001-4000-8000-000000000001/orders";
+  // const API_URL_UPDATE = "https://tu-dominio.com/api/v1/orders";
+  // const API_URL_DELIVERY = "https://tu-dominio.com/api/v1/delivery";
 
   async function fetchShipments() {
     try {
-      // Uso real: return await window.ApiService.get('/api/shipments');
-      return new Promise((resolve) => setTimeout(() => resolve(mockApiData), 300));
+      const response = await fetch(API_URL);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
     } catch (error) {
       console.error("Error fetching shipments:", error);
       return [];
@@ -1824,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const orderDate = new Date(order.estimatedDeliveryDate).toLocaleDateString('es-CO');
 
     return `
-      <div class="tarjeta" data-id="${order.id}">
+      <div class="tarjeta" data-id="${order.order ? order.order.id : order.id}">
         <div class="tarjeta__body">
           <div class="d-flex justify-content-between align-items-start">
             <h3 class="tarjeta__cliente">${recipientName}</h3>
@@ -1858,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   function crearTarjetaPanelHTML(order, esPrimera) {
     const recipientName = `${order.recipient.firstName} ${order.recipient.lastName}`;
+    const recipientPhone = order.recipient ? (order.recipient.phone || "") : "";
     const rutaDestino = order.route ? `${order.route.origin} → ${order.route.destination}` : "";
 
     // Solo la primera tarjeta tiene el encabezado azul de "Próxima parada"
@@ -1869,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
       : "";
 
     return `
-      <div class="tarjeta ${esPrimera ? "tarjeta--activa" : ""}" data-id="${order.id}">
+      <div class="tarjeta ${esPrimera ? "tarjeta--activa" : ""}" data-id="${order.order ? order.order.id : order.id}">
         ${headerHTML}
         <div class="tarjeta__body">
           <h3 class="tarjeta__cliente">${recipientName}</h3>
@@ -1882,17 +138,17 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <div class="tarjeta__alerta">
             <span class="material-symbols-outlined">warning</span>
-            ${order.sender.firstName} ${order.sender.lastName} - Tel: ${order.sender.phone}
+            Remitente: ${order.sender.firstName} ${order.sender.lastName} - Tel: ${order.sender.phone}
           </div>
           
           <!-- Botones de Utilidad -->
           <div class="tarjeta__botones">
-            <button class="tarjeta__btn-ir" data-bs-toggle="modal" data-bs-target="#modal-detalle">
+            <button class="tarjeta__btn-ir">
               <span class="material-symbols-outlined">navigation</span> Navegar
             </button>
-            <button class="tarjeta__btn-tel">
+            <a href="${recipientPhone ? `tel:${recipientPhone}` : '#'}" class="tarjeta__btn-tel" title="${recipientPhone ? `Llamar a ${recipientName}: ${recipientPhone}` : 'Sin teléfono de destinatario'}" data-phone="${recipientPhone}">
               <span class="material-symbols-outlined">call</span>
-            </button>
+            </a>
           </div>
           
           <!-- Botones de Acción de Estado -->
@@ -1915,8 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
    * - Entregados van en .lista-grid (grilla principal derecha)
    */
   function renderTarjetas() {
-    const pendientes = shipments.filter(s => s.status !== "DELIVERED");
-    const entregados = shipments.filter(s => s.status === "DELIVERED");
+    const estadosPendientes = ["PENDING", "ASSIGNED"];
+    const pendientes = shipments.filter(s => estadosPendientes.includes(s.status));
+    const entregados = shipments.filter(s => !estadosPendientes.includes(s.status));
 
 
     // Renderizar tarjetas entregadas en la grilla principal
@@ -1933,6 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
         : "<p class='text-center text-muted p-3'>🎉 ¡Todo entregado!</p>";
     }
 
+    actualizarDriverInfo();
     asignarEventosBotones();
     actualizarProgreso();
   }
@@ -1972,6 +230,41 @@ document.addEventListener("DOMContentLoaded", () => {
         modalEntregar.show();
       });
     });
+    // Evento de clic en el botón de teléfono (destinatario)
+    document.querySelectorAll('.tarjeta__btn-tel').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const phone = btn.getAttribute('data-phone');
+        if (!phone || phone === '#' || phone === 'undefined') {
+          e.preventDefault();
+          Swal.fire({
+            icon: 'info',
+            title: 'Teléfono',
+            text: 'No se encontró el número de teléfono del destinatario (persona que recibe).'
+          });
+        }
+      });
+    });
+
+    // Abrir Google Maps al hacer clic en Navegar
+    document.querySelectorAll('.tarjeta__btn-ir').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const tarjeta = e.target.closest('.tarjeta');
+        const orderId = tarjeta.getAttribute('data-id');
+        const shipment = shipments.find(s => (s.order && s.order.id === orderId) || s.id === orderId);
+        
+        if (shipment && shipment.recipient) {
+          const address = `${shipment.recipient.address || ''}, ${shipment.recipient.city || ''}`;
+          const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+          window.open(url, '_blank');
+        } else {
+          Swal.fire({
+            icon: 'info',
+            title: 'Navegación',
+            text: 'No se encontró una dirección válida para este pedido.'
+          });
+        }
+      });
+    });
   }
 
   /**
@@ -1992,21 +285,42 @@ document.addEventListener("DOMContentLoaded", () => {
           orderId: orderId
         };
 
-        console.log("-> Realizando petición POST para actualizar estado:", JSON.stringify(payload, null, 2));
-
         try {
-          // await window.ApiService.post('/api/shipments/status', payload);
+          const response = await fetch(`${API_URL_UPDATE}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
           
-          alert(`Estado actualizado a ${traducirEstado(status)}\nRevisa la consola para ver el JSON.`);
+          Swal.fire({
+            icon: 'success',
+            title: '¡Actualizado!',
+            text: `Estado actualizado a ${traducirEstado(status)}`
+          });
           modalActualizarEstado.hide();
           
-          const shipment = shipments.find(s => s.id === orderId);
-          if (shipment) shipment.status = status;
+          const shipment = shipments.find(s => (s.order && s.order.id === orderId) || s.id === orderId);
+          if (shipment) {
+            // Se actualiza el estado localmente, si es 'DELIVERED', pasará automáticamente a la columna de completados.
+            // Para forzar que siempre pase a completados según la solicitud, puedes descomentar la siguiente línea:
+            // shipment.status = "DELIVERED";
+            shipment.status = status;
+          }
           renderTarjetas();
 
         } catch (error) {
           console.error("Error actualizando estado:", error);
-          alert("Ocurrió un error al actualizar el estado.");
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un error al actualizar el estado.'
+          });
         }
       });
     }
@@ -2025,23 +339,58 @@ document.addEventListener("DOMContentLoaded", () => {
           orderId: orderId
         };
 
-        console.log("-> Realizando petición POST para procesar entrega:", JSON.stringify(payload, null, 2));
-
         try {
-          // await window.ApiService.post('/api/shipments/deliver', payload);
+          const response = await fetch(API_URL_DELIVERY, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
           
-          alert(`Entrega registrada a nombre de ${receiverName}\nRevisa la consola para ver el JSON.`);
+          Swal.fire({
+            icon: 'success',
+            title: '¡Entregado!',
+            text: `Entrega registrada a nombre de ${receiverName}`
+          });
           modalEntregar.hide();
           
-          const shipment = shipments.find(s => s.id === orderId);
+          const shipment = shipments.find(s => (s.order && s.order.id === orderId) || s.id === orderId);
           if (shipment) shipment.status = "DELIVERED";
           renderTarjetas();
 
         } catch (error) {
           console.error("Error registrando entrega:", error);
-          alert("Ocurrió un error al registrar la entrega.");
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un error al registrar la entrega.'
+          });
         }
       });
+    }
+  }
+
+  /**
+   * Actualiza el nombre del repartidor y sus iniciales en el panel superior.
+   */
+  function actualizarDriverInfo() {
+    if (!shipments || shipments.length === 0) return;
+    const sample = shipments[0];
+    const driverName = sample.driverName || sample.driver?.name || sample.order?.driverName || sample.assignedDriver || sample.route?.driverName;
+    
+    if (driverName) {
+      const choferEl = document.querySelector(".panel__chofer");
+      const avatarEl = document.querySelector(".panel__avatar");
+      if (choferEl) choferEl.textContent = driverName;
+      if (avatarEl) {
+        const initials = driverName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+        avatarEl.textContent = initials;
+      }
     }
   }
 
@@ -2050,14 +399,15 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   function actualizarProgreso() {
     const total = shipments.length;
-    const entregados = shipments.filter((s) => s.status === "DELIVERED").length;
-    const pendientes = total - entregados;
-    const porcentaje = total > 0 ? Math.round((entregados / total) * 100) : 0;
+    const estadosPendientes = ["PENDING", "ASSIGNED"];
+    const completadosCount = shipments.filter((s) => !estadosPendientes.includes(s.status)).length;
+    const pendientesCount = total - completadosCount;
+    const porcentaje = total > 0 ? Math.round((completadosCount / total) * 100) : 0;
 
     if (progresoTexto) progresoTexto.textContent = `${porcentaje}% completado`;
-    if (progresoPendiente) progresoPendiente.textContent = `${pendientes} pendientes`;
+    if (progresoPendiente) progresoPendiente.textContent = `${pendientesCount} pendientes`;
     if (progresoBarraFill) progresoBarraFill.style.width = `${porcentaje}%`;
-    if (progresoEstado) progresoEstado.textContent = `${entregados}/${total} entregados`;
+    if (progresoEstado) progresoEstado.textContent = `${completadosCount}/${total} entregados`;
   }
 
   // Inicializar la aplicación
