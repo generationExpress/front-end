@@ -133,62 +133,133 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnSave = document.getElementById("btn-vehicle-save");
     const vehicleForm = document.getElementById("vehicle-form");
 
-    if (btnSave && vehicleForm) {
-        btnSave.addEventListener("click", async (e) => {
-            e.preventDefault();
+    // --- FUNCIÓN DE TOAST ESTILIZADO (1.5 segundos) ---
+    function showFloatingAlert(title, message, type = "danger") {
+        let container = document.getElementById("toast-alert-container");
 
-            if (!vehicleForm.checkValidity()) {
-                vehicleForm.classList.add("was-validated");
-                return;
+        if (!container) {
+            container = document.createElement("div");
+            container.id = "toast-alert-container";
+            container.className = "position-fixed top-0 start-50 translate-middle-x mt-3";
+            container.style.zIndex = "1090";
+            container.style.width = "auto";
+            container.style.minWidth = "320px";
+            container.style.maxWidth = "550px";
+            document.body.appendChild(container);
+        }
+
+        const styles = {
+            danger: {
+                bg: "#FFF5F5",
+                border: "#FEB2B2",
+                titleColor: "#C53030",
+                textColor: "#E53E3E",
+                closeColor: "#E53E3E"
+            },
+            success: {
+                bg: "#F0FFF4",
+                border: "#9AE6B4",
+                titleColor: "#22543D",
+                textColor: "#2F855A",
+                closeColor: "#2F855A"
+            },
+            warning: {
+                bg: "#FFFFF0",
+                border: "#FBD38D",
+                titleColor: "#744210",
+                textColor: "#DD6B20",
+                closeColor: "#DD6B20"
             }
+        };
 
-            const rawDriverId = document.getElementById("vehicle-driver").value;
+        const config = styles[type] || styles.danger;
+        const alertId = `alert-${Date.now()}`;
 
-            const vehicleData = {
-                // id: document.getElementById("vehicle-id").value.trim() || null,
-                brand: document.getElementById("vehicle-brand").value.trim(),
-                licensePlate: document.getElementById("license-plate").value.trim().toUpperCase(),
-                capacityKg: parseFloat(document.getElementById("vehicle-capacity").value),
-                type: document.getElementById("vehicle-type").value,
-                status: document.getElementById("vehicle-status").value,
-                driverId: rawDriverId !== "" ? rawDriverId : null 
-            };
+        container.innerHTML = `
+            <div id="${alertId}" class="fade show d-flex align-items-center justify-content-between p-3 rounded-2 shadow-sm"
+                 style="background-color: ${config.bg}; border: 1px solid ${config.border}; font-family: system-ui, -apple-system, sans-serif;">
+                <div class="me-3 fs-6">
+                    <strong style="color: ${config.titleColor}; fw-bold">${title}</strong>
+                    <span style="color: ${config.textColor};">${message}</span>
+                </div>
+                <button type="button" class="btn p-0 border-0 fs-5 fw-bold ms-3" 
+                        style="color: ${config.closeColor}; line-height: 1; background: transparent; cursor: pointer;" 
+                        onclick="document.getElementById('${alertId}').remove();" aria-label="Close">
+                    &times;
+                </button>
+            </div>
+        `;
 
-            try {
-                btnSave.disabled = true;
-                btnSave.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Guardando...';
+        setTimeout(() => {
+                const alertElement = document.getElementById(alertId);
+                if (alertElement) {
+                    alertElement.classList.remove("show");
+                    setTimeout(() => alertElement.remove(), 150);
+                }
+            }, 1500);
+        }
 
-                const response = await fetch("http://localhost:8080/api/v1/vehicle", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(vehicleData)
-                });
+        function closeModal() {
+            if (modalElement) {
+                const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                if (modalInstance) modalInstance.hide();
+            }
+        }
 
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => null);
-                    throw new Error(errorData?.message || `Error en el servidor: ${response.status}`);
+        if (btnSave && vehicleForm) {
+            btnSave.addEventListener("click", async (e) => {
+                e.preventDefault();
+
+                if (!vehicleForm.checkValidity()) {
+                    vehicleForm.classList.add("was-validated");
+                    closeModal();
+                    showFloatingAlert("¡Atención!", "Por favor completa todos los campos del vehículo.", "warning");
+                    return;
                 }
 
-                await loadVehicles();
+                const rawDriverId = document.getElementById("vehicle-driver").value;
 
-                vehicleForm.reset();
-                vehicleForm.classList.remove("was-validated");
+                const vehicleData = {
+                    brand: document.getElementById("vehicle-brand").value.trim(),
+                    licensePlate: document.getElementById("license-plate").value.trim().toUpperCase(),
+                    capacityKg: parseFloat(document.getElementById("vehicle-capacity").value),
+                    type: document.getElementById("vehicle-type").value,
+                    status: document.getElementById("vehicle-status").value,
+                    driverId: rawDriverId !== "" ? rawDriverId : null 
+                };
 
-                const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                if (modalInstance) {
-                    modalInstance.hide();
+                try {
+                    btnSave.disabled = true;
+                    btnSave.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Guardando...';
+
+                    const response = await fetch("http://localhost:8080/api/v1/vehicle", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(vehicleData)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => null);
+                        throw new Error(errorData?.message || errorData?.errors?.join(", ") || `Error (${response.status})`);
+                    }
+
+                    await loadVehicles();
+
+                    vehicleForm.reset();
+                    vehicleForm.classList.remove("was-validated");
+
+                    closeModal();
+                    showFloatingAlert("¡Éxito!", "Vehículo registrado correctamente.", "success");
+
+                } catch (error) {
+                    console.error("Error al registrar el vehículo:", error);
+                    closeModal();
+                    showFloatingAlert("¡Error!", error.message, "danger");
+                } finally {
+                    btnSave.disabled = false;
+                    btnSave.innerHTML = '<i class="bi bi-check-circle me-2"></i> Registrar Vehículo';
                 }
-
-                alert("¡Vehículo registrado correctamente!");
-
-            } catch (error) {
-                console.error("Error al registrar el vehículo:", error);
-                alert(`No se pudo registrar el vehículo: ${error.message}`);
-            } finally {
-                btnSave.disabled = false;
-                btnSave.innerHTML = '<i class="bi bi-check-circle me-2"></i> Registrar Vehículo';
-            }
-        });
+            });
     }
 });
 

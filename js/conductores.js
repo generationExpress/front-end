@@ -399,12 +399,89 @@ document.addEventListener("DOMContentLoaded", () => {
         driverModalElement.addEventListener("show.bs.modal", loadVehiclesSelect);
     }
 
+    // --- FUNCIÓN DE TOAST ESTILIZADO SEGÚN TU DISEÑO ---
+    function showFloatingAlert(title, message, type = "danger") {
+        let container = document.getElementById("toast-alert-container");
+
+        if (!container) {
+            container = document.createElement("div");
+            container.id = "toast-alert-container";
+            // Posicionamiento superior centrado con prioridad z-index
+            container.className = "position-fixed top-0 start-50 translate-middle-x mt-3";
+            container.style.zIndex = "1090";
+            container.style.width = "auto";
+            container.style.minWidth = "320px";
+            container.style.maxWidth = "550px";
+            document.body.appendChild(container);
+        }
+
+        // estilos Toast
+        const styles = {
+            danger: {
+                bg: "#FFF5F5",
+                border: "#FEB2B2",
+                titleColor: "#C53030",
+                textColor: "#E53E3E",
+                closeColor: "#E53E3E"
+            },
+            success: {
+                bg: "#F0FFF4",
+                border: "#9AE6B4",
+                titleColor: "#22543D",
+                textColor: "#2F855A",
+                closeColor: "#2F855A"
+            },
+            warning: {
+                bg: "#FFFFF0",
+                border: "#FBD38D",
+                titleColor: "#744210",
+                textColor: "#DD6B20",
+                closeColor: "#DD6B20"
+            }
+        };
+
+        const config = styles[type] || styles.danger;
+        const alertId = `alert-${Date.now()}`;
+
+        container.innerHTML = `
+            <div id="${alertId}" class="fade show d-flex align-items-center justify-content-between p-3 rounded-2 shadow-sm"
+                 style="background-color: ${config.bg}; border: 1px solid ${config.border}; font-family: system-ui, -apple-system, sans-serif;">
+                <div class="me-3 fs-6">
+                    <strong style="color: ${config.titleColor}; fw-bold">${title}</strong>
+                    <span style="color: ${config.textColor};">${message}</span>
+                </div>
+                <button type="button" class="btn p-0 border-0 fs-5 fw-bold ms-3" 
+                        style="color: ${config.closeColor}; line-height: 1; background: transparent; cursor: pointer;" 
+                        onclick="document.getElementById('${alertId}').remove();" aria-label="Close">
+                    &times;
+                </button>
+            </div>
+        `;
+
+        setTimeout(() => {
+            const alertElement = document.getElementById(alertId);
+            if (alertElement) {
+                alertElement.classList.remove("show");
+                setTimeout(() => alertElement.remove(), 150);
+            }
+        }, 1500);
+    }
+
+    function closeModal() {
+        if (driverModalElement) {
+            const modalInstance = bootstrap.Modal.getInstance(driverModalElement) || new bootstrap.Modal(driverModalElement);
+            if (modalInstance) modalInstance.hide();
+        }
+    }
+
     if (btnDriverSave && driverForm) {
         btnDriverSave.addEventListener("click", async (e) => {
             e.preventDefault();
 
             if (!driverForm.checkValidity()) {
                 driverForm.classList.add("was-validated");
+                closeModal();
+                showFloatingAlert("¡Atención!", "Por favor completa todos los campos requeridos.", "warning");
                 return;
             }
 
@@ -416,11 +493,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 btnDriverSave.disabled = true;
                 btnDriverSave.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Guardando...';
 
-                // Capturar el ID del vehículo (si fue seleccionado)
                 const vehicleSelectElement = document.getElementById("assigned-vehicle");
                 const selectedVehicleId = vehicleSelectElement ? vehicleSelectElement.value : null;
 
-                // Payload único con el objeto 'user' anidado y role en MAYÚSCULAS
                 const driverPayload = {
                     license: document.getElementById("driver-license").value,
                     available: document.getElementById("driver-available").value === "true",
@@ -429,12 +504,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         lastName: lastName,
                         email: document.getElementById("driver-email").value.trim(),
                         password: defaultPassword,
-                        role: "DRIVER" // Asegurado en mayúsculas para evitar deserealization errors
+                        role: "DRIVER"
                     },
                     vehicleId: selectedVehicleId !== "" ? selectedVehicleId : null
                 };
 
-                // ÚNICO FETCH AL ENDPOINT DE DRIVER
                 const driverResponse = await fetch("http://localhost:8080/api/v1/driver", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -443,29 +517,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!driverResponse.ok) {
                     const errorDriver = await driverResponse.json().catch(() => null);
-                    throw new Error(errorDriver?.message || errorDriver?.errors?.join(", ") || `Error al registrar conductor (${driverResponse.status})`);
+                    throw new Error(errorDriver?.message || errorDriver?.errors?.join(", ") || `Error (${driverResponse.status})`);
                 }
 
-                // Renderizar tabla y estadísticas
-                if (typeof fetchDrivers === "function") {
-                    await fetchDrivers();
-                }
-                if (typeof cargarEstadisticas === "function") {
-                    await cargarEstadisticas();
-                }
+                if (typeof fetchDrivers === "function") await fetchDrivers();
+                if (typeof cargarEstadisticas === "function") await cargarEstadisticas();
 
-                // Limpieza de interfaz
                 driverForm.reset();
                 driverForm.classList.remove("was-validated");
 
-                const modalInstance = bootstrap.Modal.getInstance(driverModalElement);
-                if (modalInstance) modalInstance.hide();
-
-                alert("¡Conductor registrado correctamente!");
+                closeModal();
+                showFloatingAlert("¡Éxito!", "Conductor registrado correctamente.", "success");
 
             } catch (error) {
-                console.error("Error en el proceso de registro:", error);
-                alert(`Error al registrar: ${error.message}`);
+                console.error("Error en el registro:", error);
+                closeModal();
+                showFloatingAlert("¡Error!", error.message, "danger");
             } finally {
                 btnDriverSave.disabled = false;
                 btnDriverSave.innerHTML = '<i class="bi bi-check-circle me-2"></i> Registrar Conductor';
@@ -474,107 +541,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-
-// document.addEventListener("DOMContentLoaded", () => {
-//     const btnDriverSave = document.getElementById("btn-driver-save");
-//     const driverForm = document.getElementById("driver-form");
-//     const driverModalElement = document.getElementById("driver-modal");
-
-//     if (driverModalElement) {
-//         driverModalElement.addEventListener("show.bs.modal", loadVehiclesSelect);
-//     }
-
-//     if (btnDriverSave && driverForm) {
-//         btnDriverSave.addEventListener("click", async (e) => {
-//             e.preventDefault();
-
-//             if (!driverForm.checkValidity()) {
-//                 driverForm.classList.add("was-validated");
-//                 return;
-//             }
-
-//             const rawFullName = document.getElementById("driver-fullname").value;
-//             const { firstName, lastName } = splitFullName(rawFullName);
-//             const defaultPassword = "Driver" + Math.floor(1000 + Math.random() * 9000);
-
-//             try {
-//                 btnDriverSave.disabled = true;
-//                 btnDriverSave.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Guardando Usuario...';
-
-//                 // Create User
-//                 const userPayload = {
-//                     firstName: firstName,
-//                     lastName: lastName,
-//                     email: document.getElementById("driver-email").value.trim(),
-//                     password: defaultPassword,
-//                     role: "DRIVER"
-//                 };
-
-//                 const userResponse = await fetch("http://localhost:8080/api/v1/user", {
-//                     method: "POST",
-//                     headers: { "Content-Type": "application/json" },
-//                     body: JSON.stringify(userPayload)
-//                 });
-
-//                 if (!userResponse.ok) {
-//                     const errorUser = await userResponse.json().catch(() => null);
-//                     throw new Error(errorUser?.message || `Error al crear usuario (${userResponse.status})`);
-//                 }
-
-//                 const createdUser = await userResponse.json();
-//                 const userId = createdUser.id;
-
-//                 if (!userId) {
-//                     throw new Error("El backend no devolvió el ID del usuario creado.");
-//                 }
-
-//                 btnDriverSave.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Asignando Conductor...';
-
-              
-//                 const vehicleSelectElement = document.getElementById("assigned-vehicle");
-//                 const selectedVehicleId = vehicleSelectElement ? vehicleSelectElement.value : null;
-
-//                 // Create Driver
-//                 const driverPayload = {
-//                     license: document.getElementById("driver-license").value,
-//                     available: document.getElementById("driver-available").value === "true",
-//                     userId: userId,
-//                     vehicleId: selectedVehicleId !== "" ? selectedVehicleId : null
-//                 };
-
-//                 const driverResponse = await fetch("http://localhost:8080/api/v1/driver", {
-//                     method: "POST",
-//                     headers: { "Content-Type": "application/json" },
-//                     body: JSON.stringify(driverPayload)
-//                 });
-
-//                 if (!driverResponse.ok) {
-//                     const errorDriver = await driverResponse.json().catch(() => null);
-//                     throw new Error(errorDriver?.message || `Error al crear conductor (${driverResponse.status})`);
-//                 }
-
-//                 if (typeof fetchDrivers === "function") {
-//                     await fetchDrivers();
-//                     await cargarEstadisticas();
-
-//                 }
-
-//                 // Limpieza de interfaz
-//                 driverForm.reset();
-//                 driverForm.classList.remove("was-validated");
-
-//                 const modalInstance = bootstrap.Modal.getInstance(driverModalElement);
-//                 if (modalInstance) modalInstance.hide();
-
-//                 alert("¡Usuario y Conductor registrados correctamente!");
-
-//             } catch (error) {
-//                 console.error("Error en el proceso de registro:", error);
-//                 alert(`Error al registrar: ${error.message}`);
-//             } finally {
-//                 btnDriverSave.disabled = false;
-//                 btnDriverSave.innerHTML = '<i class="bi bi-check-circle me-2"></i> Registrar Conductor';
-//             }
-//         });
-//     }
-// });
