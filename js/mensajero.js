@@ -5,25 +5,44 @@ document.addEventListener("DOMContentLoaded", () => {
   const progresoPendiente = document.querySelector(".progreso__pendiente");
   const progresoBarraFill = document.querySelector(".progreso__barra-fill");
   const progresoEstado = document.querySelector(".progreso__estado");
+  const finalizadosTitulo = document.querySelector(".finalizados__titulo");
 
-  const modalCliente = document.querySelector(".modal-reparto__cliente");
-  const modalTag = document.querySelector(".modal-reparto__tag-camino");
-  const modalHora = document.querySelector(".modal-reparto__hora");
-  const modalCalle = document.querySelector(".modal-reparto__calle");
-  const modalCiudad = document.querySelector(".modal-reparto__ciudad");
-  const modalAlerta = document.querySelector(".modal-reparto__alerta");
-  const modalFilas = document.querySelectorAll(".modal-reparto__fila strong");
-  const btnConfirmar = document.querySelector(".modal-reparto__btn-confirmar");
+  // Instancias de los modales de Bootstrap
+  const modalActualizarEstadoEl = document.getElementById("modal-actualizar-estado");
+  const modalEntregarEl = document.getElementById("modal-entregar");
+  let modalActualizarEstado;
+  let modalEntregar;
+  if (modalActualizarEstadoEl) modalActualizarEstado = new bootstrap.Modal(modalActualizarEstadoEl);
+  if (modalEntregarEl) modalEntregar = new bootstrap.Modal(modalEntregarEl);
 
-  function cargarShipments() {
-    shipments = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  let shipments = [];
+
+  // URL de la API (Variable de entorno para desarrollo)
+  const API_URL = "http://localhost:8080/api/v1/route/route-001/orders";
+  const API_URL_UPDATE = "http://localhost:8080/api/v1/orderStatus";
+  const API_URL_DELIVERY = "http://localhost:8080/api/v1/delivery";
+  // URL de la API (Comentada para producción)
+  // const API_URL = "https://tu-dominio.com/api/v1/route/d1000001-0001-4000-8000-000000000001/orders";
+  // const API_URL_UPDATE = "https://tu-dominio.com/api/v1/orders";
+  // const API_URL_DELIVERY = "https://tu-dominio.com/api/v1/delivery";
+
+  async function fetchShipments() {
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching shipments:", error);
+      return [];
+    }
   }
 
-  function guardarShipments() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(shipments));
-  }
-
-  function getIconoEstado(status) {
+  /**
+   * Traduce el estado del backend (inglés) a español para la UI.
+   */
+  function traducirEstado(status) {
     switch (status) {
       case "PENDING": return "Pendiente";
       case "ASSIGNED": return "Asignado";
@@ -60,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const orderDate = new Date(order.estimatedDeliveryDate).toLocaleDateString('es-CO');
 
     return `
-      <div class="tarjeta" data-id="${order.id}">
+      <div class="tarjeta" data-id="${order.order ? order.order.id : order.id}">
         <div class="tarjeta__body">
           <div class="d-flex justify-content-between align-items-start">
             <h3 class="tarjeta__cliente">${recipientName}</h3>
@@ -94,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   function crearTarjetaPanelHTML(order, esPrimera) {
     const recipientName = `${order.recipient.firstName} ${order.recipient.lastName}`;
+    const recipientPhone = order.recipient ? (order.recipient.phone || "") : "";
     const rutaDestino = order.route ? `${order.route.origin} → ${order.route.destination}` : "";
 
     // Solo la primera tarjeta tiene el encabezado azul de "Próxima parada"
@@ -105,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
       : "";
 
     return `
-      <div class="tarjeta ${esPrimera ? "tarjeta--activa" : ""}" data-id="${order.id}">
+      <div class="tarjeta ${esPrimera ? "tarjeta--activa" : ""}" data-id="${order.order ? order.order.id : order.id}">
         ${headerHTML}
         <div class="tarjeta__body">
           <h3 class="tarjeta__cliente">${recipientName}</h3>
@@ -118,17 +138,17 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <div class="tarjeta__alerta">
             <span class="material-symbols-outlined">warning</span>
-            ${order.sender.firstName} ${order.sender.lastName} - Tel: ${order.sender.phone}
+            Remitente: ${order.sender.firstName} ${order.sender.lastName} - Tel: ${order.sender.phone}
           </div>
           
           <!-- Botones de Utilidad -->
           <div class="tarjeta__botones">
-            <button class="tarjeta__btn-ir" data-bs-toggle="modal" data-bs-target="#modal-detalle">
+            <button class="tarjeta__btn-ir">
               <span class="material-symbols-outlined">navigation</span> Navegar
             </button>
-            <button class="tarjeta__btn-tel">
+            <a href="${recipientPhone ? `tel:${recipientPhone}` : '#'}" class="tarjeta__btn-tel" title="${recipientPhone ? `Llamar a ${recipientName}: ${recipientPhone}` : 'Sin teléfono de destinatario'}" data-phone="${recipientPhone}">
               <span class="material-symbols-outlined">call</span>
-            </button>
+            </a>
           </div>
           
           <!-- Botones de Acción de Estado -->
@@ -151,8 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
    * - Entregados van en .lista-grid (grilla principal derecha)
    */
   function renderTarjetas() {
-    const pendientes = shipments.filter(s => s.status !== "DELIVERED");
-    const entregados = shipments.filter(s => s.status === "DELIVERED");
+    const estadosPendientes = ["PENDING", "ASSIGNED"];
+    const pendientes = shipments.filter(s => estadosPendientes.includes(s.status));
+    const entregados = shipments.filter(s => !estadosPendientes.includes(s.status));
 
 
     // Renderizar tarjetas entregadas en la grilla principal
@@ -169,6 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
         : "<p class='text-center text-muted p-3'>🎉 ¡Todo entregado!</p>";
     }
 
+    actualizarDriverInfo();
     asignarEventosBotones();
     actualizarProgreso();
   }
@@ -208,6 +230,41 @@ document.addEventListener("DOMContentLoaded", () => {
         modalEntregar.show();
       });
     });
+    // Evento de clic en el botón de teléfono (destinatario)
+    document.querySelectorAll('.tarjeta__btn-tel').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const phone = btn.getAttribute('data-phone');
+        if (!phone || phone === '#' || phone === 'undefined') {
+          e.preventDefault();
+          Swal.fire({
+            icon: 'info',
+            title: 'Teléfono',
+            text: 'No se encontró el número de teléfono del destinatario (persona que recibe).'
+          });
+        }
+      });
+    });
+
+    // Abrir Google Maps al hacer clic en Navegar
+    document.querySelectorAll('.tarjeta__btn-ir').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const tarjeta = e.target.closest('.tarjeta');
+        const orderId = tarjeta.getAttribute('data-id');
+        const shipment = shipments.find(s => (s.order && s.order.id === orderId) || s.id === orderId);
+        
+        if (shipment && shipment.recipient) {
+          const address = `${shipment.recipient.address || ''}, ${shipment.recipient.city || ''}`;
+          const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+          window.open(url, '_blank');
+        } else {
+          Swal.fire({
+            icon: 'info',
+            title: 'Navegación',
+            text: 'No se encontró una dirección válida para este pedido.'
+          });
+        }
+      });
+    });
   }
 
   /**
@@ -228,21 +285,42 @@ document.addEventListener("DOMContentLoaded", () => {
           orderId: orderId
         };
 
-        console.log("-> Realizando petición POST para actualizar estado:", JSON.stringify(payload, null, 2));
-
         try {
-          // await window.ApiService.post('/api/shipments/status', payload);
+          const response = await fetch(`${API_URL_UPDATE}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
           
-          alert(`Estado actualizado a ${traducirEstado(status)}\nRevisa la consola para ver el JSON.`);
+          Swal.fire({
+            icon: 'success',
+            title: '¡Actualizado!',
+            text: `Estado actualizado a ${traducirEstado(status)}`
+          });
           modalActualizarEstado.hide();
           
-          const shipment = shipments.find(s => s.id === orderId);
-          if (shipment) shipment.status = status;
+          const shipment = shipments.find(s => (s.order && s.order.id === orderId) || s.id === orderId);
+          if (shipment) {
+            // Se actualiza el estado localmente, si es 'DELIVERED', pasará automáticamente a la columna de completados.
+            // Para forzar que siempre pase a completados según la solicitud, puedes descomentar la siguiente línea:
+            // shipment.status = "DELIVERED";
+            shipment.status = status;
+          }
           renderTarjetas();
 
         } catch (error) {
           console.error("Error actualizando estado:", error);
-          alert("Ocurrió un error al actualizar el estado.");
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un error al actualizar el estado.'
+          });
         }
       });
     }
@@ -261,23 +339,58 @@ document.addEventListener("DOMContentLoaded", () => {
           orderId: orderId
         };
 
-        console.log("-> Realizando petición POST para procesar entrega:", JSON.stringify(payload, null, 2));
-
         try {
-          // await window.ApiService.post('/api/shipments/deliver', payload);
+          const response = await fetch(API_URL_DELIVERY, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
           
-          alert(`Entrega registrada a nombre de ${receiverName}\nRevisa la consola para ver el JSON.`);
+          Swal.fire({
+            icon: 'success',
+            title: '¡Entregado!',
+            text: `Entrega registrada a nombre de ${receiverName}`
+          });
           modalEntregar.hide();
           
-          const shipment = shipments.find(s => s.id === orderId);
+          const shipment = shipments.find(s => (s.order && s.order.id === orderId) || s.id === orderId);
           if (shipment) shipment.status = "DELIVERED";
           renderTarjetas();
 
         } catch (error) {
           console.error("Error registrando entrega:", error);
-          alert("Ocurrió un error al registrar la entrega.");
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un error al registrar la entrega.'
+          });
         }
       });
+    }
+  }
+
+  /**
+   * Actualiza el nombre del repartidor y sus iniciales en el panel superior.
+   */
+  function actualizarDriverInfo() {
+    if (!shipments || shipments.length === 0) return;
+    const sample = shipments[0];
+    const driverName = sample.driverName || sample.driver?.name || sample.order?.driverName || sample.assignedDriver || sample.route?.driverName;
+    
+    if (driverName) {
+      const choferEl = document.querySelector(".panel__chofer");
+      const avatarEl = document.querySelector(".panel__avatar");
+      if (choferEl) choferEl.textContent = driverName;
+      if (avatarEl) {
+        const initials = driverName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+        avatarEl.textContent = initials;
+      }
     }
   }
 
@@ -286,14 +399,15 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   function actualizarProgreso() {
     const total = shipments.length;
-    const entregados = shipments.filter((s) => s.status === "DELIVERED").length;
-    const pendientes = total - entregados;
-    const porcentaje = total > 0 ? Math.round((entregados / total) * 100) : 0;
+    const estadosPendientes = ["PENDING", "ASSIGNED"];
+    const completadosCount = shipments.filter((s) => !estadosPendientes.includes(s.status)).length;
+    const pendientesCount = total - completadosCount;
+    const porcentaje = total > 0 ? Math.round((completadosCount / total) * 100) : 0;
 
     if (progresoTexto) progresoTexto.textContent = `${porcentaje}% completado`;
-    if (progresoPendiente) progresoPendiente.textContent = `${pendientes} pendientes`;
+    if (progresoPendiente) progresoPendiente.textContent = `${pendientesCount} pendientes`;
     if (progresoBarraFill) progresoBarraFill.style.width = `${porcentaje}%`;
-    if (progresoEstado) progresoEstado.textContent = `${entregados}/${total} entregados`;
+    if (progresoEstado) progresoEstado.textContent = `${completadosCount}/${total} entregados`;
   }
 
   // Inicializar la aplicación
